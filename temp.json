@@ -1,0 +1,13 @@
+[{
+        "success": "true",
+        "message": "Matr\u00edcula localizada.",
+        "professor": {
+            "matricula": "11000822",
+            "matricula_sap": "110008221",
+            "cpf": "2147483647",
+            "nome": "MARIA DAS GRACAS SANTOS BATISTA",
+            "cargo": "PROFESSOR",
+            "vinculo": "Estatut?rio",
+            "licenca_plena": ""
+        }
+    }]
