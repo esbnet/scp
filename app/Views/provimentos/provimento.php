@@ -7,11 +7,9 @@
         <!-- Início do header do card -->
         <div class="card-header py-3">
             <h2 class="float-left text-primary"> <?= $title; ?> </h2>
-            <a title="Voltar ao inínio" class="btn btn-circle btn-outline-success float-right" href="/"><i
-                    class="fas fa-home"></i></a>
+            <a title="Voltar ao inínio" class="btn btn-circle btn-outline-success float-right" href="/"><i class="fas fa-home"></i></a>
             <a class="float-right">&nbsp;</a>
-            <a title="Voltar a lista de provimentos" class="btn btn-circle btn-outline-primary float-right"
-                href="/provimentos"><i class="fas fa-undo"></i></a>
+            <a title="Voltar a lista de provimentos" class="btn btn-circle btn-outline-primary float-right" href="/provimentos"><i class="fas fa-undo"></i></a>
         </div>
         <!-- Fim do header do card -->
 
@@ -24,21 +22,15 @@
 
                     <?= csrf_field() ?>
 
-                    <!-- Variável para pegar a tabela. --><input type="hidden" id="variavel_tabela"
-                        name="variavel_tabela" />
+                    <!-- Variável para pegar a tabela. --><input type="hidden" id="variavel_tabela" name="variavel_tabela" />
 
                     <!-- Form1 -->
                     <div class="form-row">
                         <div class="form-group col-md-2">
                             <label class="control-label" for="ueid">UE</label>
                             <div class="input-group mb-3">
-                                <input title="Informa o código CodSecul ou SAP" type="number"
-                                    value="<?= isset($ue['Ue_Id']) ? $ue['Ue_Id'] : "1100159" ?>" size="9" id="ueid"
-                                    name="ueid" class="form-control form-control-sm text-primary" data-toggle="tooltip"
-                                    data-placement="top" title="Tooltip na parte superior"
-                                    aria-label="Recipient's username" aria-describedby="button-addon2" required>
-                                <button class="btn btn-primary btn-sm" type="button" id="busca_escola"
-                                    onclick="pesquisa_carencia()">
+                                <input title="Informa o código CodSecul ou SAP" type="number" value="<?= isset($ue['Ue_Id']) ? $ue['Ue_Id'] : "1100159" ?>" size="9" id="ueid" name="ueid" class="form-control form-control-sm text-primary" data-toggle="tooltip" data-placement="top" title="Tooltip na parte superior" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                                <button class="btn btn-primary btn-sm" type="button" id="busca_escola" onclick="pesquisa_carencia()">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
@@ -46,24 +38,20 @@
 
                         <div class="form-group col-md-2">
                             <label class="control-label" for="ou">Cód. SAP</label>
-                            <input value="<?= isset($ue['OU']) ? $ue['OU'] : ""  ?>" name="OU" type="text"
-                                class="form-control form-control-sm text-primary" id="OU" readonly>
+                            <input value="<?= isset($ue['OU']) ? $ue['OU'] : ""  ?>" name="OU" type="text" class="form-control form-control-sm text-primary" id="OU" readonly>
                         </div>
 
                         <div class="form-group col-md-5">
                             <label class="control-label" for="ue">Nome da Unidade Escolar</label>
-                            <input value="<?= isset($ue['Ue']) ? $ue['Ue'] : ""; ?>" name="UE" type="text"
-                                class="form-control form-control-sm text-primary" id="UE" readonly>
+                            <input value="<?= isset($ue['Ue']) ? $ue['Ue'] : ""; ?>" name="UE" type="text" class="form-control form-control-sm text-primary" id="UE" readonly>
                         </div>
                         <div class="form-group col-md-2">
                             <label class="control-label" for="Municipio">Município</label>
-                            <input value="<?= isset($ue['Municipio']) ? $ue['Municipio'] : ""; ?>" name="Municipio"
-                                type="text" class="form-control form-control-sm text-primary" id="Municipio" readonly>
+                            <input value="<?= isset($ue['Municipio']) ? $ue['Municipio'] : ""; ?>" name="Municipio" type="text" class="form-control form-control-sm text-primary" id="Municipio" readonly>
                         </div>
                         <div class="form-group col-md-1">
                             <label class="control-label" for="CodNte">Nte</label>
-                            <input value="<?= isset($ue['CodNte']) ? $ue['CodNte'] : ""; ?>" name="CodNte" type="text"
-                                class="form-control form-control-sm text-primary" id="CodNte" readonly>
+                            <input value="<?= isset($ue['CodNte']) ? $ue['CodNte'] : ""; ?>" name="CodNte" type="text" class="form-control form-control-sm text-primary" id="CodNte" readonly>
                         </div>
                     </div>
                     <!-- Fim Form1-->
@@ -78,27 +66,17 @@
                                 <div class="form-group col-md-2">
                                     <label class="control-label" for="inputMatricula">Matrícula</label>
                                     <div class="input-group mb-3">
-                                        <input title="CodSecul ou Cod. SAP ou CPF" data-toggle="tooltip"
-                                            data-placement="top" title="Tooltip na parte superior" type="number"
-                                            value="<?= isset($professor['Matricula']) ? $professor['Matricula'] : '11019361' ?>"
-                                            size="9" name="matricula_Id" id="Matricula"
-                                            class="form-control form-control-sm text-primary matricula">
-                                        <button class="btn btn-primary btn-sm btn-matricula" type="button"
-                                            id="busca_professor" onclick="pesquisa_professor_provimento()"><i
-                                                class="fas fa-search"></i></button>
+                                        <input title="CodSecul ou Cod. SAP ou CPF" data-toggle="tooltip" data-placement="top" title="Tooltip na parte superior" type="number" value="<?= isset($professor['Matricula']) ? $professor['Matricula'] : '11019361' ?>" size="9" name="matricula_Id" id="Matricula" class="form-control form-control-sm text-primary matricula">
+                                        <button class="btn btn-primary btn-sm btn-matricula" type="button" id="busca_professor" onclick="pesquisa_professor_provimento()"><i class="fas fa-search"></i></button>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label class="control-label" for="NomeProfessor">Nome do Professor</label>
-                                    <input value="<?= isset($professor['Nome']) ? $professor['Nome'] : '' ?>"
-                                        type="text" class="form-control form-control-sm text-primary"
-                                        name="NomeProfessor" id="NomeProfessor" readonly>
+                                    <input value="<?= isset($professor['Nome']) ? $professor['Nome'] : '' ?>" type="text" class="form-control form-control-sm text-primary" name="NomeProfessor" id="NomeProfessor" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label class="control-label" for="Vinculo">Vínculo</label>
-                                    <input value="<?= isset($professor['Vinculo']) ? $professor['Vinculo'] : '' ?>"
-                                        type="Text" class="form-control form-control-sm text-primary" id="Vinculo"
-                                        Name="Vinculo" readonly>
+                                    <input value="<?= isset($professor['Vinculo']) ? $professor['Vinculo'] : '' ?>" type="Text" class="form-control form-control-sm text-primary" id="Vinculo" Name="Vinculo" readonly>
                                 </div>
                             </div>
 
@@ -106,20 +84,15 @@
                             <div class="form-row d-none linha-02 ">
                                 <div class="form-group col-md-3 ">
                                     <label class="control-label" for="MatriculaSap">Cód. RH Bahia</label>
-                                    <input
-                                        value="<?= isset($professor['MatriculaSap']) ? $professor['MatriculaSap'] : '' ?>"
-                                        type="text" class="form-control form-control-sm text-primary"
-                                        name="MatriculaSap" id="MatriculaSap" readonly>
+                                    <input value="<?= isset($professor['MatriculaSap']) ? $professor['MatriculaSap'] : '' ?>" type="text" class="form-control form-control-sm text-primary" name="MatriculaSap" id="MatriculaSap" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label for="CPF">CPF</label>
-                                    <input type="text" class="form-control form-control-sm text-primary" id="CPF"
-                                        disabled>
+                                    <input type="text" class="form-control form-control-sm text-primary" id="CPF" disabled>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="Licenciatura">Licenciatura Plena (Seconline)</label>
-                                    <input type="text" class="form-control form-control-sm text-primary"
-                                        id="Licenciatura" disabled>
+                                    <input type="text" class="form-control form-control-sm text-primary" id="Licenciatura" disabled>
                                 </div>
                             </div>
                             <hr>
@@ -127,8 +100,7 @@
                                 <h3 class="control-label text-primary" for="CodNte">Relação de carência</h3>
                                 <!-- <div class="form-group col-md-12"> -->
                                 <div class="table-responsive">
-                                    <table id="tabelaCarencia" name="tabelaCarencia"
-                                        class="table table-hover table-bordered table-sm dataTable" width="100%">
+                                    <table id="tabelaCarencia" name="tabelaCarencia" class="table table-hover table-bordered table-sm dataTable" width="100%">
                                         <!-- <table  class='table table-striped table-sm table-bordered'> -->
                                         <thead class="thead-dark">
                                             <tr>
@@ -157,13 +129,11 @@
                             <div class="form-row d-none linha-03 ">
                                 <div class="form-group col-md-3">
                                     <label for="inputMotivo">Forma de Suprimento</label>
-                                    <select name="FormaSupId" id="forma_suprimento_id"
-                                        class="form-control form-control-sm text-primary">
+                                    <select name="FormaSupId" id="forma_suprimento_id" class="form-control form-control-sm text-primary">
                                         <option value="0" selected>Selecione o motivo...</option>
                                         <?php foreach ($formas_suprimento as $forma) : ?>
-                                        <option value="<?php echo esc($forma['id']); ?>"
-                                            <?= esc($forma['id'] == $forma['id'] ? 'selected' : '') ?>>
-                                            <?php echo $forma['Nome'] ?></option>
+                                            <option value="<?php echo esc($forma['id']); ?>" <?= esc($forma['id'] == $forma['id'] ? 'selected' : '') ?>>
+                                                <?php echo $forma['Nome'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                     <div class="invalid-feedback" id="erroForma"> </div>
@@ -171,13 +141,11 @@
 
                                 <div class="form-group col-md-3">
                                     <label for="motivo_provimento_id">Tipo de Movimentação</label>
-                                    <select name="TipoMovId" id="motivo_provimento_id"
-                                        class="form-control form-control-sm text-primary">
+                                    <select name="TipoMovId" id="motivo_provimento_id" class="form-control form-control-sm text-primary">
                                         <option value="0" selected>Selecione o tipo de movimentação...</option>
                                         <?php foreach ($tipos_movimentacao as $tipo) : ?>
-                                        <option value="<?php echo esc($tipo['id']); ?>"
-                                            <?= esc($tipo['id'] == $tipo['id'] ? 'selected' : '') ?>>
-                                            <?php echo $tipo['Nome'] ?></option>
+                                            <option value="<?php echo esc($tipo['id']); ?>" <?= esc($tipo['id'] == $tipo['id'] ? 'selected' : '') ?>>
+                                                <?php echo $tipo['Nome'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                     <div class="invalid-feedback" id="erroMotivo"> </div>
@@ -187,8 +155,7 @@
                                     <label class="form-check-label " for="AulaNormal">Aula Normal</label>
                                 </div>
                                 <div class="form-check form-check-inline ">
-                                    <input class="form-check-input text-primary" type="checkbox" id="AulaExtra"
-                                        name="AulaExtra">
+                                    <input class="form-check-input text-primary" type="checkbox" id="AulaExtra" name="AulaExtra">
                                     <label class="form-check-label " for="AulaExtra">Aula Extra</label>
                                 </div>
                             </div>
@@ -196,21 +163,15 @@
                             <div class="form-row d-none linha-04 ">
                                 <div class="form-group ">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input text-primary" type="checkbox" id="cb_anuencia"
-                                            name="Anuencia" onchange="habilitaDataAnuencia()">
-                                        <label class="form-check-label"
-                                            for="cb_anuencia">Anuência</label>&nbsp;&nbsp;&nbsp;
-                                        <input type="date" class="form-control form-control-sm text-primary"
-                                            id="DataAnuencia" name="DataAnuencia" disabled>
+                                        <input class="form-check-input text-primary" type="checkbox" id="cb_anuencia" name="Anuencia" onchange="habilitaDataAnuencia()">
+                                        <label class="form-check-label" for="cb_anuencia">Anuência</label>&nbsp;&nbsp;&nbsp;
+                                        <input type="date" class="form-control form-control-sm text-primary" id="DataAnuencia" name="DataAnuencia" disabled>
 
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input text-primary" type="checkbox" id="cb_assuncao"
-                                            name="Assuncao" onchange="habilitaDataAssuncao()">
-                                        <label class="form-check-label "
-                                            for="cb_assuncao">Assução</label>&nbsp;&nbsp;&nbsp;
-                                        <input type="date" class="form-control form-control-sm text-primary"
-                                            id="DataAssuncao" name="DataAssuncao" disabled>
+                                        <input class="form-check-input text-primary" type="checkbox" id="cb_assuncao" name="Assuncao" onchange="habilitaDataAssuncao()">
+                                        <label class="form-check-label " for="cb_assuncao">Assução</label>&nbsp;&nbsp;&nbsp;
+                                        <input type="date" class="form-control form-control-sm text-primary" id="DataAssuncao" name="DataAssuncao" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -218,8 +179,7 @@
                             <div class="form-row d-none linha-05 ">
                                 <div class="form-group col-md-12">
                                     <label for="Observacao">Observação</label>
-                                    <textarea class="form-control form-control-sm text-primary" id="Observacao"
-                                        name="Observacao" rows="3"></textarea>
+                                    <textarea class="form-control form-control-sm text-primary" id="Observacao" name="Observacao" rows="3"></textarea>
                                 </div>
                             </div>
 
@@ -231,105 +191,15 @@
 
                 <!-- Início do footer do card -->
                 <div class="card-footer ">
-                    <button title="Grava as informações de carência." type="submit" name="submit" id="submit"
-                        class="btn btn-outline-primary" value="Salvar" onclick="" disabled>
+                    <button title="Grava as informações de carência." type="submit" name="submit" id="submit" class="btn btn-outline-primary" value="Salvar" onclick="" disabled>
                         <i class="fas fa-database">&nbsp;&nbsp;Gravar</i>
                     </button>
-                    <a title="Cancela a inclusão da carência." name="cancel" class="btn btn-outline-warning "
-                        href="/provimentos"><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
+                    <a title="Cancela a inclusão da carência." name="cancel" class="btn btn-outline-warning " href="/provimentos"><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
                 </div>
                 <!-- Fim do footer do card -->
 
             </form>
     </div>
     <!-- Fim do card -->
-
-    <div class="modal fade " id="carenciaModal" tabindex="-1" role="dialog" aria-labelledby="carenciaModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered " role="document">
-            <div class="modal-content ">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="carenciaModalLabel">Informar Carga Horária da Matrícula</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="card">
-                        <div class="card-body">
-                            <!-- <form class="shadow p-3 mb-5 bg-white rounded"> -->
-                            <form action="<?= '/lancamento_carencias/store' ?>" method="post">
-                                <?= csrf_field() ?>
-                                <div class="form-group row">
-                                    <label for="imput_id" class="col-sm-4 col-form-label">Id</label>
-                                    <div class="col-sm-3">
-                                        <input type="email" class="form-control" id="imput_id" value="0000" disabled>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="imput_disciplina" class="col-sm-4 col-form-label">Disciplina</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="imput_disciplina">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-4">Temporária</div>
-                                    <div class="col-sm-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="input_matutino" class="col-sm-4 col-form-label">Matutino</label>
-                                    <div class="col-sm-2">
-                                        <input type="email" class="form-control " id="input_matutino" value="10"
-                                            disabled>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="number" min="0" max="10" class="form-control" id="input_matutino2">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="input_vespertino" class="col-sm-4 col-form-label">Vespertino</label>
-                                    <div class="col-sm-2">
-                                        <input type="email" class="form-control " id="input_vespertino" value="10"
-                                            disabled>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="number" min="0" max="10" class="form-control"
-                                            id="input_vespertino2">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="imput_noturno" class="col-sm-4 col-form-label">Noturno</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" class="form-control " id="imput_noturno" value="10" disabled>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="number" min="0" max="10" class="form-control" id="imput_noturno2">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="input_total" class="col-sm-4 col-form-label">Total</label>
-                                    <div class="col-sm-2">
-                                        <input type="email" class="form-control " id="input_total" value="10" disabled>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="email" min="0" max="10" class="form-control" id="input_total2"
-                                            disabled>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary" onclick="pesquisa_escola()">Enviar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </div>

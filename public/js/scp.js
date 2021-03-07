@@ -343,19 +343,19 @@ function pesquisa_carencia() {
                         }
 
                         if (carencia[i].matutino > 0) {
-                            MatProv = "<input style='border' class='form-control form-control-sm text-primary' name='mat_prov[]' length='2' type='number' min='0' max='" + carencia[i].matutino + "'>";
+                            MatProv = "<input class='form-control form-control-sm text-primary' name='mat_prov[]' value='0' type='number' maxlength='2' min='0' max='" + carencia[i].matutino + "'>";
                         } else {
                             MatProv = " - "
                         }
 
                         if (carencia[i].vespertino > 0) {
-                            VespProv = "<input class='form-control form-control-sm text-primary' name='vesp_prov[]' type='number' min='0' max='" + carencia[i].vespertino + "'>";
+                            VespProv = "<input class='form-control form-control-sm text-primary' name='vesp_prov[]' value='0' type='number' min='0' max='" + carencia[i].vespertino + "'>";
                         } else {
                             VespProv = " - "
                         }
 
                         if (carencia[i].noturno > 0) {
-                            NotProv = "<input class='form-control form-control-sm text-primary' name='not_prov[]' type='number' min='0' max='" + carencia[i].noturno + "'>";
+                            NotProv = "<input class='form-control form-control-sm text-primary' name='not_prov[]'  value='0' type='number' min='0' max='" + carencia[i].noturno + "'>";
                         } else {
                             NotProv = " - "
                         }
@@ -500,7 +500,7 @@ function SalvarProvimento() {
 };
 
 // Código das funções Adicionar, Salvar, Editar e Excluir
-$(".btnEditar").bind("click", EditarCarencia);
+// $(".btnEditar").bind("click", EditarCarencia);
 // $("#btnAdicionar").bind("click", Adicionar);
 
 

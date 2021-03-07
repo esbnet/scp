@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Controllers\Carencias;
 use App\Models\CarenciaModel;
 use App\Models\ProvimentoModel;
 use App\Models\EscolaModel;
