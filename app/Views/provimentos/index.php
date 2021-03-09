@@ -12,22 +12,24 @@
 
         <div class="card-body">
 
-            <?php if ($provimentos) : ?>
+            <?php
+
+                                                    use Config\Format;
+
+if ($provimentos) : ?>
 
                 <div class="table-responsive">
                     <table class="table table-bordered dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>NTE</th>
-                                <th>Município</th>
-                                <th>Escola</th>
-                                <th>Disciplina</th>
-                                <th>Professor</th>
-                                <th>Mat.</th>
-                                <th>Vestp.</th>
-                                <th>Not.</th>
-                                <th>Total</th>
+                                <th>Cod. UE</th>
+                                <th>Unidade Escolar</th>
+                                <th>Matricula</th>
+                                <th>Nome Professor</th>
+                                <th>Forma Supr.</th>
+                                <th>Assunção</th>
+                                <th>Data Ass.</th>
                                 <th class="text-center no-sort">Ações</th>
                             </tr>
                         </thead>
@@ -36,16 +38,20 @@
                             <?php foreach ($provimentos as $provimento) : ?>
                                 <tr>
                                     <td><?= esc($provimento['id']); ?> </td>
-                                    <td>NTE </td>
-                                    <td>Municipio </td>
-                                    <td><?= esc($provimento['UeId']); ?> </td>
-                                    <td><?= esc($provimento['DisciplinaId']); ?> </td>
-                                    <td><?= esc($provimento['Matricula']); ?> </td>
-                                    <td><?= esc($provimento['Mat']); ?> </td>
-                                    <td><?= esc($provimento['Vesp']); ?> </td>
-                                    <td><?= esc($provimento['Not']); ?> </td>
-                                    <td><?= esc($provimento['Total']); ?> </td>
+                                    <td><?= esc($provimento['ue_id']); ?> </td>
+                                    <td><?= esc($provimento['ue']); ?> </td>
+                                    <td><?= esc($provimento['matricula']); ?> </td>
+                                    <td><?= esc($provimento['professor_nome']); ?> </td>
+                                    <td><?= esc($provimento['forma_suprimento_nome']); ?> </td>
 
+
+                                    <td class="text-center pr-4">
+                                        <?php echo ($provimento['assuncao'] == -1
+                                            ? '<span class="badge badge-warning">Sim</span>'
+                                            : '<span class="badge badge-secondary">Não</span>'); ?>
+                                    </td>
+
+                                    <td><?= esc( $provimento['data_assuncao'] ); ?> </td>
                                     <td class="text-center">
                                         <a class="btn btn-light btn-sm" style='color: #0D47A1' href="<?= base_url('/provimentos/edit/' . $provimento['id']); ?>"><i class="fas fa-pencil-alt"></i></a>
                                         <a class="btn btn-light btn-sm" style='color: #E02D1B' href="/provimentos/delete/<?= esc($provimento['id']); ?>"><i class="fas fa-trash"></i></a>

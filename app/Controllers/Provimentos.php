@@ -20,7 +20,6 @@ class Provimentos extends BaseController
         $provimentoModel = new ProvimentoModel();
 
         $data = [
-            'provimentos'  => $provimentoModel->getProvimento(),
             'title' => 'Relação de Provimentos',
             'styles' => [
                 'vendor/datatables/dataTables.bootstrap4.min.css',
@@ -30,12 +29,18 @@ class Provimentos extends BaseController
                 'vendor/datatables/dataTables.bootstrap4.min.js',
                 'vendor/datatables/app.js',
             ],
+            'provimentos'  => $provimentoModel->getProvimento(), 
         ];
+
+        // echo '<pre>';
+        // echo dd($data);
+        // exit(); 
 
         echo view('layout/header', $data);
         echo view('provimentos/index');
         echo view('layout/footer');
     }
+    //=========================================================================
 
     //Exibe registro pelo Id
     public function view($Id = NULL)
@@ -54,6 +59,7 @@ class Provimentos extends BaseController
         echo view('provimentos/view');
         echo view('templates/footer');
     }
+    //=========================================================================
 
     //Grava um novo registro
     public function store()
@@ -110,7 +116,8 @@ class Provimentos extends BaseController
         echo view('provimentos/index');
         echo view('layout/footer');
         //    }
-    }
+    //=========================================================================
+}
 
     //Apaga um registro com Id específico
     public function delete($Id)
@@ -120,6 +127,7 @@ class Provimentos extends BaseController
 
         return redirect()->to(site_url('carencias/'));
     }
+    //=========================================================================
 
     //Exibe um registro para edição
     public function edit($id)
@@ -156,6 +164,8 @@ class Provimentos extends BaseController
         $model = new ProvimentoModel();
         $model->update($Id);
     }
+    //=========================================================================
+
 
     //Chama a primeira view para informar
     public function real_new()
@@ -174,6 +184,7 @@ class Provimentos extends BaseController
         echo view('carencias/carencia_new_escola');
         echo view('layout/footer');
     }
+    //=========================================================================
 
     public function provimento()
     {
@@ -201,14 +212,17 @@ class Provimentos extends BaseController
         echo view('provimentos/provimento');
         echo view('layout/footer');
     }
+    //=========================================================================
 
     public function professorView()
     {
     }
+    //=========================================================================
 
     public function carenciaView()
     {
     }
+    //=========================================================================
 
     //Pesquisa escola para incluir carência
     public function pesquisaEscola($codigoEscola)
@@ -233,6 +247,7 @@ class Provimentos extends BaseController
 
         echo json_encode([$encontrado]);
     }
+    //=========================================================================
 
     //Pesquisa escola para incluir carência
     public function pesquisaEscolaCarencia($codigoEscola)
@@ -275,6 +290,7 @@ class Provimentos extends BaseController
 
         echo json_encode([$encontrado]);
     }
+    //=========================================================================
 
     public function pesquisaEscolaold()
     {
@@ -312,6 +328,7 @@ class Provimentos extends BaseController
             };
         }
     }
+    //=========================================================================
 
     //Pesquisa escola para incluir carência
     public function pesquisaProfessor()
@@ -377,4 +394,6 @@ class Provimentos extends BaseController
             }
         }
     }
+    //=========================================================================
+
 }
