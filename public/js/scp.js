@@ -268,7 +268,7 @@ function pesquisa_carencia() {
 
   var endereco = "/provimentos/pesquisaEscolaCarencia/" + ueid;
 
-  console.log(endereco);
+  // console.log(endereco);
 
   $.ajax({
     url: endereco,

@@ -4,9 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 use App\Models\CarenciaModel;
-use App\Models\EscolaModel;
 use App\Models\DisciplinaModel;
-use App\Models\ProfessorModel;
 use App\Models\MotivoCarenciaModel;
 
 class Carencias extends Controller
@@ -31,11 +29,9 @@ class Carencias extends Controller
             ],
         ];
 
-
         // echo '<pre>';
         // print_r($data['carencias']);
         // exit('=============================');
-
 
         echo view('layout/header', $data);
         echo view('carencias/index');

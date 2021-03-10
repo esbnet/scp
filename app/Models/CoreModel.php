@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('Ação não permitida');
 
 use CodeIgniter\Model;
 
-class CorModel extends Model
+class CoreModel extends Model
 {
 
   public function get_All($table = NULL, $condicao = NULL)

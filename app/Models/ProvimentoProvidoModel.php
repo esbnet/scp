@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ProvimentoModel extends Model
+class ProvimentoProvidoModel extends Model
 {
 
-    protected $table = 'scp_provimento';
+    protected $table = 'scp_provimento_provido';
     protected $primaryKey = 'id';
 
     protected $allowedFields = [
@@ -25,20 +25,33 @@ class ProvimentoModel extends Model
         'carencia_old_id',
     ];
 
-    public function getProvido($id = NULL)
+    public function getProvidoByProvimentoId($provimento_id = NULL)
     {
-        if ($id === NULL) {
+        return  $this->select([
+            'scp_provimento_provido.*',
+            'scp_disciplina.nome'
+        ])
+            ->join('scp_disciplina', 'id = disciplina_id')
+            ->where(['scp_provimento' => $provimento_id])
+            ->get('scp_provimento_provido')
+            ->result();
+    }
 
-            return  $this->select('scp_provimento.*')
-                ->join('scp_ue', 'scp_ue.id = scp_provimento.ue_id', 'left')
-                ->join('scp_professor', 'scp_professor.matricula = scp_provimento.matricula', 'left')
-                ->join('scp_forma_suprimento', 'scp_forma_suprimento.id = scp_provimento.forma_suprimento_id', 'left')
-                ->findAll();
-        } else {
+    public function deleteOldProvimentoProvido($provimento_id = NULL)
+    {
+        $this->delete('scp_provimento_provido');
+    }
 
-            return $this->asArray()
-                ->where(['id' => $id])
-                ->first();
-        }
+
+
+    public function getProvidoAll()
+    {
+        return $this->asArray()->findAll();
+    }
+
+    public function getTotalProvido()
+    {
+        return $this->selectSum('total')
+            ->findAll();
     }
 }

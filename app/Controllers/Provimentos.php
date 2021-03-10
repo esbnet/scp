@@ -3,13 +3,14 @@
 namespace App\Controllers;
 
 use App\Models\CarenciaModel;
-use App\Models\ProvimentoModel;
 use App\Models\EscolaModel;
 use App\Models\DisciplinaModel;
 use App\Models\ProfessorModel;
 use App\Models\TipoMovimentacaoModel;
 use App\Models\FormaSuprimentoModel;
 use App\Models\LancamentoCarenciaModel;
+use App\Models\ProvimentoModel;
+use App\Models\ProvimentoProvidoModel;
 
 class Provimentos extends BaseController
 {
@@ -29,7 +30,7 @@ class Provimentos extends BaseController
                 'vendor/datatables/dataTables.bootstrap4.min.js',
                 'vendor/datatables/app.js',
             ],
-            'provimentos'  => $provimentoModel->getProvimento(), 
+            'provimentos'  => $provimentoModel->getProvimentoIndex(), 
         ];
 
         // echo '<pre>';
@@ -130,31 +131,38 @@ class Provimentos extends BaseController
     //=========================================================================
 
     //Exibe um registro para edição
-    public function edit($id)
+    public function edit($provimento_id)
     {
         helper(['form', 'url']);
 
-        $modelCarencia = new LancamentoCarenciaModel();
+        $modelProvimento = new ProvimentoModel();
         $modelTipo_Movimentacao = new TipoMovimentacaoModel();
         $modelDisciplina = new DisciplinaModel();
-
+        $modelCarencia = new LancamentoCarenciaModel();
+        $modelFormaSuprimentoModel = new FormaSuprimentoModel();
+        $modelProvimentoProvido = new ProvimentoProvidoModel();
+        
         $data = [
-            'title' => 'Editar a carência',
-            'carencia' => $modelCarencia->getUserById($id),
+            'title' => 'Editar o provimento',
+            'provimento' => $modelProvimento->getProvimento($provimento_id),
             'tipos_movimentacao' => $modelTipo_Movimentacao->getAll(),
+            'formas_suprimento' => $modelFormaSuprimentoModel->getAll(),
             'disciplina' => $modelDisciplina->getAll()
+            // 'carencia' => $modelCarencia->getUserById($id),
         ];
 
-        // echo '<pre>';
-        // var_dump($this->validate([]));        
-        // exit('Parada forçada...');
+//        $data['provimento_provido'] = $modelProvimentoProvido->getProvidoByProvimentoId($data['provimento']['provimento_id']);
+        
+        echo '<pre>';   
+        dd($data['provimento']['id']);        
+        exit('Parada forçada...');
 
-        if (empty($data['carencia'])) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Não foi possível encontrar o usuário: ' . $id);
+        if (empty($data['provimento'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Não foi possível encontrar o provimento: ' . $provimento_id);
         }
 
         echo view('layout/header', $data);
-        echo view('users/edit');
+        echo view('provimentos/edit');
         echo view('layout/footer');
     }
 

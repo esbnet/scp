@@ -23,13 +23,12 @@ if ($provimentos) : ?>
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Cod. UE</th>
+                                <th>UE</th>
                                 <th>Unidade Escolar</th>
                                 <th>Matricula</th>
                                 <th>Nome Professor</th>
                                 <th>Forma Supr.</th>
                                 <th>Assunção</th>
-                                <th>Data Ass.</th>
                                 <th class="text-center no-sort">Ações</th>
                             </tr>
                         </thead>
@@ -51,7 +50,6 @@ if ($provimentos) : ?>
                                             : '<span class="badge badge-secondary">Não</span>'); ?>
                                     </td>
 
-                                    <td><?= esc( $provimento['data_assuncao'] ); ?> </td>
                                     <td class="text-center">
                                         <a class="btn btn-light btn-sm" style='color: #0D47A1' href="<?= base_url('/provimentos/edit/' . $provimento['id']); ?>"><i class="fas fa-pencil-alt"></i></a>
                                         <a class="btn btn-light btn-sm" style='color: #E02D1B' href="/provimentos/delete/<?= esc($provimento['id']); ?>"><i class="fas fa-trash"></i></a>
