@@ -27,14 +27,18 @@ class ProvimentoProvidoModel extends Model
 
     public function getProvidoByProvimentoId($provimento_id = NULL)
     {
+
+        // echo('<pre>');
+        // echo($provimento_id);
+        // exit('chegou no');
+
         return  $this->select([
             'scp_provimento_provido.*',
             'scp_disciplina.nome'
         ])
-            ->join('scp_disciplina', 'id = disciplina_id')
-            ->where(['scp_provimento' => $provimento_id])
-            ->get('scp_provimento_provido')
-            ->result();
+            ->join('scp_disciplina', 'scp_disciplina.id = disciplina_id')
+            ->where('provimento_id',  $provimento_id)
+            ->findAll();
     }
 
     public function deleteOldProvimentoProvido($provimento_id = NULL)

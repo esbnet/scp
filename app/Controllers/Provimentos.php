@@ -8,7 +8,6 @@ use App\Models\DisciplinaModel;
 use App\Models\ProfessorModel;
 use App\Models\TipoMovimentacaoModel;
 use App\Models\FormaSuprimentoModel;
-use App\Models\LancamentoCarenciaModel;
 use App\Models\ProvimentoModel;
 use App\Models\ProvimentoProvidoModel;
 
@@ -30,7 +29,7 @@ class Provimentos extends BaseController
                 'vendor/datatables/dataTables.bootstrap4.min.js',
                 'vendor/datatables/app.js',
             ],
-            'provimentos'  => $provimentoModel->getProvimentoIndex(), 
+            'provimentos'  => $provimentoModel->getProvimentoIndex(),
         ];
 
         // echo '<pre>';
@@ -117,8 +116,8 @@ class Provimentos extends BaseController
         echo view('provimentos/index');
         echo view('layout/footer');
         //    }
-    //=========================================================================
-}
+        //=========================================================================
+    }
 
     //Apaga um registro com Id específico
     public function delete($Id)
@@ -131,31 +130,55 @@ class Provimentos extends BaseController
     //=========================================================================
 
     //Exibe um registro para edição
-    public function edit($provimento_id)
+    public function edit($provimento_id = null)
     {
+        $session = \Config\Services::session();
+
+        if ($provimento_id == null) {
+            $session->set('error', 'Provimento não informado');
+            redirect('provimentos');
+        }
+
         helper(['form', 'url']);
 
         $modelProvimento = new ProvimentoModel();
         $modelTipo_Movimentacao = new TipoMovimentacaoModel();
         $modelDisciplina = new DisciplinaModel();
-        $modelCarencia = new LancamentoCarenciaModel();
         $modelFormaSuprimentoModel = new FormaSuprimentoModel();
+        // $modelCarencia = new LancamentoCarenciaModel();
         $modelProvimentoProvido = new ProvimentoProvidoModel();
-        
+
         $data = [
             'title' => 'Editar o provimento',
-            'provimento' => $modelProvimento->getProvimento($provimento_id),
+
+            'styles' => [
+                'vendor/select2/select2.min.css',
+                'vendor/autocomplete/jquery-ui.css',
+                'vendor/autocomplete/estilo.css',
+            ],
+            'scripts' => [
+                'vendor/autocomplete/jquery-migrate.js',
+                'vendor/calcx/jquery-calcx-sample-2.2.8.min.js',
+                'vendor/calcx/carencia.js',
+                'vendor/select2/select2.min.js',
+                'vendor/select2/app.js',
+                'vendor/sweetalert3/sweetalert2.js',
+                'vendor/autocomplete/jquery-ui.js',
+            ],
             'tipos_movimentacao' => $modelTipo_Movimentacao->getAll(),
             'formas_suprimento' => $modelFormaSuprimentoModel->getAll(),
-            'disciplina' => $modelDisciplina->getAll()
+            'disciplinas' => $modelDisciplina->getAll(),
+            'provimento' => $modelProvimento->getProvimento($provimento_id)
             // 'carencia' => $modelCarencia->getUserById($id),
+
         ];
 
-//        $data['provimento_provido'] = $modelProvimentoProvido->getProvidoByProvimentoId($data['provimento']['provimento_id']);
-        
-        echo '<pre>';   
-        dd($data['provimento']['id']);        
-        exit('Parada forçada...');
+        $id_provimento = intval($data['provimento']['provimento_id']);
+        $data['provimento_provido'] = $modelProvimentoProvido->getProvidoByProvimentoId($id_provimento);
+
+        // echo '<pre>';
+        // dd($data);
+        // exit('Parada forçada...');
 
         if (empty($data['provimento'])) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Não foi possível encontrar o provimento: ' . $provimento_id);
@@ -235,18 +258,18 @@ class Provimentos extends BaseController
     //Pesquisa escola para incluir carência
     public function pesquisaEscola($codigoEscola)
     {
-        $modelEscola = new EscolaModel();       
+        $modelEscola = new EscolaModel();
         $Ue = $modelEscola->getEscolabyUEId($codigoEscola);
 
         // echo '<pre>';
         // print_r($Ue);
         // exit('Localizou a escola');
-        
+
         //Verifica se a escola informada para prover existe
         if ($Ue) {
             $encontrado['success'] = 'true';
             $encontrado['message'] = 'Código informado localizado';
-            $encontrado['escola'] = $Ue;            
+            $encontrado['escola'] = $Ue;
         } else { //Se a escola informada não existir no banco de dados 
             $encontrado['success'] = 'false';
             $encontrado['message'] = 'O código informado não foi encontrado';
@@ -260,19 +283,19 @@ class Provimentos extends BaseController
     //Pesquisa escola para incluir carência
     public function pesquisaEscolaCarencia($codigoEscola)
     {
-        $modelEscola = new EscolaModel();       
+        $modelEscola = new EscolaModel();
         $Ue = $modelEscola->getEscolabyUEId($codigoEscola);
 
         // echo '<pre>';
         // print_r($Ue);
         // exit('Localizou a escola');
-        
+
         //Verifica se a escola informada para prover existe
         if ($Ue) {
             $encontrado['success'] = 'true';
             $encontrado['message'] = 'Código informado localizado';
             $encontrado['escola'] = $Ue;
-            
+
             //Recuperar carencias para a escola caso houver
             $modelCarencia = new CarenciaModel();
             $Carencias = $modelCarencia->getCarenciaUE($codigoEscola);

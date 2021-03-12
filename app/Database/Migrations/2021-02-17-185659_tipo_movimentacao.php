@@ -14,11 +14,11 @@ class TipoMovimentacao extends Migration {
 				'unsigned'       => TRUE,
 				'auto_increment' => TRUE,
 			],
-			'Nome' => [
+			'nome' => [
 				'type'           => 'VARCHAR',
 				'constraint'     => 20,
 			],
-			'Temp' => [
+			'temp' => [
 				'type'           => 'BOOL',
 			],
 

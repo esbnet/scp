@@ -72,11 +72,11 @@
                                 </div>
                                 <div class="form-group col-md-7">
                                     <label class="control-label" for="NomeProfessor">Nome do Professor</label>
-                                    <input value="<?= isset($professor['Nome']) ? $professor['Nome'] : '' ?>" type="text" class="form-control form-control-sm text-primary" name="NomeProfessor" id="NomeProfessor" readonly>
+                                    <input value="<?= isset($professor['nome']) ? $professor['nome'] : '' ?>" type="text" class="form-control form-control-sm text-primary" name="NomeProfessor" id="NomeProfessor" readonly>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label class="control-label" for="Vinculo">Vínculo</label>
-                                    <input value="<?= isset($professor['Vinculo']) ? $professor['Vinculo'] : '' ?>" type="Text" class="form-control form-control-sm text-primary" id="Vinculo" Name="Vinculo" readonly>
+                                    <input value="<?= isset($professor['vinculo']) ? $professor['vinculo'] : '' ?>" type="Text" class="form-control form-control-sm text-primary" id="Vinculo" Name="Vinculo" readonly>
                                 </div>
                             </div>
 
@@ -133,7 +133,7 @@
                                         <option value="0" selected>Selecione o motivo...</option>
                                         <?php foreach ($formas_suprimento as $forma) : ?>
                                             <option value="<?php echo esc($forma['id']); ?>" <?= esc($forma['id'] == $forma['id'] ? 'selected' : '') ?>>
-                                                <?php echo $forma['Nome'] ?></option>
+                                                <?php echo $forma['nome'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                     <div class="invalid-feedback" id="erroForma"> </div>
@@ -145,7 +145,7 @@
                                         <option value="0" selected>Selecione o tipo de movimentação...</option>
                                         <?php foreach ($tipos_movimentacao as $tipo) : ?>
                                             <option value="<?php echo esc($tipo['id']); ?>" <?= esc($tipo['id'] == $tipo['id'] ? 'selected' : '') ?>>
-                                                <?php echo $tipo['Nome'] ?></option>
+                                                <?php echo $tipo['nome'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                     <div class="invalid-feedback" id="erroMotivo"> </div>

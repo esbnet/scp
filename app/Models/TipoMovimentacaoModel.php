@@ -6,7 +6,7 @@ class TipoMovimentacaoModel extends Model {
 
     protected $table = 'scp_tipo_movimentacao';
     
-    protected $allowedFields = ['id','Nome'];
+    protected $allowedFields = ['id','nome','tipo'];
 
     public function getUsersbyName($nome) {
 

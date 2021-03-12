@@ -152,26 +152,31 @@
 <div class="modal show" id="modalTipoCarencia" tabindex="-1" role="dialog" aria-labelledby="tipoCarenciaModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="tipoCarenciaModalLabel"> <i class="fas fa-hourglass-half"></i>&nbsp; Tipo de Carência?</h5>
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="tipoCarenciaModalLabel">Tipo de Carência?</h5>
             </div>
             <div class="modal-body">
-                <center>
-                    <button type="button" onclick="setTipoCarenciaDefinitiva()" class="btn btn-primary btn-icon-split" data-dismiss="modal">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-hourglass"></i>
-                        </span>
-                        <span class="text">Real</span>
-                    </button>
-                    <button type="button" onclick="setTipoCarenciaTemporaria()" class="btn btn-warning btn-icon-split" data-dismiss="modal">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-hourglass-start"></i>
-                        </span>
-                        <span class="text">Temporária</span>
-                    </button>
-                </center>
+                <br>
+                <div class="row">
+                    <div class="col-sm text-center">
+                        <button type="button" onclick="setTipoCarenciaDefinitiva()" class="btn btn-primary  btn-icon-split" data-dismiss="modal">
+                            <span class="text">Real</span>
+                            <span class="icon text-white-50">
+                                <i class="fas fa-hourglass"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="col-sm text-center">
+                        <button type="button" onclick="setTipoCarenciaTemporaria()" class="btn btn-warning btn-icon-split" data-dismiss="modal">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-hourglass-start"></i>
+                            </span>
+                            <span class="text">Temp</span>
+                        </button>
+                    </div>
+                </div>
+                <br>
             </div>
         </div>
     </div>
 </div>
-

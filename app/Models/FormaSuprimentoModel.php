@@ -6,12 +6,12 @@ class FormaSuprimentoModel extends Model {
 
     protected $table = 'scp_forma_suprimento';
     
-    protected $allowedFields = ['id','Nome'];
+    protected $allowedFields = ['id','nome'];
 
     public function getUsersbyName($nome) {
 
         return $this->asArray()
-                    ->where(['Nome' => $nome])
+                    ->where(['nome' => $nome])
                     ->first();
     }
 
@@ -25,7 +25,7 @@ class FormaSuprimentoModel extends Model {
     public function getAll() {
 
         return $this
-            ->OrderBy('Nome Asc')
+            ->OrderBy('nome Asc')
             ->findAll();
 
     }

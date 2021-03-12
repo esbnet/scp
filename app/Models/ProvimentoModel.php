@@ -50,6 +50,7 @@ class ProvimentoModel extends Model
             'scp_provimento.data_assuncao',
             'scp_provimento.forma_suprimento_id',
             'scp_provimento.tipo_movimentacao_id',
+            'scp_provimento.observacao',
 
             'scp_ue.id as ue_id',
             'scp_ue.ou',
@@ -73,7 +74,7 @@ class ProvimentoModel extends Model
             ->join('scp_professor', 'scp_professor.matricula = scp_provimento.matricula', 'left')
             ->join('scp_forma_suprimento', 'scp_forma_suprimento.id = scp_provimento.forma_suprimento_id', 'left')
             ->join('scp_tipo_movimentacao', 'scp_tipo_movimentacao.id = scp_provimento.tipo_movimentacao_id', 'left')
-            ->findAll();
+            ->first();
     }
 
     public function getProvimentoIndex($id = NULL)

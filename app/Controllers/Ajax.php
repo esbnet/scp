@@ -27,7 +27,7 @@ class Ajax extends Controller
             $busca = $this->input->post('term');
             $data['response'] = 'false';
 
-            $query = $modelCore->auto_complete_produtos($busca);
+            $query = $modelCore->auto_complete_carencia($busca);
 
             if ($query) {
                 $data['response'] = 'true';

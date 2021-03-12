@@ -5,9 +5,9 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h2 class="float-left text-primary"> <?= $title; ?> </h2>
-            <a title="Voltar ao inínio" class="btn btn-sm btn-circle btn-outline-success float-right" href="/"><i class="fas fa-chart-line"></i></a>
+            <a title="Voltar ao inínio" class="btn btn-circle btn-outline-success float-right" href="/"><i class="fas fa-chart-line"></i></a>
             <a class="float-right">&nbsp;&nbsp;</a>
-            <a title="Adicionar novo provimento" class="btn btn-sm btn-circle btn-outline-primary float-right" href="/provimentos/provimento"><i class="fas fa-plus"></i></a>
+            <a title="Adicionar novo provimento" class="btn btn-circle btn-outline-primary float-right" href="/provimentos/provimento"><i class="fas fa-plus"></i></a>
         </div>
 
         <div class="card-body">
@@ -22,7 +22,7 @@ if ($provimentos) : ?>
                     <table class="table table-bordered dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Id</th>
+                                <th class="d-none">Id</th>
                                 <th>UE</th>
                                 <th>Unidade Escolar</th>
                                 <th>Matricula</th>
@@ -36,7 +36,7 @@ if ($provimentos) : ?>
                         <tbody>
                             <?php foreach ($provimentos as $provimento) : ?>
                                 <tr>
-                                    <td><?= esc($provimento['id']); ?> </td>
+                                    <td class="d-none"<?= esc($provimento['id']); ?> </td>
                                     <td><?= esc($provimento['ue_id']); ?> </td>
                                     <td><?= esc($provimento['ue']); ?> </td>
                                     <td><?= esc($provimento['matricula']); ?> </td>

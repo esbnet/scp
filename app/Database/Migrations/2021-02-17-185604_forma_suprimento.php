@@ -14,7 +14,7 @@ class FormaSuprimento extends Migration {
 				'auto_increment' => TRUE,
 			],
 
-			'Nome' => [
+			'nome' => [
 				'type'           => 'VARCHAR',
 				'constraint'     => 50,
 			],
