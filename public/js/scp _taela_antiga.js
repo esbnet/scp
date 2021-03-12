@@ -316,7 +316,7 @@ function pesquisa_carencia() {
                                 "<i class='fas fa-hourglass fas-sm text-primary'></i>";
                         }
 
-						if (carencia[i].matutino > 0) {
+                        if (carencia[i].matutino > 0) {
                             MatProv =
                                 "<input class='form-control form-control-sm text-primary' name='mat_prov[]' value='0' type='number' maxlength='2' min='0' max='" +
                                 carencia[i].matutino +
@@ -346,43 +346,35 @@ function pesquisa_carencia() {
                         // Adicionando registros retornados na tabela
                         $("#tabelaCarencia").append(
                             "<tr class='linha_carencia'>" +
-                                "<td>" + carencia[i].nome + "</td>" +
-                                "<td class='text-center'>" + temp + "</td>" +
-                                "<td class='text-center'>" + carencia[i].matutino + "</td>" +
-                                "<td class='text-center'>" + MatProv + "</td>" +
-                                "<td class='text-center'>" + carencia[i].vespertino + "</td>" +
-                                "<td class='text-center'>" + VespProv + "</td>" +
-                                "<td class='text-center'>" + carencia[i].noturno + "</td>" +
-                                "<td class='text-center'>" + NotProv + "</td>" +
-								"<td class='text-center'>" + carencia[i].total + "</td>" +
-								"<td class='text-center'>" + "<a href='#'>" +
-								"<input type='checkbox' name='adicionar'/>" + "</td>" + "</a>" +
-							"</tr>"
+                                "<td>" +
+                                carencia[i].nome +
+                                "</td>" +
+                                "<td class='text-center'>" +
+                                temp +
+                                "</td>" +
+                                "<td class='text-center'>" +
+                                carencia[i].matutino +
+                                "</td>" +
+                                "<td class='text-center'>" +
+                                MatProv +
+                                "</td>" +
+                                "<td class='text-center'>" +
+                                carencia[i].vespertino +
+                                "</td>" +
+                                "<td class='text-center'>" +
+                                VespProv +
+                                "</td>" +
+                                "<td class='text-center'>" +
+                                carencia[i].noturno +
+                                "<td class='text-center'>" +
+                                NotProv +
+                                "</td>" +
+                                "<td class='text-center'>" +
+                                carencia[i].total +
+                                "</td>"
                         );
-
+                        // "<td class='text-center'>" + "<a class='btn btn-sm btn-circle btn-outline-primary btnEditar' onclick='EditarCarencia()' >" + "<i class='fas fa-pencil-alt'></i></a>&nbsp" + "<a class='btn btn-sm btn-circle btn-outline-success btnSalvar d-none' onclick='SalvarCarencia()' >" + "<i class='fas fa-save'></i></a>" + "<a class='btn btn-sm btn-circle btn-outline-success btnCacel d-none' onclick='SalvarCarencia()' >" + "<i class='fas fa-save'></i></a>" + "</td>" + "</tr>");
                     }
-
-					//consultando todos os input to type checkbox na pagina
-					//caso a sua pagina possua mais inputs deste tipo, você deve tornar o filtro abaixo mais especifico.
-					var adicionar = document.querySelectorAll("input[type='checkbox']");
-
-					//consultando as tabelas que irão armazenar as disciplinas disponiveis e as que o aluno está matriculado.
-					var tabelaCarencia = document.querySelector("#tabelaCarencia tbody");
-					var tabelaProvimento = document.querySelector("#tabelaProvimento tbody");
-					
-					//definindo o evento que irá mover a linha, é importante instanciar apenas um evento para todos os checkbox.
-					var adicionarOnClick = function () {
-						//caso o checkbox esteja marcado, mova a linha para a tabela de matriculados, caso contrario para a tabela de disciplinas disponiveis.
-						var escopo = this.checked ? tabelaProvimento  : tabelaCarencia;
-						//this é o checkbox que foi clickado, o parentNode dele é a celula atual, e o parentNode da celula é a linha (arvore).
-						
-						escopo.appendChild(this.parentNode.parentNode.parentNode); //removeClass("d-none")
-					};
-
-					//registrando o evento criado acima para todos os checkbox.
-					for (var indice in adicionar) {
-						adicionar[indice].onclick = adicionarOnClick;
-					}
 
                     $(".quadroTabelaCarencia").removeClass("d-none");
                     document.getElementById("busca_escola").disabled = true;

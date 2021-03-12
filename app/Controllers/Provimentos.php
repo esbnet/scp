@@ -88,8 +88,9 @@ class Provimentos extends BaseController
             'DataLanc' => date('d/m/Y G:i:s'),
             'Desistencia' => 0,
             'Observacao' => $this->request->getPost('Observacao'),
-            'tabela' => json_encode($this->request->getPost('variavel_tabela')),
-            'tabela' => $this->request->getPost('celula04')
+            'mat_prov' => $this->request->getPost('mat_prov'),
+            'vesp_prov' => $this->request->getPost('mat_prov'),
+            'not_prov' => $this->request->getPost('mat_prov'),
         ];
 
         echo '<pre>';
