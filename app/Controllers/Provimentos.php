@@ -66,6 +66,7 @@ class Provimentos extends BaseController
     {
 
         $modelProvimento = new provimentoModel();
+        $modelProvimentoProvido = new ProvimentoProvidoModel();
 
         $val = $this->validate([
             'ue_id' => 'required|max_length[8]',
@@ -75,10 +76,10 @@ class Provimentos extends BaseController
 
         $provimento = [
             'Ue_Id' => substr($this->request->getPost('ueid'),  0, 8),
-            'Matricula_Id' => $this->request->getPost('matricula_Id'),
-            'AulaNormal' => $this->request->getPost('AulaNormal'),
-            'AulaExtra' => $this->request->getPost('AulaExtra'),
-            'FormaSup_Id' => $this->request->getPost('FormaSupId'),
+            'matricula' => $this->request->getPost('matricula_Id'),
+            'aula_normal' => $this->request->getPost('AulaNormal'),
+            'aula_extra' => $this->request->getPost('AulaExtra'),
+            'forma_suprimento_id' => $this->request->getPost('FormaSupId'),
             'TipoMov_Id' => $this->request->getPost('TipoMovId'),
             'Anuencia' => $this->request->getPost('Anuencia'),
             'DataAnuencia' => $this->request->getPost('DataAnuencia'),
@@ -97,7 +98,14 @@ class Provimentos extends BaseController
         dd($provimento);
         exit('-------------------------------------------------');
 
+
         $modelProvimento->save($provimento);
+        $this->db->lastInsertId();
+
+        echo '<pre>';
+        dd($provimento);
+        exit('-------------------------------------------------');
+
         return redirect()->to(site_url('provimentos'));
 
         // echo '<pre>';

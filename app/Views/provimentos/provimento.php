@@ -107,11 +107,8 @@
                                             <th class=''>Disciplina</th>
                                             <th class=''>Temp</th>
                                             <th class=''>Matutino</th>
-                                            <th class=''></th>
                                             <th class=''>Vespertino</th>
-                                            <th class=''></th>
                                             <th class=''>Noturno</th>
-                                            <th class=''></th>
                                             <th class=''>Total</th>
                                             <th class=''>Prover</th>
                                             <th style='display:none;'>id</th>
