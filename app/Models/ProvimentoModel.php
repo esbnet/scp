@@ -12,28 +12,18 @@ class ProvimentoModel extends Model
 
     protected $allowedFields = [
         'id',
-        'ue_Id',
-        'disciplina_id',
+        'ue_id',
         'matricula_id',
-        'mat',
-        'vesp',
-        'not',
-        'total',
         'aula_normal',
         'aula_extra',
-        'forma_sup_Id',
-        'tipo_mov_Id',
+        'forma_suprimento_id',
+        'tipo_movimentacao_id',
         'anuencia',
         'data_anuencia',
         'assuncao',
         'data_assuncao',
-        'User_Id',
-        'data_lanc',
-        'mat_old',
-        'vesp_old',
-        'not_old',
-        'total_old',
-        'carencia_old_id',
+        'user_id',
+        'data_lancamento',
         'desistencia',
         'observacao',
     ];
@@ -71,7 +61,7 @@ class ProvimentoModel extends Model
 
         ])  ->where(['scp_provimento.id' => $id])
             ->join('scp_ue', 'scp_ue.id = scp_provimento.ue_id', 'left')
-            ->join('scp_professor', 'scp_professor.matricula = scp_provimento.matricula', 'left')
+            ->join('scp_professor', 'scp_professor.matricula = scp_provimento.matricula_id', 'left')
             ->join('scp_forma_suprimento', 'scp_forma_suprimento.id = scp_provimento.forma_suprimento_id', 'left')
             ->join('scp_tipo_movimentacao', 'scp_tipo_movimentacao.id = scp_provimento.tipo_movimentacao_id', 'left')
             ->first();
@@ -84,7 +74,7 @@ class ProvimentoModel extends Model
             return  $this->select([
                 'scp_provimento.id',
                 'scp_provimento.ue_id',
-                'scp_provimento.matricula',
+                'scp_provimento.matricula_id',
                 'scp_provimento.assuncao',
                 'scp_provimento.data_assuncao',
                 'scp_ue.ue',
@@ -92,7 +82,7 @@ class ProvimentoModel extends Model
                 'scp_forma_suprimento.nome forma_suprimento_nome'
             ])
                 ->join('scp_ue', 'scp_ue.id = scp_provimento.ue_id', 'left')
-                ->join('scp_professor', 'scp_professor.matricula = scp_provimento.matricula', 'left')
+                ->join('scp_professor', 'scp_professor.matricula = scp_provimento.matricula_id', 'left')
                 ->join('scp_forma_suprimento', 'scp_forma_suprimento.id = scp_provimento.forma_suprimento_id', 'left')
                 ->findAll();
         } else {

@@ -66,6 +66,7 @@ class Provimentos extends BaseController
     {
 
         $modelProvimento = new provimentoModel();
+        $modelCarencia = new CarenciaModel();
         $modelProvimentoProvido = new ProvimentoProvidoModel();
 
         $val = $this->validate([
@@ -75,56 +76,86 @@ class Provimentos extends BaseController
         ]);
 
         $provimento = [
-            'Ue_Id' => substr($this->request->getPost('ueid'),  0, 8),
-            'matricula' => $this->request->getPost('matricula_Id'),
-            'aula_normal' => $this->request->getPost('AulaNormal'),
-            'aula_extra' => $this->request->getPost('AulaExtra'),
+            'ue_id' => substr($this->request->getPost('ueid'),  0, 8),
+            'matricula_id' => $this->request->getPost('matricula_Id'),
+            'aula_normal' => is_null($this->request->getPost('AulaNormal')) ? 0 : -1,
+            'aula_extra' => is_null($this->request->getPost('AulaExtra')) ? 0 : -1,
             'forma_suprimento_id' => $this->request->getPost('FormaSupId'),
-            'TipoMov_Id' => $this->request->getPost('TipoMovId'),
-            'Anuencia' => $this->request->getPost('Anuencia'),
-            'DataAnuencia' => $this->request->getPost('DataAnuencia'),
-            'Assuncao' => $this->request->getPost('Assuncao'),
-            'DataAssuncao' => $this->request->getPost('DataAssuncao'),
-            'User_Id' => $_SESSION['logged_in'],
-            'DataLanc' => date('d/m/Y G:i:s'),
-            'Desistencia' => 0,
+            'tipo_movimentacao_id' => $this->request->getPost('TipoMovId'),
+            'anuencia' => is_null($this->request->getPost('Anuencia')) ? 0 : -1,
+            'data_anuencia' => is_null($this->request->getPost('DataAnuencia')) ? '00-00-0000' : $this->request->getPost('DataAnuencia'),
+            'assuncao' => is_null($this->request->getPost('Assuncao')) ? 0 : -1,
+            'data_assuncao' => is_null($this->request->getPost('DataAssuncao')) ? '00-00-0000' : $this->request->getPost('DataAssuncao'),
+            'user_id' => $_SESSION['logged_in'],
+            'data_lancamento' => date('d/m/Y G:i:s'),
+            'desistencia' => 0,
             'Observacao' => $this->request->getPost('Observacao'),
-            'mat_prov' => $this->request->getPost('mat_prov'),
-            'vesp_prov' => $this->request->getPost('mat_prov'),
-            'not_prov' => $this->request->getPost('mat_prov'),
         ];
 
-        echo '<pre>';
-        dd($provimento);
-        exit('-------------------------------------------------');
-
-
+        //Salva o cabeçalho do provimento
         $modelProvimento->save($provimento);
-        $this->db->lastInsertId();
 
-        echo '<pre>';
-        dd($provimento);
-        exit('-------------------------------------------------');
+        //Salva as disciplinas providas
+        $provimento_id = $modelProvimento->getInsertID();
+
+        //Pega os dados da tabela com os provimentos
+        $provido_disciplina_id = $this->request->getPost('disciplina_id[]');
+        $provido_temporaria = $this->request->getPost('temporaria[]');
+        $provido_mat_prov = $this->request->getPost('mat_prov[]');
+        $provido_vesp_prov = $this->request->getPost('vesp_prov[]');
+        $provido_not_prov = $this->request->getPost('not_prov[]');
+
+        for ($i = 0; $i <= count($provido_disciplina_id) - 1; $i++) {
+
+            $totalProvidoDisciplina = intval($provido_mat_prov[$i]) + intval($provido_vesp_prov[$i]) + intval($provido_not_prov[$i]);
+
+            if ($totalProvidoDisciplina > 0) {
+
+                $carencia = $modelCarencia->getCarenciaByDisciplina($provimento['ue_id'], $provido_disciplina_id[$i], $provido_temporaria[$i]) ;
+
+                //Valores antigos para salvar no provimento
+                $mat_old = $carencia[0]['matutino'];
+                $vesp_old = $carencia[0]['vespertino'];
+                $not_old = $carencia[0]['noturno'];
+                $total_old = $carencia[0]['total'];
+                $carencia_old_id = $carencia[0]['id'];
+                
+                //Calcula as horas que restaram na carência
+                $carencia[0]['matutino'] = $carencia[0]['matutino'] - $provido_mat_prov[$i];
+                $carencia[0]['vespertino'] = $carencia[0]['vespertino'] - $provido_vesp_prov[$i];
+                $carencia[0]['noturno'] = $carencia[0]['noturno'] - $provido_not_prov[$i];
+                $carencia[0]['total'] = $carencia[0]['total'] - $totalProvidoDisciplina;
+                
+                //Grava horas restantes na carência
+                $modelCarencia->save($carencia[0]);
+
+                //Monta registro do provimento
+                $provido = [
+                    'provimento_id' => $provimento_id,
+                    'disciplina_id' => $provido_disciplina_id[$i],
+                    'mat' => $provido_mat_prov[$i],
+                    'vesp' => $provido_vesp_prov[$i],
+                    'not' => $provido_not_prov[$i],
+                    'total' => $totalProvidoDisciplina,
+                    'mat_old' => $mat_old,
+                    'vesp_old' => $vesp_old,
+                    'not_old' => $not_old,
+                    'total_old' => $total_old,
+                    'carencia_old_id' => $carencia_old_id,
+                ];
+                
+                //Grava disciplina e horas providas relacionada ao provimento
+                $modelProvimentoProvido->insert($provido);
+                
+                // echo '<pre>';
+                // dd($provido);
+                // exit('-------------------------------------------------');
+            }
+        }
+
 
         return redirect()->to(site_url('provimentos'));
 
-        // echo '<pre>';
-        // var_dump($provimento);
-        // exit();
-
-
-        //        if ($this->request->getMethod() === 'post' && $val) {
-
-
-        //          echo view( base_url('provimentos') );
-        //      } else {
-
-        $data = ['title' => 'Erro ao Gravar a carência'];
-
-        echo view('layout/header', $data);
-        echo view('provimentos/index');
-        echo view('layout/footer');
-        //    }
         //=========================================================================
     }
 
@@ -134,7 +165,7 @@ class Provimentos extends BaseController
         $model = new provimentoModel();
         $model->delete($Id);
 
-        return redirect()->to(site_url('carencias/'));
+        return redirect()->to(site_url('provimentos/'));
     }
     //=========================================================================
 
@@ -295,10 +326,6 @@ class Provimentos extends BaseController
         $modelEscola = new EscolaModel();
         $Ue = $modelEscola->getEscolabyUEId($codigoEscola);
 
-        // echo '<pre>';
-        // print_r($Ue);
-        // exit('Localizou a escola');
-
         //Verifica se a escola informada para prover existe
         if ($Ue) {
             $encontrado['success'] = 'true';
@@ -308,10 +335,6 @@ class Provimentos extends BaseController
             //Recuperar carencias para a escola caso houver
             $modelCarencia = new CarenciaModel();
             $Carencias = $modelCarencia->getCarenciaUE($codigoEscola);
-
-            // echo ('<pre>');
-            // dd($Carencias);
-            // exit('cacrencias encontradas');
 
             if ($Carencias) {
                 $encontrado['carencia_success'] = 'true';

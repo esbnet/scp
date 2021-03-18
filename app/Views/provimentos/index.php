@@ -39,7 +39,7 @@ if ($provimentos) : ?>
                                     <td class="d-none"<?= esc($provimento['id']); ?> </td>
                                     <td><?= esc($provimento['ue_id']); ?> </td>
                                     <td><?= esc($provimento['ue']); ?> </td>
-                                    <td><?= esc($provimento['matricula']); ?> </td>
+                                    <td><?= esc($provimento['matricula_id']); ?> </td>
                                     <td><?= esc($provimento['professor_nome']); ?> </td>
                                     <td><?= esc($provimento['forma_suprimento_nome']); ?> </td>
 

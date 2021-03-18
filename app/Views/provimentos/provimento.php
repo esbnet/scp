@@ -28,7 +28,7 @@
                     <div class="form-group col-md-2">
                         <label class="control-label" for="ueid">UE</label>
                         <div class="input-group mb-3">
-                            <input title="Informa o código CodSecul ou SAP" type="number" value="<?= isset($ue['Ue_Id']) ? $ue['Ue_Id'] : "1100159" ?>" size="9" id="ueid" name="ueid" class="form-control form-control-sm text-primary" data-toggle="tooltip" data-placement="top" title="Tooltip na parte superior" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                            <input title="Informa o código CodSecul ou SAP" type="number" value="<?= isset($ue['ue_id']) ? $ue['ue_id'] : "1100159" ?>" size="9" id="ueid" name="ueid" class="form-control form-control-sm text-primary" data-toggle="tooltip" data-placement="top" title="Tooltip na parte superior" aria-label="Recipient's username" aria-describedby="button-addon2" required>
                             <button class="btn btn-primary btn-sm" type="button" id="busca_escola" onclick="pesquisa_carencia()">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -65,7 +65,7 @@
                             <div class="form-group col-md-2">
                                 <label class="control-label" for="inputMatricula">Matrícula</label>
                                 <div class="input-group mb-3">
-                                    <input title="CodSecul ou Cod. SAP ou CPF" data-toggle="tooltip" data-placement="top" title="Tooltip na parte superior" type="number" value="<?= isset($professor['Matricula']) ? $professor['Matricula'] : '11019361' ?>" size="9" name="matricula_Id" id="Matricula" class="form-control form-control-sm text-primary matricula">
+                                    <input title="CodSecul ou Cod. SAP ou CPF" data-toggle="tooltip" data-placement="top" title="Tooltip na parte superior" type="number" value="<?= isset($professor['matricula_id']) ? $professor['matricula_id'] : '11019361' ?>" size="9" name="matricula_Id" id="Matricula" class="form-control form-control-sm text-primary matricula">
                                     <button class="btn btn-primary btn-sm btn-matricula" type="button" id="busca_professor" onclick="pesquisa_professor_provimento()"><i class="fas fa-search"></i></button>
                                 </div>
                             </div>

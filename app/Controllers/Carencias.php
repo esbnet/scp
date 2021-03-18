@@ -3,9 +3,11 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
+use App\Models\EscolaModel;
 use App\Models\CarenciaModel;
 use App\Models\DisciplinaModel;
 use App\Models\MotivoCarenciaModel;
+use App\Models\ProfessorModel;
 
 class Carencias extends Controller
 {

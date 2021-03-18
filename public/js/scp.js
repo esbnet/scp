@@ -256,7 +256,7 @@ function pesquisa_professor_provimento() {
     });
 }
 
-// Busca carência para realizar o provimento
+// Busca toda a carência da UE informada
 function pesquisa_carencia() {
     var ueid = document.getElementById("ueid").value;
 
@@ -322,7 +322,8 @@ function pesquisa_carencia() {
                                 carencia[i].matutino +
                                 "'>";
                         } else {
-                            MatProv = " - ";
+                            MatProv =
+                                "<input class='form-control form-control-sm text-primary' name='p[]' value='0' type='number' maxlength='2' min='0' max='0' readonly>";
                         }
 
                         if (carencia[i].vespertino > 0) {
@@ -331,7 +332,8 @@ function pesquisa_carencia() {
                                 carencia[i].vespertino +
                                 "'>";
                         } else {
-                            VespProv = " - ";
+                            VespProv =
+                                "<input class='form-control form-control-sm text-primary' name='vesp_prov[]' value='0' type='number' maxlength='2' min='0' max='0' readonly>";
                         }
 
                         if (carencia[i].noturno > 0) {
@@ -340,45 +342,26 @@ function pesquisa_carencia() {
                                 carencia[i].noturno +
                                 "'>";
                         } else {
-                            NotProv = " - ";
+                            NotProv =
+                                "<input class='form-control form-control-sm text-primary' name='not_prov[]' value='0' type='number' maxlength='2' min='0' max='0' readonly>";
                         }
 
                         // Adicionando registros retornados na tabela
                         $("#tabelaCarencia").append(
                             "<tr class='linha_carencia'>" +
-                                "<td>" +
-                                carencia[i].nome +
-                                "</td>" +
-                                "<td class='text-center'>" +
-                                temp +
-                                "</td>" +
-                                "<td class='text-center'>" +
-                                carencia[i].matutino +
-                                "</td>" +
-                                "<td class='campo text-center d-none'>" +
-                                MatProv +
-                                "</td>" +
-                                "<td class='text-center'>" +
-                                carencia[i].vespertino +
-                                "</td>" +
-                                "<td class='campo text-center d-none'>" +
-                                VespProv +
-                                "</td>" +
-                                "<td class='text-center'>" +
-                                carencia[i].noturno +
-                                "</td>" +
-                                "<td class='campo text-center d-none'>" +
-                                NotProv +
-                                "</td>" +
-                                "<td class='text-center'>" +
-                                carencia[i].total +
-                                "</td>" +
-                                "<td class='text-center'>" +
-                                "<a href='#'>" +
-                                "<input type='checkbox' name='adicionar'/>" +
-                                "</td>" +
-                                "</a>" +
-                                "</tr>"
+                                "<td class='d-none' ><input name='disciplina_id[]' value='" + carencia[i].disciplina_id + "' type='number'></td>" +
+                                "<td class='d-none' ><input name='temporaria[]' value='" + carencia[i].temporaria + "' type='number'></td>" +
+                                "<td class='text-center'>" + carencia[i].nome + "</td>" +
+                                "<td class='text-center'>" + temp +"</td>" +
+                                "<td class='text-center'>" + carencia[i].matutino + "</td>" +
+                                "<td class='campo text-center d-none'>" + MatProv + "</td>" +
+                                "<td class='text-center'>" + carencia[i].vespertino + "</td>" +
+                                "<td class='campo text-center d-none'>" + VespProv + "</td>" +
+                                "<td class='text-center'>" + carencia[i].noturno + "</td>" +
+                                "<td class='campo text-center d-none'>" + NotProv + "</td>" +
+                                "<td class='text-center'>" + carencia[i].total + "</td>" +
+                                "<td class='text-center'>" + "<a href='#'><input type='checkbox' name='adicionar'/></a></td>" +
+                            "</tr>"
                         );
                     }
 
@@ -409,9 +392,9 @@ function pesquisa_carencia() {
 
                         var child_nodes = linha.childNodes;
 
-                        child_nodes[3].classList.toggle("d-none");
                         child_nodes[5].classList.toggle("d-none");
                         child_nodes[7].classList.toggle("d-none");
+                        child_nodes[9].classList.toggle("d-none");
 
                         //this é o checkbox que foi clickado, o parentNode dele é a celula atual, e o parentNode da celula é a linha (arvore).
                         escopo.appendChild(linha); //removeClass("d-none")

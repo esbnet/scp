@@ -47,6 +47,8 @@ class CarenciaModel extends Model
 
     public function getCarenciaUE($ueid = NULL)
     {
+        $array = ['ue_id = ' => $ueid, 'total >' => 0 ];
+
         $carencia = $this->select(
             'scp_carencia.id, 
                 scp_carencia.ue_id, 
@@ -59,7 +61,7 @@ class CarenciaModel extends Model
                 scp_disciplina.nome'
         )
             ->join('scp_disciplina', 'scp_disciplina.id = scp_carencia.disciplina_id', 'left')
-            ->where(['ue_id' => $ueid])
+            ->where($array)
             ->orderby('scp_disciplina.nome asc')
             ->findAll();
         return $carencia;
