@@ -50,7 +50,7 @@ class CarenciaModel extends Model
         $array = ['ue_id = ' => $ueid, 'total >' => 0 ];
 
         $carencia = $this->select(
-            'scp_carencia.id, 
+                'scp_carencia.id, 
                 scp_carencia.ue_id, 
                 scp_carencia.disciplina_id, 
                 scp_carencia.matutino,
@@ -82,4 +82,5 @@ class CarenciaModel extends Model
             ->where(['temporaria' => 1])
             ->findAll();
     }
+
 }

@@ -18,10 +18,11 @@ class LancamentoCarencias extends BaseController
         $modelLancamentoCarencia = new LancamentoCarenciaModel();
 
         $data = [
-            'carencias'  => $modelLancamentoCarencia->paginate(100),
-            'title' => 'Lista de Carências',
+            'carencias'  => $modelLancamentoCarencia->getCarenciaIndex(),
+            'title' => 'Relação de Carências',
             'session' => \Config\Services::session(),
             'styles' => [
+                // 'vendor/datatables/dataTables.basestyle.min.css',
                 'vendor/datatables/dataTables.bootstrap4.min.css',
             ],
             'scripts' => [
@@ -29,7 +30,6 @@ class LancamentoCarencias extends BaseController
                 'vendor/datatables/dataTables.bootstrap4.min.js',
                 'vendor/datatables/app.js',
             ],
-
         ];
 
         // echo '<pre>';
@@ -62,14 +62,16 @@ class LancamentoCarencias extends BaseController
     //Grava um novo registro
     public function store()
     {
+
         $modelLancamentoCarencia = new lancamentoCarenciaModel();
         $modelCarencia = new CarenciaModel;
 
-        $val = $this->validate([
-            'ue_id' => 'required|min_length[3]|max_length[9]',
-            'cadastro' => 'required|min_length[8]|max_length[9]',
-            'disciplina_id'  => 'required'
-        ]);
+        //Validação dos campos
+        // $val = $this->validate([
+        //     'ue_id' => 'required|min_length[3]|max_length[9]',
+        //     'cadastro' => 'required|min_length[8]|max_length[9]',
+        //     'disciplina_id'  => 'required'
+        // ]);
 
         $lancamento_carencia = [
             'id' => $this->request->getPost('id'),
@@ -90,9 +92,12 @@ class LancamentoCarencias extends BaseController
             'data_lancamento' => date('Y/m/d H:i:s'),
             'observacao' => $this->request->getPost('observacao'),
         ];
-
         //Salva o lançamento
         $modelLancamentoCarencia->save($lancamento_carencia);
+
+        // echo ('<pre>');
+        // dd($lancamento_carencia);
+        // exit('Chegou no metodo store!');
 
         //Procura na tabela carencia acumulada por disciplina para adicionar ou atualizar
         $findcarencia = $modelCarencia->getCarenciaByDisciplina(
@@ -101,11 +106,7 @@ class LancamentoCarencias extends BaseController
             $lancamento_carencia['temporaria']
         );
 
-        // echo '<pre>';
-        // print_r($findcarencia);
-        // exit(' parou depois de salvar carencia');
-
-        if (count($findcarencia) == 0) {
+        if (count($findcarencia) == 0) { //ADD
             // Grava um novo registro de carência
             $carencia = [
                 'ue_id' => substr($this->request->getPost('ueid'),  0, 8),
@@ -118,8 +119,7 @@ class LancamentoCarencias extends BaseController
                 'atualizacao' => date('Y/m/d H:i:s'),
             ];
             $modelCarencia->save($carencia);
-        } elseif (count($findcarencia) == 1) {
-
+        } elseif (count($findcarencia) == 1) { //UPDATE
             //Atualiza um registro de carência existente
             $carencia = [
                 'id' => intval($findcarencia[0]['id']),
@@ -132,16 +132,20 @@ class LancamentoCarencias extends BaseController
                 'temporaria' => $this->request->getPost('temporaria'),
                 'atualizacao' => date('Y-m-d H:i:s'),
             ];
-            // echo '<pre>';
-            // print_r($carencia);
-            // exit(' parou depois de salvar carencia');
-
             $modelCarencia->save($carencia);
         } else {
             echo 'ATENÇÃO! ERRO GRAVE NA APLICAÇÃO. ENTRE EM CONTATO COM O DESENVOLVEROR.';
             echo 'Encontrado mais de um registro de carência para o mesma UE/DISCIPLINA/TEMPORARIA.';
             exit('_____________');
-        };
+        }
+
+        print ("<script type='text/javascript'>Swal.fire({
+            title: 'Atenção!',
+            text:
+                'Carência gravada com sucesso!',
+            icon: 'error',
+            confirmButtonText: 'Voltar',
+        });</script>");
 
         return redirect()->to(site_url('LancamentoCarencias'));
     }
@@ -167,28 +171,25 @@ class LancamentoCarencias extends BaseController
 
         $data = [
             'title' => 'Editar a carência',
-            'carencia' => $modelLancamentoCarencia->getCarencia($id),
+            'lancamento_carencia' => $modelLancamentoCarencia->getCarencia($id),
             'motivos' => $modelMotivoAfastamento->getAll(),
             'disciplinas' => $modelDisciplina->getAll()
         ];
 
-        if (empty($data['carencia'])) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Não foi possível encontrar o usuário: ' . $id);
+        if (empty($data['lancamento_carencia'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Não foi possível encontrar a carência: ' . $id);
         }
 
-        $ue_id = $data['carencia']['ue_id'];
-        $matricula = $data['carencia']['cadastro'];
+
+        $ue_id = $data['lancamento_carencia']['ue_id'];
+        $matricula = $data['lancamento_carencia']['matricula'];
 
         $escola = $modelEscola->getEscolabyUEId($ue_id);
         $professor = $modelProfessor->getProfessorbyId($matricula);
 
-        // echo '<pre>';
-        // dd($data['motivos']);
-        // exit('Parada forçada...');
-
         $data['ue'] = $escola;
         $data['professor'] = $professor;
-
+        
         // echo '<pre>';
         // dd($data);
         // exit('Parada forçada...');
@@ -244,6 +245,11 @@ class LancamentoCarencias extends BaseController
 
     public function carencia()
     {
+
+        // echo '<pre>';
+        // exit('Chegou na inclusãop da carencia');
+        helper('form');
+
         $modelDisciplina = new DisciplinaModel();
         $modelMotivo = new MotivoCarenciaModel();
 
@@ -257,9 +263,9 @@ class LancamentoCarencias extends BaseController
             $data['erro'] = session('erro');
         }
 
-        echo view('layout/header', $data);
-        echo view('carencias/carencia');
-        echo view('layout/footer');
+        echo view('/layout/header', $data);
+        echo view('/carencias/carencia');
+        echo view('/layout/footer');
     }
 
     public function professorView()

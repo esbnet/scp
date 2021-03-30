@@ -7,7 +7,7 @@
         <!-- Início do header do card -->
         <div class="card-header py-3">
             <h2 class="float-left text-primary"> <?= $title; ?> </h2>
-            <a title="Voltar ao inínio" class="btn btn-circle btn-outline-success float-right" href="/"><i class="fas fa-home"></i></a>
+            <a title="Voltar ao painel" class="btn btn-circle btn-outline-success float-right" href="/"><i class="fas fa-chart-line"></i></a>
             <a class="float-right">&nbsp;</a>
             <a title="Voltar a lista de provimentos" class="btn btn-circle btn-outline-primary float-right" href="/provimentos"><i class="fas fa-undo"></i></a>
         </div>
@@ -130,7 +130,8 @@
                                     <option value="0" selected>Selecione o motivo...</option>
                                     <?php foreach ($formas_suprimento as $forma) : ?>
                                         <option value="<?php echo esc($forma['id']); ?>" <?= esc($forma['id'] == $forma['id'] ? 'selected' : '') ?>>
-                                            <?php echo $forma['nome'] ?></option>
+                                            <?php echo $forma['nome'] ?>
+                                        </option>
                                     <?php endforeach; ?>
                                 </select>
                                 <div class="invalid-feedback" id="erroForma"> </div>
@@ -142,7 +143,8 @@
                                     <option value="0" selected>Selecione o tipo de movimentação...</option>
                                     <?php foreach ($tipos_movimentacao as $tipo) : ?>
                                         <option value="<?php echo esc($tipo['id']); ?>" <?= esc($tipo['id'] == $tipo['id'] ? 'selected' : '') ?>>
-                                            <?php echo $tipo['nome'] ?></option>
+                                            <?php echo $tipo['nome'] ?>
+                                        </option>
                                     <?php endforeach; ?>
                                 </select>
                                 <div class="invalid-feedback" id="erroMotivo"> </div>

@@ -34,7 +34,7 @@ function pesquisa_escola_carencia() {
         return;
     }
 
-    var endereco = "/lancamentocarencias/pesquisaEscola/" + codigo;
+    var endereco = "/LancamentoCarencias/pesquisaEscola/" + codigo;
     $.ajax({
         url: endereco,
         method: "post",
@@ -75,6 +75,71 @@ function pesquisa_escola_carencia() {
     });
 }
 
+//Persiste carencia no  banco
+// Procura a escola informada na base de dados
+function lancamento_carencia_store() {
+    var codigo = document.getElementById("ueid").value;
+    var total_carencia = document.getElementById("total").value;
+
+    //Verifica se foi informado alguma escola
+    if (codigo == null || codigo == "") {
+        Swal.fire({
+            title: "Atenção!",
+            text: "Còdigo da escola não foi informado. Tente novamente.",
+            icon: "warning",
+            confirmButtonText: "Voltar",
+        });
+        document.getElementById("ueid").focus();
+        return;
+    }
+
+    //Verifica se foi inserido algum valor de carência
+    if (total_carencia <= 0) {
+        Swal.fire({
+            title: "Atenção!",
+            text: "Você não informou nenhuma carência. Tente novamente.",
+            icon: "warning",
+            confirmButtonText: "Voltar",
+        });
+        // alert("Valor total zerado!");
+        document.getElementById("Matutino").focus();
+        return;
+    }
+
+    var endereco = "/LancamentoCarencias/store/";
+    $.ajax({
+        url: endereco,
+        method: "post",
+        data: $(this).serialize(),
+        dataType: "json",
+        success: function (resposta) {
+            var [{ success }] = resposta;
+            var [{ message }] = resposta;
+
+            alert("Retorno do controller " + resposta);
+            console.log(message);
+
+            if (!success) {
+                Swal.fire({
+                    title: "Atenção!",
+                    text: message,
+                    icon: "error",
+                    confirmButtonText: "Voltar",
+                });
+            } else {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: message,
+                    showConfirmButton: false,
+                    timer: 3000,
+                });
+            }
+        },
+    });
+}
+//fim persiste carência no banco
+
 function pesquisa_professor_carencia() {
     var matricula = document.getElementById("Matricula").value;
 
@@ -88,7 +153,7 @@ function pesquisa_professor_carencia() {
         return;
     }
 
-    var endereco = "/lancamentocarencias/pesquisaProfessor/" + matricula;
+    var endereco = "/LancamentoCarencias/pesquisaProfessor/" + matricula;
     $.ajax({
         url: endereco,
         method: "post",
@@ -115,7 +180,6 @@ function pesquisa_professor_carencia() {
                 $(".linha-04").removeClass("d-none");
                 $(".linha-05").removeClass("d-none");
                 $(".footer").removeClass("d-none");
-                document.getElementById("submit").disabled = false;
             } else {
                 Swal.fire({
                     title: "Atenção!",
@@ -151,7 +215,7 @@ function pesquisa_escola_provimento() {
         return;
     }
 
-    var endereco = "/lancamentocarencias/pesquisaEscola/" + codigo;
+    var endereco = "/LancamentoCarencias/pesquisaEscola/" + codigo;
 
     $.ajax({
         url: endereco,
@@ -206,7 +270,7 @@ function pesquisa_professor_provimento() {
         return;
     }
 
-    var endereco = "/lancamentocarencias/pesquisaProfessor/" + matricula;
+    var endereco = "/LancamentoCarencias/pesquisaProfessor/" + matricula;
     $.ajax({
         url: endereco,
         method: "post",
@@ -270,7 +334,7 @@ function pesquisa_carencia() {
         return;
     }
 
-    var endereco = "/provimentos/pesquisaEscolaCarencia/" + ueid;
+    var endereco = "/Provimentos/pesquisaEscolaCarencia/" + ueid;
 
     // console.log(endereco);
 
@@ -320,48 +384,71 @@ function pesquisa_carencia() {
                             MatProv =
                                 "<input class='form-control form-control-sm text-primary' name='mat_prov[]' value='0' type='number' maxlength='2' min='0' max='" +
                                 carencia[i].matutino +
-                                "'>";
+                                "' required>";
                         } else {
                             MatProv =
-                                "<input class='form-control form-control-sm text-primary' name='p[]' value='0' type='number' maxlength='2' min='0' max='0' readonly>";
+                                "<input class='form-control form-control-sm text-primary' name='mat_prov[]' value='0' type='number' maxlength='2' min='0' max='0' readonly required>";
                         }
 
                         if (carencia[i].vespertino > 0) {
                             VespProv =
                                 "<input class='form-control form-control-sm text-primary' name='vesp_prov[]' value='0' type='number' min='0' max='" +
                                 carencia[i].vespertino +
-                                "'>";
+                                "' required>";
                         } else {
                             VespProv =
-                                "<input class='form-control form-control-sm text-primary' name='vesp_prov[]' value='0' type='number' maxlength='2' min='0' max='0' readonly>";
+                                "<input class='form-control form-control-sm text-primary' name='vesp_prov[]' value='0' type='number' maxlength='2' min='0' max='0' readonly required>";
                         }
 
                         if (carencia[i].noturno > 0) {
                             NotProv =
                                 "<input class='form-control form-control-sm text-primary' name='not_prov[]'  value='0' type='number' min='0' max='" +
                                 carencia[i].noturno +
-                                "'>";
+                                "' required>";
                         } else {
                             NotProv =
-                                "<input class='form-control form-control-sm text-primary' name='not_prov[]' value='0' type='number' maxlength='2' min='0' max='0' readonly>";
+                                "<input class='form-control form-control-sm text-primary' name='not_prov[]' value='0' type='number' maxlength='2' min='0' max='0' readonly required>";
                         }
 
                         // Adicionando registros retornados na tabela
                         $("#tabelaCarencia").append(
                             "<tr class='linha_carencia'>" +
-                                "<td class='d-none' ><input name='disciplina_id[]' value='" + carencia[i].disciplina_id + "' type='number'></td>" +
-                                "<td class='d-none' ><input name='temporaria[]' value='" + carencia[i].temporaria + "' type='number'></td>" +
-                                "<td class='text-center'>" + carencia[i].nome + "</td>" +
-                                "<td class='text-center'>" + temp +"</td>" +
-                                "<td class='text-center'>" + carencia[i].matutino + "</td>" +
-                                "<td class='campo text-center d-none'>" + MatProv + "</td>" +
-                                "<td class='text-center'>" + carencia[i].vespertino + "</td>" +
-                                "<td class='campo text-center d-none'>" + VespProv + "</td>" +
-                                "<td class='text-center'>" + carencia[i].noturno + "</td>" +
-                                "<td class='campo text-center d-none'>" + NotProv + "</td>" +
-                                "<td class='text-center'>" + carencia[i].total + "</td>" +
-                                "<td class='text-center'>" + "<a href='#'><input type='checkbox' name='adicionar'/></a></td>" +
-                            "</tr>"
+                                "<td class='d-none' ><input name='disciplina_id[]' value='" +
+                                carencia[i].disciplina_id +
+                                "' type='number'></td>" +
+                                "<td class='d-none' ><input name='temporaria[]' value='" +
+                                carencia[i].temporaria +
+                                "' type='number'></td>" +
+                                "<td class='text-center'>" +
+                                carencia[i].nome +
+                                "</td>" +
+                                "<td class='text-center'>" +
+                                temp +
+                                "</td>" +
+                                "<td class='text-center'>" +
+                                carencia[i].matutino +
+                                "</td>" +
+                                "<td class='campo text-center d-none'>" +
+                                MatProv +
+                                "</td>" +
+                                "<td class='text-center'>" +
+                                carencia[i].vespertino +
+                                "</td>" +
+                                "<td class='campo text-center d-none'>" +
+                                VespProv +
+                                "</td>" +
+                                "<td class='text-center'>" +
+                                carencia[i].noturno +
+                                "</td>" +
+                                "<td class='campo text-center d-none'>" +
+                                NotProv +
+                                "</td>" +
+                                "<td class='text-center'>" +
+                                carencia[i].total +
+                                "</td>" +
+                                "<td class='text-center'>" +
+                                "<a href='#'><input type='checkbox' name='adicionar'/></a></td>" +
+                                "</tr>"
                         );
                     }
 
@@ -473,7 +560,13 @@ function calcular_total_carencia() {
     var n1 = parseInt(document.getElementById("Matutino").value, 10);
     var n2 = parseInt(document.getElementById("Vespertino").value, 10);
     var n3 = parseInt(document.getElementById("Noturno").value, 10);
-    document.getElementById("Total").value = n1 + n2 + n3;
+    total = n1 + n2 + n3;
+    document.getElementById("total").value = total;
+    if (total > 0) {
+        document.getElementById("submit").disabled = false;
+    } else {
+        document.getElementById("submit").disabled = true;
+    }
 }
 
 // Validar campos do form de provimento
@@ -543,7 +636,23 @@ function inserirCarencia() {
     //    alert(celulaClicada.children().last());
 }
 
-function SalvarProvimento() {}
+function update_carencia() {
+    Swal.fire({
+        title: "Tem certeza?",
+        text: "A alteração será permanente",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Atualizar",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire("Atualição!", "Seus dados foram atualizados com sucesso.", "success");
+        }
+        window.location.href = "/LancamentoCarencias";
+    });
+}
 
 // Código das funções Adicionar, Salvar, Editar e Excluir
 // $(".btnEditar").bind("click", EditarCarencia);

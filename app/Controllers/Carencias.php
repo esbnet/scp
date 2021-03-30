@@ -18,8 +18,8 @@ class Carencias extends Controller
         $carenciaModel = new CarenciaModel();
 
         $data = [
-            'carencias'  => $carenciaModel->paginate(100),
-            'title' => 'Lista de Carências',
+            'carencias'  => $carenciaModel->paginate(5),
+            'title' => 'Relação de Carências',
             'session' => \Config\Services::session(),
             'styles' => [
                 'vendor/datatables/dataTables.bootstrap4.min.css',
@@ -61,9 +61,10 @@ class Carencias extends Controller
     //Grava um novo registro
     public function store()
     {
-
+    
         $model = new CarenciaModel();
 
+        //Critérios de validação
         $val = $this->validate([
             'ue_id' => 'required|min_length[3]|max_length[9]',
             'cadastro' => 'required|min_length[8]|max_length[9]',
@@ -81,26 +82,22 @@ class Carencias extends Controller
             'atualizacao' => date('d/m/y h:m:s'),
         ];
 
-        $model->save($carencia);
-        return redirect()->to(site_url('carencias'));
+        if($model->save($carencia) == true) {
+                $encontrado['success'] = 'true';
+                $encontrado['message'] = 'Código informado localizado';
+        }else{
+            $encontrado['success'] = 'false';
+            $encontrado['message'] = 'O código informado não foi encontrado';            
+        };
+        
+        echo json_encode([$encontrado]);
+
+        // return redirect()->to(site_url('carencias'));
 
         // echo '<pre>';
         // var_dump($carencia);
         // exit();
 
-
-        //        if ($this->request->getMethod() === 'post' && $val) {
-
-
-        //          echo view( base_url('carencias') );
-        //      } else {
-
-        $data = ['title' => 'Erro ao Gravar a carência'];
-
-        echo view('layout/header', $data);
-        echo view('carencias/index');
-        echo view('layout/footer');
-        //    }
     }
 
     //Apaga um registro com Id específico

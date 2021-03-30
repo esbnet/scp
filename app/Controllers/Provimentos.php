@@ -104,14 +104,21 @@ class Provimentos extends BaseController
         $provido_mat_prov = $this->request->getPost('mat_prov[]');
         $provido_vesp_prov = $this->request->getPost('vesp_prov[]');
         $provido_not_prov = $this->request->getPost('not_prov[]');
+        
+        
+        $tamanho_array = count($provido_not_prov);
+        
+                // echo '<pre>';
+                // dd($tamanho_array);
+                // exit('-------------------------------------------------');
 
-        for ($i = 0; $i <= count($provido_disciplina_id) - 1; $i++) {
+        for ($i = 0; $i < ($tamanho_array); $i++) {
 
             $totalProvidoDisciplina = intval($provido_mat_prov[$i]) + intval($provido_vesp_prov[$i]) + intval($provido_not_prov[$i]);
 
             if ($totalProvidoDisciplina > 0) {
 
-                $carencia = $modelCarencia->getCarenciaByDisciplina($provimento['ue_id'], $provido_disciplina_id[$i], $provido_temporaria[$i]) ;
+                $carencia = $modelCarencia->getCarenciaByDisciplina($provimento['ue_id'], $provido_disciplina_id[$i], $provido_temporaria[$i]);
 
                 //Valores antigos para salvar no provimento
                 $mat_old = $carencia[0]['matutino'];
@@ -119,13 +126,13 @@ class Provimentos extends BaseController
                 $not_old = $carencia[0]['noturno'];
                 $total_old = $carencia[0]['total'];
                 $carencia_old_id = $carencia[0]['id'];
-                
+
                 //Calcula as horas que restaram na carência
                 $carencia[0]['matutino'] = $carencia[0]['matutino'] - $provido_mat_prov[$i];
                 $carencia[0]['vespertino'] = $carencia[0]['vespertino'] - $provido_vesp_prov[$i];
                 $carencia[0]['noturno'] = $carencia[0]['noturno'] - $provido_not_prov[$i];
                 $carencia[0]['total'] = $carencia[0]['total'] - $totalProvidoDisciplina;
-                
+
                 //Grava horas restantes na carência
                 $modelCarencia->save($carencia[0]);
 
@@ -143,10 +150,10 @@ class Provimentos extends BaseController
                     'total_old' => $total_old,
                     'carencia_old_id' => $carencia_old_id,
                 ];
-                
+
                 //Grava disciplina e horas providas relacionada ao provimento
                 $modelProvimentoProvido->insert($provido);
-                
+
                 // echo '<pre>';
                 // dd($provido);
                 // exit('-------------------------------------------------');

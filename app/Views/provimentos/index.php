@@ -23,11 +23,11 @@ if ($provimentos) : ?>
                         <thead>
                             <tr>
                                 <th class="d-none">Id</th>
-                                <th>UE</th>
+                                <!-- <th>UE</th> -->
                                 <th>Unidade Escolar</th>
                                 <th>Matricula</th>
                                 <th>Nome Professor</th>
-                                <th>Forma Supr.</th>
+                                <!-- <th>Forma Supr.</th> -->
                                 <th>Assunção</th>
                                 <th class="text-center no-sort">Ações</th>
                             </tr>
@@ -37,11 +37,11 @@ if ($provimentos) : ?>
                             <?php foreach ($provimentos as $provimento) : ?>
                                 <tr>
                                     <td class="d-none"<?= esc($provimento['id']); ?> </td>
-                                    <td><?= esc($provimento['ue_id']); ?> </td>
+                                    <!-- <td><?= esc($provimento['ue_id']); ?> </td> -->
                                     <td><?= esc($provimento['ue']); ?> </td>
                                     <td><?= esc($provimento['matricula_id']); ?> </td>
                                     <td><?= esc($provimento['professor_nome']); ?> </td>
-                                    <td><?= esc($provimento['forma_suprimento_nome']); ?> </td>
+                                    <!-- <td><?= esc($provimento['forma_suprimento_nome']); ?> </td> -->
 
 
                                     <td class="text-center pr-4">
@@ -51,8 +51,8 @@ if ($provimentos) : ?>
                                     </td>
 
                                     <td class="text-center">
-                                        <a class="btn btn-light btn-sm" style='color: #0D47A1' href="<?= base_url('/provimentos/edit/' . $provimento['id']); ?>"><i class="fas fa-pencil-alt"></i></a>
-                                        <a class="btn btn-light btn-sm" style='color: #E02D1B' href="/provimentos/delete/<?= esc($provimento['id']); ?>"><i class="fas fa-trash"></i></a>
+                                        <a class="btn btn-light btn-circle btn-sm" style='color: #0D47A1' href="<?= base_url('/provimentos/edit/' . $provimento['id']); ?>"><i class="fas fa-pencil-alt"></i></a>
+                                        <a class="btn btn-light btn-circle btn-sm" style='color: #E02D1B' href="/provimentos/delete/<?= esc($provimento['id']); ?>"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

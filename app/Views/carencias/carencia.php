@@ -8,11 +8,12 @@
             <h2 class="float-left text-primary" id="titleCard"> <?= $title; ?> </h2>
             <a title="Voltar ao painel" class="btn btn-outline-success float-right btn-circle shadow" href="/"><i class="fas fa-chart-line"></i></a>
             <a class="float-right">&nbsp;</a>
-            <a title="Voltar a pesquisa de carência" class="btn btn-outline-primary float-right btn-circle" href="#"><i class="fas fa-search"></i></a>
+            <a title="Voltar a pesquisa de carência" class="btn btn-outline-primary float-right btn-circle" href="/LancamentoCarencias"><i class="fas fa-undo-alt"></i></a>
         </div>
 
         <!-- <form class="shadow p-3 mb-5 bg-white rounded"> -->
-        <form action="<?= '/lancamentocarencias/store' ?>" method="post">
+
+        <form class="needs-validation shadow" action="<?= '/LancamentoCarencias/store' ?>" method="post">
             <?= csrf_field() ?>
 
             <div id="borderCard" class="card-body border-left-primary">
@@ -22,7 +23,8 @@
                     <div class="form-group col-md-2">
                         <label class="control-label" for="ueid">Unidade Escolar</label>
                         <div class="input-group mb-3">
-                            <input type="number" value="<?= isset($ue['UeID']) ? $ue['UeID'] : "" ?>" size="9" id="ueid" name="ueid" class="form-control form-control-sm btn-sm" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                            <input type="number" value="1100485" size="9" id="ueid" name="ueid" class="form-control form-control-sm btn-sm" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                            <!-- <input type="number" value="<?= isset($ue['UeID']) ? $ue['UeID'] : "" ?>" size="9" id="ueid" name="ueid" class="form-control form-control-sm btn-sm" aria-label="Recipient's username" aria-describedby="button-addon2" required> -->
                             <button class="btn btn-primary btn-sm" type="button" id="busca_escola" onclick="pesquisa_escola_carencia()"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
@@ -51,7 +53,8 @@
                     <div class="form-group col-md-2">
                         <label class="control-label" for="inputMatricula">Matrícula</label>
                         <div class="input-group mb-3">
-                            <input type="number" value="<?= isset($professor['matricula']) ? $professor['matricula'] : '' ?>" size="9" name="matricula" id="Matricula" class="form-control form-control-sm matricula" readonly>
+                            <input type="number" value="110568394" size="9" name="matricula" id="Matricula" class="form-control form-control-sm matricula" readonly>
+                            <!-- <input type="number" value="<?= isset($professor['matricula']) ? $professor['matricula'] : '' ?>" size="9" name="matricula" id="Matricula" class="form-control form-control-sm matricula" readonly> -->
                             <button class="btn btn-primary btn-sm btn-matricula" type="button" id="busca_professor" onclick="pesquisa_professor_carencia()" disabled><i class="fas fa-search"></i></button>
                         </div>
                     </div>
@@ -72,20 +75,20 @@
                 <div class="form-row d-none linha-02">
                     <div class="form-group col-md-3">
                         <label class="control-label" for="disciplina_id">Disciplina</label>
-                        <select name="disciplina_id" id="disciplina_id" class="form-control form-control-sm">
-                            <option selected>Disciplina...</option>
+                        <select name="disciplina_id" id="disciplina_id" class="form-control form-control-sm" required>
+                            <option value="" selected>Disciplina...</option>
                             <?php foreach ($disciplinas as $disciplina) : ?>
-                                <option value="<?= esc($disciplina['id']); ?>" <?= esc($disciplina['id'] == $disciplina['id'] ? 'selected' : '') ?>><?= $disciplina['nome'] ?></option>
+                                <option value="<?php echo esc($disciplina['id']); ?>"> <?= $disciplina['nome'] ?> </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-5">
                         <label class="control-label" for="inputMotivoAfastamento">Motivo do Afastamento</label>
-                        <select name="motivo_vaga_id" id="inputMotivoAfastamento" class="form-control  form-control-sm">
-                            <option selected>Motivo do Afastamento...</option>
+                        <select name="motivo_vaga_id" id="inputMotivoAfastamento" class="form-control  form-control-sm" required>
+                            <option value="" selected >Motivo do Afastamento...</option>
                             <?php foreach ($motivos as $motivo) : ?>
-                                <option value="<?= esc($motivo['id']); ?>" <?= esc($motivo['id'] == $motivo['id'] ? 'selected' : '') ?>><?= $motivo['Motivo'] ?></option>
+                                <option value="<?= esc($motivo['id']); ?>" > <?= $motivo['Motivo'] ?> </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -119,7 +122,7 @@
                     </div>
                     <div class="form-group col-md-1">
                         <label class="control-label">Total</label>
-                        <input name="total" type="number" class="form-control  form-control-sm" min="1" id="Total" value="0" readonly>
+                        <input class="form-control  form-control-sm" name="total" type="number" min="1" id="total" value="" readonly required>
                     </div>
                     <div class="col-sm">
                         <div class="form-group">
@@ -137,8 +140,9 @@
             <input id="tipoCarencia" type="hidden" name="temporaria" value="original" />
 
             <div class="card-footer d-none footer">
-                <button onclick="confirmaGravacaoCarencia()" type="submit" name="submit" id="submit" class="btn btn-outline-primary " value="Salvar"><i class="fas fa-database">&nbsp;&nbsp;Gravar</i></button>
-                <a name="cancel" class="btn btn-outline-warning " href="/lancamentocarencias/carencia"><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
+                <button type="submit" name="submit" id="submit" class="btn btn-outline-primary " value="Salvar" disabled><i class="fas fa-database">&nbsp;&nbsp;Gravar</i></button>
+                <!-- <button onclick="confirmaGravacaoCarencia()" type="submit" name="submit" id="submit" class="btn btn-outline-primary " value="Salvar"><i class="fas fa-database">&nbsp;&nbsp;Gravar</i></button> -->
+                <a name="cancel" class="btn btn-outline-warning " href="/LancamentoCarencias/carencia" disabled><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
             </div>
 
         </form>

@@ -38,7 +38,8 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item text-success" href="<?= base_url('#') ?>"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;Painel Carência</a>
-                <a class="collapse-item text-primary" href="<?= base_url('lancamentocarencias/carencia') ?>"><i class="fas fa-hourglass-half"></i>&nbsp;&nbsp;Inclusão</a>
+                <a class="collapse-item text-primary" href="<?= base_url('LancamentoCarencias') ?>"><i class="fas fa-hourglass-half"></i>&nbsp;&nbsp;Relação</a>
+                <a class="collapse-item text-primary" href="<?= base_url('LancamentoCarencias/carencia') ?>"><i class="fas fa-plus"></i>&nbsp;&nbsp;Incluir</a>
             </div>
         </div>
     </li>
@@ -51,10 +52,9 @@
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item text-success" href="<?= base_url('#') ?>"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;Painel Provimento</a>
-                <a class="collapse-item text-primary" href="<?= base_url('provimentos') ?>">
-                    <i class="fas fa-fw fa-chalkboard-teacher"></i>&nbsp;&nbsp;Prover Servidor
-                </a>
+                <a class="collapse-item text-success" href="<?= base_url('#') ?>"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;Painel Provimento</a>
+                <a class="collapse-item text-primary" href="<?= base_url('provimentos') ?>"><i class="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;Relação</a>
+                <a class="collapse-item text-primary" href="<?= base_url('provimentos/provimento') ?>"><i class="fas fa-plus"></i>&nbsp;&nbsp;Incluir</a>
             </div>
         </div>
     </li>
