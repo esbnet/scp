@@ -28,8 +28,8 @@ if ($provimentos) : ?>
                                 <th>Matricula</th>
                                 <th>Nome Professor</th>
                                 <!-- <th>Forma Supr.</th> -->
-                                <th>Assunção</th>
-                                <th class="text-center no-sort">Ações</th>
+                                <th class="text-center ">Assunção</th>
+                                <th class="text-center no-sort">Alterar</th>
                             </tr>
                         </thead>
 
@@ -52,7 +52,7 @@ if ($provimentos) : ?>
 
                                     <td class="text-center">
                                         <a class="btn btn-light btn-circle btn-sm" style='color: #0D47A1' href="<?= base_url('/provimentos/edit/' . $provimento['id']); ?>"><i class="fas fa-pencil-alt"></i></a>
-                                        <a class="btn btn-light btn-circle btn-sm" style='color: #E02D1B' href="/provimentos/delete/<?= esc($provimento['id']); ?>"><i class="fas fa-trash"></i></a>
+                                        <!-- <a class="btn btn-light btn-circle btn-sm" style='color: #E02D1B' href="/provimentos/delete/<?= esc($provimento['id']); ?>"><i class="fas fa-trash"></i></a> -->
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\CarenciaModel;
+use App\Models\LancamentoCarenciaModel;
 use App\Models\EscolaModel;
 use App\Models\DisciplinaModel;
 use App\Models\ProfessorModel;
@@ -66,7 +66,7 @@ class Provimentos extends BaseController
     {
 
         $modelProvimento = new provimentoModel();
-        $modelCarencia = new CarenciaModel();
+        $modelCarencia = new LancamentoCarenciaModel();
         $modelProvimentoProvido = new ProvimentoProvidoModel();
 
         // $val = $this->validate([
@@ -336,7 +336,7 @@ class Provimentos extends BaseController
             $encontrado['escola'] = $Ue;
 
             //Recuperar carencias para a escola caso houver
-            $modelCarencia = new CarenciaModel();
+            $modelCarencia = new LancamentoCarenciaModel();
             $Carencias = $modelCarencia->getCarenciaUE($codigoEscola);
 
             if ($Carencias) {

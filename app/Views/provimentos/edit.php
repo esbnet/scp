@@ -219,13 +219,19 @@
             <input type="hidden" name="provimento_id" value="<?= $provimento['provimento_id'] ?>" />
 
             <!-- Início do footer do card -->
-            <div class="card-footer ">
 
-                <button class="btn btn-outline-danger" id="btn_grava_provimento" form="form" title="Exclui definitivamente este provimento." type="submit" name="submit" value="Salvar" >
+            <div class="card-footer footer">
+                <button title="Grava as alteração realizadas" type="submit" class="btn btn-primary text-white" id="update_carencia" name="submit" value="Salvar"><i class="fas fa-database">&nbsp;&nbsp;Gravar</i></button>
+                <a title="Abandona as alterações e retorna a lista de carência" name="cancel" class="btn btn-warning " href="/provimentos"><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
+                <a title="Exclusão permamente" class="btn btn-outline-danger btn-circle text-danger float-right" onclick="deleta_carencia()"><i class="fas fa-trash"></i></a>
+            </div>
+
+            <!-- <div class="card-footer ">
+                <button class="btn btn-outline-danger" id="btn_grava_provimento" form="form" title="Exclui definitivamente este provimento." type="submit" name="submit" value="Salvar">
                     <i class="fas fa-trash-alt">&nbsp;&nbsp;Exclui</i>
                 </button>
                 <a title="Cancela e retorna a lista de provimentos." name="cancel" class="btn btn-outline-warning " href="/provimentos"><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
-            </div>
+            </div> -->
             <!-- Fim do footer do card -->
 
         </form>

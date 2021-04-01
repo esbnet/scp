@@ -51,17 +51,17 @@ class LancamentoCarenciaModel extends Model
         $array = ['ue_id = ' => $ueid, 'total >' => 0];
 
         $carencia = $this->select(
-            'scp_carencia.id, 
-                scp_carencia.ue_id, 
-                scp_carencia.disciplina_id, 
-                scp_carencia.matutino,
-                scp_carencia.vespertino,
-                scp_carencia.noturno,
-                scp_carencia.total, 
-                scp_carencia.temporaria, 
+            'scp_lancamento_carencia.id, 
+                scp_lancamento_carencia.ue_id, 
+                scp_lancamento_carencia.disciplina_id, 
+                scp_lancamento_carencia.matutino,
+                scp_lancamento_carencia.vespertino,
+                scp_lancamento_carencia.noturno,
+                scp_lancamento_carencia.total, 
+                scp_lancamento_carencia.temporaria, 
                 scp_disciplina.nome'
         )
-            ->join('scp_disciplina', 'scp_disciplina.id = scp_carencia.disciplina_id', 'left')
+            ->join('scp_disciplina', 'scp_disciplina.id = scp_lancamento_carencia.disciplina_id', 'left')
             ->where($array)
             ->orderby('scp_disciplina.nome asc')
             ->findAll();
@@ -89,4 +89,35 @@ class LancamentoCarenciaModel extends Model
 
         return $carencia;
     }
+
+    public function getTotalCarenciaReal()
+    {
+
+        return $this->selectSum('total')
+            ->where(['temporaria' => 0])
+            ->findAll();
+    }
+
+    public function getTotalCarenciaTemporaria()
+    {
+
+        return $this->selectSum('total')
+            ->where(['temporaria' => 1])
+            ->findAll();
+    }
+
+    public function getCarenciaByDisciplina($ue_id = NULL, $disciplina_id = NULL, $temporaria = NULL)
+    {
+
+        $carencia =  $this
+            ->where(['ue_id' => $ue_id])
+            ->where(['disciplina_id' => $disciplina_id])
+            ->where(['temporaria' => $temporaria])
+            ->findAll();
+
+        return $carencia;
+    }
+
+    
+
 }

@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\CarenciaModel;
+use App\Models\LancamentoCarenciaModel;
 use App\Models\ProvimentoProvidoModel;
 
 class Home extends BaseController
@@ -10,7 +10,7 @@ class Home extends BaseController
 	public function index()
 	{
 
-		$modelCarencia = new CarenciaModel();
+		$modelCarencia = new LancamentoCarenciaModel();
 		$modelProvido = new ProvimentoProvidoModel();
 
 		$TCR = $modelCarencia->getTotalCarenciaReal();
@@ -24,8 +24,8 @@ class Home extends BaseController
 		// print_r($TP);
 		// exit('Chegou -------------------');
 
-		$TTC = (intval(($TCR[0]['Total'])) + intval($TCT[0]['Total']));
-		$EFICIENCIA = 0;// (intval($TP[0]['total']) / $TTC) * 100;
+		$TTC = (intval(($TCR[0]['total'])) + intval($TCT[0]['total']));
+		$EFICIENCIA = (intval($TP[0]['total']) / $TTC) * 100;
 
 		// echo('<pre>');
 		// print_r($TTC);
@@ -34,8 +34,8 @@ class Home extends BaseController
 		// exit('Chegou -------------------');
 
 		$data = [
-			'TotalCarenciaReal' => number_format($TCR[0]['Total'], 0, '', '.'),
-			'TotalCarenciaTemporaria' => number_format($TCT[0]['Total'], 0, '', '.'),
+			'TotalCarenciaReal' => number_format($TCR[0]['total'], 0, '', '.'),
+			'TotalCarenciaTemporaria' => number_format($TCT[0]['total'], 0, '', '.'),
 			'TotalProvimento' => number_format($TP[0]['total'], 0, '', '.'),
 			'Eficiencia' => number_format($EFICIENCIA, 0, '', '.'),
 			'title' => 'Titulo exemplo'

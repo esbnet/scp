@@ -4,8 +4,6 @@
     <!-- Main Content -->
     <div id="content">
 
-
-
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
@@ -59,7 +57,7 @@
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Provimento (Ano)</div>
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Provimento</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><?= esc($TotalProvimento); ?> h</div>
                                 </div>
                                 <div class="col-auto">

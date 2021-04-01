@@ -93,5 +93,4 @@ class ProvimentoModel extends Model
         }
     }
 
-
 }
