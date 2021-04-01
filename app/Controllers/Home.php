@@ -25,7 +25,7 @@ class Home extends BaseController
 		// exit('Chegou -------------------');
 
 		$TTC = (intval(($TCR[0]['Total'])) + intval($TCT[0]['Total']));
-		$EFICIENCIA = (intval($TP[0]['total']) / $TTC) * 100;
+		$EFICIENCIA = 0;// (intval($TP[0]['total']) / $TTC) * 100;
 
 		// echo('<pre>');
 		// print_r($TTC);

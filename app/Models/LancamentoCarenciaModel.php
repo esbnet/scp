@@ -26,7 +26,11 @@ class LancamentoCarenciaModel extends Model
         'tipo_lancamento_id',
         'lancamento_id',
         'data_lancamento',
-        'observacao'
+        'observacao',
+        'matutino_original',
+        'vespertino_original',
+        'noturno_original',
+        'total_original',
     ];
 
     public function getCarencia($id = NULL)
@@ -70,11 +74,11 @@ class LancamentoCarenciaModel extends Model
         $carencia = $this->select(
             'scp_lancamento_carencia.id,
             scp_ue.nte_id,
-            scp_ue.municipio, 
-            scp_ue.id as ue_id, 
+            scp_ue.municipio,
+            scp_ue.id as ue_id,
             scp_ue.ue as escola_nome,
             scp_disciplina.nome as disciplina_nome,
-            scp_lancamento_carencia.total, 
+            scp_lancamento_carencia.total,
             scp_lancamento_carencia.temporaria'
         )
             ->join('scp_ue', 'scp_ue.id = scp_lancamento_carencia.ue_id', 'left')

@@ -13,7 +13,7 @@
 
         <!-- <form class="shadow p-3 mb-5 bg-white rounded"> -->
 
-        <form class="needs-validation shadow" action="<?= '/LancamentoCarencias/store' ?>" method="post">
+        <form class="needs-validation shadow" action="<?= '/LancamentoCarencias/add' ?>" method="post">
             <?= csrf_field() ?>
 
             <div id="borderCard" class="card-body border-left-primary">
@@ -142,7 +142,7 @@
             <div class="card-footer d-none footer">
                 <button type="submit" name="submit" id="submit" class="btn btn-outline-primary " value="Salvar" disabled><i class="fas fa-database">&nbsp;&nbsp;Gravar</i></button>
                 <!-- <button onclick="confirmaGravacaoCarencia()" type="submit" name="submit" id="submit" class="btn btn-outline-primary " value="Salvar"><i class="fas fa-database">&nbsp;&nbsp;Gravar</i></button> -->
-                <a name="cancel" class="btn btn-outline-warning " href="/LancamentoCarencias/carencia" disabled><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
+                <a name="cancel" class="btn btn-outline-warning " href="/LancamentoCarencias" disabled><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
             </div>
 
         </form>

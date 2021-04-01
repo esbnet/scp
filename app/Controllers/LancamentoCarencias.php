@@ -15,6 +15,8 @@ class LancamentoCarencias extends BaseController
     //Exibe todos os registros
     public function index()
     {
+        helper(['form', 'url']);
+
         $modelLancamentoCarencia = new LancamentoCarenciaModel();
 
         $data = [
@@ -60,18 +62,10 @@ class LancamentoCarencias extends BaseController
     }
 
     //Grava um novo registro
-    public function store()
+    public function add()
     {
 
         $modelLancamentoCarencia = new lancamentoCarenciaModel();
-        $modelCarencia = new CarenciaModel;
-
-        //Validação dos campos
-        // $val = $this->validate([
-        //     'ue_id' => 'required|min_length[3]|max_length[9]',
-        //     'cadastro' => 'required|min_length[8]|max_length[9]',
-        //     'disciplina_id'  => 'required'
-        // ]);
 
         $lancamento_carencia = [
             'id' => $this->request->getPost('id'),
@@ -82,73 +76,66 @@ class LancamentoCarencias extends BaseController
             'vespertino' => $this->request->getPost('vespertino'),
             'noturno' => $this->request->getPost('noturno'),
             'total' => $this->request->getPost('total'),
-            'temporaria' => $this->request->getPost('temporaria'),
+            'temporaria' =>  $this->request->getPost('temporaria'),
             'inicio_afastamento' => $this->request->getPost('inicio_afastamento'),
             'termino_afastamento' => $this->request->getPost('termino_afastamento'),
             'motivo_vaga_id' => $this->request->getPost('motivo_vaga_id'),
-            'user_id' => 0,
-            'tipo_lancamento_id' => 1,
-            'lancamento_id' => 1,
+            'user_id' => $this->request->getPost('user'),
+            'tipo_lancamento_id' => 2, //Update
+            'lancamento_id' => 0, //registro atual
             'data_lancamento' => date('Y/m/d H:i:s'),
             'observacao' => $this->request->getPost('observacao'),
+            'matutino_original' => $this->request->getPost('matutino'),
+            'vespertino_original' => $this->request->getPost('vespertino'),
+            'noturno_original' => $this->request->getPost('noturno'),
+            'total_original' => $this->request->getPost('total'),     
         ];
-        //Salva o lançamento
+
         $modelLancamentoCarencia->save($lancamento_carencia);
 
         // echo ('<pre>');
         // dd($lancamento_carencia);
-        // exit('Chegou no metodo store!');
-
-        //Procura na tabela carencia acumulada por disciplina para adicionar ou atualizar
-        $findcarencia = $modelCarencia->getCarenciaByDisciplina(
-            $lancamento_carencia['ue_id'],
-            $lancamento_carencia['disciplina_id'],
-            $lancamento_carencia['temporaria']
-        );
-
-        if (count($findcarencia) == 0) { //ADD
-            // Grava um novo registro de carência
-            $carencia = [
-                'ue_id' => substr($this->request->getPost('ueid'),  0, 8),
-                'disciplina_id' => $this->request->getPost('disciplina_id'),
-                'matutino' => $this->request->getPost('matutino'),
-                'vespertino' => $this->request->getPost('vespertino'),
-                'noturno' => $this->request->getPost('noturno'),
-                'total' => $this->request->getPost('total'),
-                'temporaria' => $this->request->getPost('temporaria'),
-                'atualizacao' => date('Y/m/d H:i:s'),
-            ];
-            $modelCarencia->save($carencia);
-        } elseif (count($findcarencia) == 1) { //UPDATE
-            //Atualiza um registro de carência existente
-            $carencia = [
-                'id' => intval($findcarencia[0]['id']),
-                'ueid' => intval(substr($this->request->getPost('ueid'),  0, 8)),
-                'disciplina_id' => $this->request->getPost('disciplina_id'),
-                'matutino' => intval($this->request->getPost('matutino')) + intval($findcarencia[0]['matutino']),
-                'vespertino' => intval($this->request->getPost('vespertino')) + intval($findcarencia[0]['vespertino']),
-                'noturno' => intval($this->request->getPost('noturno')) + intval($findcarencia[0]['noturno']),
-                'total' => intval($this->request->getPost('total')) + intval($findcarencia[0]['total']),
-                'temporaria' => $this->request->getPost('temporaria'),
-                'atualizacao' => date('Y-m-d H:i:s'),
-            ];
-            $modelCarencia->save($carencia);
-        } else {
-            echo 'ATENÇÃO! ERRO GRAVE NA APLICAÇÃO. ENTRE EM CONTATO COM O DESENVOLVEROR.';
-            echo 'Encontrado mais de um registro de carência para o mesma UE/DISCIPLINA/TEMPORARIA.';
-            exit('_____________');
-        }
-
-        print ("<script type='text/javascript'>Swal.fire({
-            title: 'Atenção!',
-            text:
-                'Carência gravada com sucesso!',
-            icon: 'error',
-            confirmButtonText: 'Voltar',
-        });</script>");
+        // exit('Update!');
 
         return redirect()->to(site_url('LancamentoCarencias'));
     }
+
+    //Grava um novo registro
+    public function update()
+    {
+
+        $modelLancamentoCarencia = new lancamentoCarenciaModel();
+
+        $lancamento_carencia = [
+            'id' => $this->request->getPost('id'),
+            'ue_id' => substr($this->request->getPost('ueid'),  0, 8),
+            'disciplina_id' => $this->request->getPost('disciplina_id'),
+            'matricula' => $this->request->getPost('matricula'),
+            'matutino' => $this->request->getPost('matutino'),
+            'vespertino' => $this->request->getPost('vespertino'),
+            'noturno' => $this->request->getPost('noturno'),
+            'total' => $this->request->getPost('total'),
+            'temporaria' =>  $this->request->getPost('temporaria'),
+            'inicio_afastamento' => $this->request->getPost('inicio_afastamento'),
+            'termino_afastamento' => $this->request->getPost('termino_afastamento'),
+            'motivo_vaga_id' => $this->request->getPost('motivo_vaga_id'),
+            'user_id' => $this->request->getPost('user_id'),
+            'tipo_lancamento_id' => 2, //Update
+            'lancamento_id' => 0, //registro atual
+            'data_lancamento' => date('Y/m/d H:i:s'),
+            'observacao' => $this->request->getPost('observacao'),
+        ];
+
+        $modelLancamentoCarencia->save($lancamento_carencia);
+
+        // echo ('<pre>');
+        // dd($lancamento_carencia);
+        // exit('Update!');
+
+        return redirect()->to(site_url('LancamentoCarencias'));
+    }
+
+
 
     //Apaga um registro com Id específico
     public function delete($Id)
@@ -156,12 +143,14 @@ class LancamentoCarencias extends BaseController
         $model = new LancamentoCarenciaModel();
         $model->delete($Id);
 
-        return redirect()->to(site_url('carencias/'));
+        return redirect()->to(site_url('/LancamentoCarencias'));
     }
 
     //Exibe um registro para edição
     public function edit($id)
     {
+
+        helper(['form', 'url']);
 
         $modelLancamentoCarencia = new LancamentoCarenciaModel();
         $modelMotivoAfastamento = new MotivoCarenciaModel();
@@ -180,7 +169,6 @@ class LancamentoCarencias extends BaseController
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Não foi possível encontrar a carência: ' . $id);
         }
 
-
         $ue_id = $data['lancamento_carencia']['ue_id'];
         $matricula = $data['lancamento_carencia']['matricula'];
 
@@ -189,7 +177,7 @@ class LancamentoCarencias extends BaseController
 
         $data['ue'] = $escola;
         $data['professor'] = $professor;
-        
+
         // echo '<pre>';
         // dd($data);
         // exit('Parada forçada...');
@@ -201,10 +189,36 @@ class LancamentoCarencias extends BaseController
     }
 
     //Grava alterações em um registro
-    public function update($Id)
+    public function update_old($Id)
     {
-        $model = new LancamentoCarenciaModel();
-        $model->update($Id);
+
+        $modelLancamentoCarencia = new LancamentoCarenciaModel();
+        $modelCarencia = new CarenciaModel();
+
+
+        $lancamento = [
+            'ue_id' => substr($this->request->getPost('ueid'),  0, 8),
+            'matricula_id' => $this->request->getPost('matricula_Id'),
+            'aula_normal' => is_null($this->request->getPost('AulaNormal')) ? 0 : -1,
+            'aula_extra' => is_null($this->request->getPost('AulaExtra')) ? 0 : -1,
+            'forma_suprimento_id' => $this->request->getPost('FormaSupId'),
+            'tipo_movimentacao_id' => $this->request->getPost('TipoMovId'),
+            'anuencia' => is_null($this->request->getPost('Anuencia')) ? 0 : -1,
+            'data_anuencia' => is_null($this->request->getPost('DataAnuencia')) ? '00-00-0000' : $this->request->getPost('DataAnuencia'),
+            'assuncao' => is_null($this->request->getPost('Assuncao')) ? 0 : -1,
+            'data_assuncao' => is_null($this->request->getPost('DataAssuncao')) ? '00-00-0000' : $this->request->getPost('DataAssuncao'),
+            'user_id' => $_SESSION['logged_in'],
+            'data_lancamento' => date('d/m/Y G:i:s'),
+            'desistencia' => 0,
+            'Observacao' => $this->request->getPost('Observacao'),
+        ];
+
+        //Salva o cabeçalho do provimento
+        $modelProvimento->save($provimento);
+
+
+
+        $modelLancamentoCarencia->update($Id);
     }
 
     //Chama a primeira view para informar

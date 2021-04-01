@@ -25,8 +25,8 @@
                                 <th>Escola</th>
                                 <th>Disciplina</th>
                                 <th>Total</th>
-                                <th>Temp.</th>
-                                <th class="text-center no-sort">Detalhe</th>
+                                <th class="text-center">Temp.</th>
+                                <th class="text-center no-sort">Alterar</th>
                             </tr>
                         </thead>
 

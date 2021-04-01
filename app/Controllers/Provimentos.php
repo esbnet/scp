@@ -69,11 +69,11 @@ class Provimentos extends BaseController
         $modelCarencia = new CarenciaModel();
         $modelProvimentoProvido = new ProvimentoProvidoModel();
 
-        $val = $this->validate([
-            'ue_id' => 'required|max_length[8]',
-            'cadastro' => 'required|min_length[8]|max_length[9]',
-            'disciplina_id'  => 'required'
-        ]);
+        // $val = $this->validate([
+        //     'ue_id' => 'required|max_length[8]',
+        //     'cadastro' => 'required|min_length[8]|max_length[9]',
+        //     'disciplina_id'  => 'required'
+        // ]);
 
         $provimento = [
             'ue_id' => substr($this->request->getPost('ueid'),  0, 8),
@@ -108,9 +108,6 @@ class Provimentos extends BaseController
         
         $tamanho_array = count($provido_not_prov);
         
-                // echo '<pre>';
-                // dd($tamanho_array);
-                // exit('-------------------------------------------------');
 
         for ($i = 0; $i < ($tamanho_array); $i++) {
 
@@ -159,7 +156,6 @@ class Provimentos extends BaseController
                 // exit('-------------------------------------------------');
             }
         }
-
 
         return redirect()->to(site_url('provimentos'));
 

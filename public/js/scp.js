@@ -636,21 +636,23 @@ function inserirCarencia() {
     //    alert(celulaClicada.children().last());
 }
 
-function update_carencia() {
+function deleta_carencia() {
+    var url = "/LancamentoCarencias/delete/" +  document.getElementById("id").value;
+
     Swal.fire({
         title: "Tem certeza?",
-        text: "A alteração será permanente",
+        text: "Esta carência será excluída permanentemente.",
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Atualizar",
+        confirmButtonText: "Excluir",
         cancelButtonText: "Cancelar",
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire("Atualição!", "Seus dados foram atualizados com sucesso.", "success");
+            Swal.fire("Exclusão!", "Carência excluída com sucesso.", "success");
+            window.location.href = url;
         }
-        window.location.href = "/LancamentoCarencias";
     });
 }
 

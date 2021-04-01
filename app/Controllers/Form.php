@@ -11,18 +11,9 @@ class Form extends Controller
         helper(['form', 'url']);
 
         if (!$this->validate([])) {
-            echo view('Signup', ['validation' => $this->validator]);
-            
-            echo '<pre>';
-            var_dump($this->validator);
-            exit('Falhou...');
-
+            echo view('form/Signup', ['validation' => $this->validator,]);
         } else {
-            echo view('Success');
-
-            echo '<pre>';
-            var_dump($this->validate([]));
-            exit('Passou...');
+            echo view('form/Success');
         }
     }
 }
