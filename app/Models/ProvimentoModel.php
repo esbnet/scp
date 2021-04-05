@@ -40,6 +40,8 @@ class ProvimentoModel extends Model
             'scp_provimento.data_assuncao',
             'scp_provimento.forma_suprimento_id',
             'scp_provimento.tipo_movimentacao_id',
+            'scp_provimento.user_id',
+            'scp_provimento.data_lancamento',
             'scp_provimento.observacao',
 
             'scp_ue.id as ue_id',
@@ -92,5 +94,6 @@ class ProvimentoModel extends Model
                 ->first();
         }
     }
+
 
 }

@@ -19,7 +19,7 @@
 if ($provimentos) : ?>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered dataTable" width="100%" cellspacing="0">
+                    <table class="table-striped tabble-hover compact dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th class="d-none">Id</th>

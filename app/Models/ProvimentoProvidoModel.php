@@ -58,4 +58,12 @@ class ProvimentoProvidoModel extends Model
         return $this->selectSum('total')
             ->findAll();
     }
+
+    public function getProvimentoByProvimentoId($provimento_id = NULL) {
+        return $this->asArray()
+        ->where(['provimento_id' => $provimento_id])
+        ->first();
+
+    }
+
 }

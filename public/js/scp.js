@@ -656,6 +656,28 @@ function deleta_carencia() {
     });
 }
 
+function deleta_provimento() {
+    var url = "/provimentos/delete/" +  document.getElementById("provimento_id").value;
+
+    Swal.fire({
+        title: "Tem certeza?",
+        text: "Este provimento será excluído permanentemente.",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Excluir",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire("Exclusão!", "Provimento excluída com sucesso.", "success");
+            window.location.href = url;
+        }
+    });
+}
+
+
+
 // Código das funções Adicionar, Salvar, Editar e Excluir
 // $(".btnEditar").bind("click", EditarCarencia);
 // $("#btnAdicionar").bind("click", Adicionar);

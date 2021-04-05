@@ -86,9 +86,9 @@
                     <div class="form-group col-md-5">
                         <label class="control-label" for="inputMotivoAfastamento">Motivo do Afastamento</label>
                         <select name="motivo_vaga_id" id="inputMotivoAfastamento" class="form-control  form-control-sm" required>
-                            <option value="" selected >Motivo do Afastamento...</option>
+                            <option value="" selected>Motivo do Afastamento...</option>
                             <?php foreach ($motivos as $motivo) : ?>
-                                <option value="<?= esc($motivo['id']); ?>" > <?= $motivo['Motivo'] ?> </option>
+                                <option value="<?= esc($motivo['id']); ?>"> <?= $motivo['Motivo'] ?> </option>
                             <?php endforeach; ?>
                         </select>
                     </div>

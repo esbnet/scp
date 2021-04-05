@@ -16,7 +16,7 @@
             <?php if ($carencias) : ?>
 
                 <div class="table-responsive">
-                    <table class="dysplay compact dataTable" style="width:100%" cellspacing="0">
+                    <table class="table-striped table-hover compact dataTable" style="width:100%" cellspacing="0">
                     <!-- <table class="table dataTable" width="100%" cellspacing="0"> -->
                         <thead>
                             <tr>

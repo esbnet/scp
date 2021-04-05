@@ -27,16 +27,23 @@
         <!-- <form class="shadow p-3 mb-5 bg-white rounded"> -->
         <form action="<?= $url; ?> " method="post">
 
-
-
             <input class="d-none" type="hidden" name="id" id="id" value="<?php echo ($lancamento_carencia['id']) ?>" />
             <?php csrf_field() ?>
 
             <?php if (!$lancamento_carencia['temporaria']) : ?>
                 <div id="borderCard" class="card-body border-left-primary">
-                    <?php else : ?>
-                        <div id="borderCard" class="card-body border-left-warning">
+                <?php else : ?>
+                    <div id="borderCard" class="card-body border-left-warning">
                     <?php endif; ?>
+
+                    <div class="form-row float-right">
+                        <label class="control-label" for="ueid">
+                            Última atualização:&nbsp;&nbsp;
+                            <i class="fas fa-user-edit text-success"></i>&nbsp;&nbsp;<?php echo $lancamento_carencia['user_id']; ?>
+                            &nbsp;&nbsp;&nbsp;
+                            <i class="fas fa-calendar-alt text-success"></i>&nbsp;&nbsp;<?php echo $lancamento_carencia['data_lancamento']; ?> </label>
+                    </div>
+                    <br><hr>
 
                     <?php if ($lancamento_carencia['houve_provimento'] == 1) : ?>
                         <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -175,7 +182,7 @@
                     <div class="card-footer footer">
                         <button title="Grava as alteração realizadas" type="submit" class="btn btn-primary text-white" id="update_carencia" name="submit" value="Salvar"><i class="fas fa-database">&nbsp;&nbsp;Atualizar</i></button>
                         <a title="Abandona as informações e retorna lista de carência" name="cancel" class="btn btn-warning " href="/LancamentoCarencias"><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
-                        <a title="Exclusão permamente" class="btn btn-outline-danger btn-circle text-danger float-right" onclick="deleta_carencia()" ><i class="fas fa-trash"></i></a>
+                        <a title="Exclusão permamente" class="btn btn-outline-danger btn-circle text-danger float-right" onclick="deleta_carencia()"><i class="fas fa-trash"></i></a>
                     </div>
 
         </form>

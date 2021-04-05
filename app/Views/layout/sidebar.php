@@ -90,8 +90,9 @@
             <span>Consultas</span>
         </a>
         <div id="collapseConsultas" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<?= base_url('escolas/index') ?>">Escolas</a>
+        <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="<?= base_url('/construcao') ?>">Carência</a>
+                <a class="collapse-item" href="<?= base_url('/construcao') ?>">Provimento</a>
             </div>
         </div>
     </li>
@@ -103,8 +104,9 @@
             <span>Relatórios</span>
         </a>
         <div id="collapseRelatorios" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<?= base_url('escolas/index') ?>">Escolas</a>
+        <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="<?= base_url('construcao') ?>">Carência</a>
+                <a class="collapse-item" href="<?= base_url('construcao') ?>">Provimento</a>
             </div>
         </div>
     </li>

@@ -34,7 +34,7 @@ class Provimentos extends BaseController
 
         // echo '<pre>';
         // echo dd($data);
-        // exit(); 
+        // exit();
 
         echo view('layout/header', $data);
         echo view('provimentos/index');
@@ -87,7 +87,7 @@ class Provimentos extends BaseController
             'assuncao' => is_null($this->request->getPost('Assuncao')) ? 0 : -1,
             'data_assuncao' => is_null($this->request->getPost('DataAssuncao')) ? '00-00-0000' : $this->request->getPost('DataAssuncao'),
             'user_id' => $_SESSION['logged_in'],
-            'data_lancamento' => date('d/m/Y G:i:s'),
+            'data_lancamento' => date('Y/m/d H:i:s'),
             'desistencia' => 0,
             'Observacao' => $this->request->getPost('Observacao'),
         ];
@@ -104,10 +104,8 @@ class Provimentos extends BaseController
         $provido_mat_prov = $this->request->getPost('mat_prov[]');
         $provido_vesp_prov = $this->request->getPost('vesp_prov[]');
         $provido_not_prov = $this->request->getPost('not_prov[]');
-        
-        
+
         $tamanho_array = count($provido_not_prov);
-        
 
         for ($i = 0; $i < ($tamanho_array); $i++) {
 
@@ -162,11 +160,85 @@ class Provimentos extends BaseController
         //=========================================================================
     }
 
-    //Apaga um registro com Id específico
-    public function delete($Id)
+    //Grava um registro editado
+    public function save_edit()
     {
-        $model = new provimentoModel();
-        $model->delete($Id);
+
+        $modelProvimento = new provimentoModel();
+
+        $provimento = [
+            'id' => $this->request->getPost('provimento_id'),
+            'ue_id' => substr($this->request->getPost('ueid'),  0, 8),
+            'matricula_id' => $this->request->getPost('matricula_Id'),
+            'aula_normal' => is_null($this->request->getPost('AulaNormal')) ? 0 : -1,
+            'aula_extra' => is_null($this->request->getPost('AulaExtra')) ? 0 : -1,
+            'forma_suprimento_id' => $this->request->getPost('FormaSupId'),
+            'tipo_movimentacao_id' => $this->request->getPost('TipoMovId'),
+            'anuencia' => is_null($this->request->getPost('Anuencia')) ? 0 : -1,
+            'data_anuencia' => is_null($this->request->getPost('DataAnuencia')) ? '00-00-0000' : $this->request->getPost('DataAnuencia'),
+            'assuncao' => is_null($this->request->getPost('Assuncao')) ? 0 : -1,
+            'data_assuncao' => is_null($this->request->getPost('DataAssuncao')) ? '00-00-0000' : $this->request->getPost('DataAssuncao'),
+            'user_id' => $_SESSION['logged_in'],
+            'data_lancamento' => date('Y/m/d H:i:s'),
+            'desistencia' => 0,
+            'Observacao' => $this->request->getPost('Observacao'),
+        ];
+
+        //Salva o cabeçalho do provimento
+        $modelProvimento->save($provimento);
+
+        // echo '<pre>';
+        // dd($provimento);
+        // exit('-------------------------------------------------');
+
+        return redirect()->to(site_url('provimentos'));
+
+        //=========================================================================
+    }
+
+    //Apaga um registro com Id específico
+    public function delete($id = NULL)
+    {
+
+        $modelProvimento = new provimentoModel();
+        $modelCarencia = new LancamentoCarenciaModel();
+        $modelProvimentoProvido = new ProvimentoProvidoModel();
+
+        //Pega todos as disciplinas relativas ao provimento
+        $disciplinas_providos = [$modelProvimentoProvido->getProvimentoByProvimentoId($id)];
+
+        // echo '<pre>';
+        // dd($disciplinas_providos);
+        // exit('-------------------------------------------------');
+
+        //Percorre todas as disciplinas e faz a devolução das horas
+        foreach ($disciplinas_providos as $provido) {
+
+            //Localiza a origem da carência
+            $carencia = $modelCarencia->getCarencia($provido['carencia_old_id']);
+
+
+            //Soma a carência atual com a carência do provimento
+            $carencia['matutino'] = intval($carencia['matutino']) + intval($provido['mat']);
+            $carencia['vespertino'] = intval($carencia['vespertino']) + intval($provido['vesp']);
+            $carencia['noturno'] = intval($carencia['noturno']) + intval($provido['not']);
+            $carencia['total'] = intval($carencia['total']) + intval($provido['total']);
+
+            // $carencia = $carencia;
+            
+            // echo '<pre>';
+            // print_r($id);
+            // exit('-------------------------------------------------');
+
+            //Registra a devolução da carênca
+            $modelCarencia->save($carencia);
+
+            //Apaga a disciplina do provimento
+            $modelProvimentoProvido->delete($provido['id']);
+        }
+
+        //Excluir o provimento definitivamento 
+        $modelProvimento->delete($id);
 
         return redirect()->to(site_url('provimentos/'));
     }
@@ -240,26 +312,6 @@ class Provimentos extends BaseController
     }
     //=========================================================================
 
-
-    //Chama a primeira view para informar
-    public function real_new()
-    {
-        helper('form', 'url');
-
-        $data = [
-            'title' => 'Incluir Carência Real',
-        ];
-
-        if (session()->has('erro')) {
-            $data['erro'] = session('erro');
-        }
-
-        echo view('layout/header', $data);
-        echo view('carencias/carencia_new_escola');
-        echo view('layout/footer');
-    }
-    //=========================================================================
-
     public function provimento()
     {
         $modelDisciplina = new DisciplinaModel();
@@ -285,16 +337,6 @@ class Provimentos extends BaseController
         echo view('layout/header', $data);
         echo view('provimentos/provimento');
         echo view('layout/footer');
-    }
-    //=========================================================================
-
-    public function professorView()
-    {
-    }
-    //=========================================================================
-
-    public function carenciaView()
-    {
     }
     //=========================================================================
 
