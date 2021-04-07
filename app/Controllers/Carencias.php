@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 use App\Models\EscolaModel;
-use App\Models\CarenciaModel;
+use App\Models\LancamentoCarenciaModel;
 use App\Models\DisciplinaModel;
 use App\Models\MotivoCarenciaModel;
 use App\Models\ProfessorModel;
@@ -38,7 +38,8 @@ class Carencias extends Controller
         echo view('layout/header', $data);
         echo view('carencias/index');
         echo view('layout/footer');
-    }
+    }    //Exibe todos os registros
+
 
     //Exibe registro pelo Id
     public function view($Id = NULL)
@@ -59,46 +60,46 @@ class Carencias extends Controller
     }
 
     //Grava um novo registro
-    public function store()
-    {
-    
-        $model = new CarenciaModel();
+    // public function store()
+    // {
 
-        //Critérios de validação
-        $val = $this->validate([
-            'ue_id' => 'required|min_length[3]|max_length[9]',
-            'cadastro' => 'required|min_length[8]|max_length[9]',
-            'disciplina_id'  => 'required'
-        ]);
+    //     $model = new CarenciaModel();
 
-        $carencia = [
-            'ue_id' => substr($this->request->getPost('ue_id'),  0, 8),
-            'disciplina_id' => $this->request->getPost('disciplina_id'),
-            'matutino' => $this->request->getPost('matutino'),
-            'vespertino' => $this->request->getPost('vespertino'),
-            'noturno' => $this->request->getPost('noturno'),
-            'total' => $this->request->getPost('total'),
-            'teporario' => 'Não',
-            'atualizacao' => date('d/m/y h:m:s'),
-        ];
+    //     //Critérios de validação
+    //     $val = $this->validate([
+    //         'ue_id' => 'required|min_length[3]|max_length[9]',
+    //         'cadastro' => 'required|min_length[8]|max_length[9]',
+    //         'disciplina_id'  => 'required'
+    //     ]);
 
-        if($model->save($carencia) == true) {
-                $encontrado['success'] = 'true';
-                $encontrado['message'] = 'Código informado localizado';
-        }else{
-            $encontrado['success'] = 'false';
-            $encontrado['message'] = 'O código informado não foi encontrado';            
-        };
-        
-        echo json_encode([$encontrado]);
+    //     $carencia = [
+    //         'ue_id' => substr($this->request->getPost('ue_id'),  0, 8),
+    //         'disciplina_id' => $this->request->getPost('disciplina_id'),
+    //         'matutino' => $this->request->getPost('matutino'),
+    //         'vespertino' => $this->request->getPost('vespertino'),
+    //         'noturno' => $this->request->getPost('noturno'),
+    //         'total' => $this->request->getPost('total'),
+    //         'teporario' => 'Não',
+    //         'atualizacao' => date('d/m/y h:m:s'),
+    //     ];
 
-        // return redirect()->to(site_url('carencias'));
+    //     if ($model->save($carencia) == true) {
+    //         $encontrado['success'] = 'true';
+    //         $encontrado['message'] = 'Código informado localizado';
+    //     } else {
+    //         $encontrado['success'] = 'false';
+    //         $encontrado['message'] = 'O código informado não foi encontrado';
+    //     };
 
-        // echo '<pre>';
-        // var_dump($carencia);
-        // exit();
+    //     echo json_encode([$encontrado]);
 
-    }
+    //     // return redirect()->to(site_url('carencias'));
+
+    //     // echo '<pre>';
+    //     // var_dump($carencia);
+    //     // exit();
+
+    // }
 
     //Apaga um registro com Id específico
     public function delete($Id)
@@ -170,17 +171,16 @@ class Carencias extends Controller
         $modelEscola = new EscolaModel();
         $Ue = $modelEscola->getEscolabyUEId($codigoEscola);
 
-        if ($Ue){
+        if ($Ue) {
             $encontrado['success'] = 'true';
             $encontrado['message'] = 'Código informado localizado';
-            $encontrado['escola'] = $Ue;            
-        }else{
+            $encontrado['escola'] = $Ue;
+        } else {
             $encontrado['success'] = 'false';
             $encontrado['message'] = 'O código informado não foi encontrado';
         }
 
         echo json_encode([$encontrado]);
-
     }
 
 
@@ -191,40 +191,40 @@ class Carencias extends Controller
         $modelProfessor = new ProfessorModel();
         $Professor = $modelProfessor->getProfessorbyId($codigoProfessor);
 
-        if ($Professor){
+        if ($Professor) {
             $encontrado['success'] = 'true';
             $encontrado['message'] = 'Código informado localizado';
-            $encontrado['professor'] = $Professor;            
-        }else{
+            $encontrado['professor'] = $Professor;
+        } else {
             $encontrado['success'] = 'false';
             $encontrado['message'] = 'Matrícula informada não encontrada';
         }
 
         echo json_encode([$encontrado]);
-
     }
 
     //Pesquisa carências para uma determinada escola
-    public function  pesquisaCarenciasByUeid($ueid){
+    public function  pesquisaCarenciasByUeid($ueid)
+    {
 
         $modelCarencia = new CarenciaModel();
         $Carencias = $modelCarencia->getCarenciaUE($ueid);
 
-        if ($Carencias){
+        if ($Carencias) {
             $encontrado['success'] = 'true';
             $encontrado['message'] = 'Código informado localizado';
-            $encontrado['carencias'] = $Carencias;            
-        }else{
+            $encontrado['carencias'] = $Carencias;
+        } else {
             $encontrado['success'] = 'false';
             $encontrado['message'] = 'Código informada não encontrada';
-            $encontrado['carencias'] = "";            
+            $encontrado['carencias'] = "";
         }
 
-        echo('<pre>');
+        echo ('<pre>');
         dd($encontrado['carencias']);
         exit('cacrencias encontradas');
 
         echo json_encode([$encontrado]);
-
     }
+
 }

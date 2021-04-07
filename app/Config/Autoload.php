@@ -45,6 +45,7 @@ class Autoload extends AutoloadConfig
 		'App'         => APPPATH,
 		'Myth\Auth'   => APPPATH .'ThirdParty/myth-auth/src',
 		'Dompdf'      => APPPATH .'ThirdParty/dompdf/src',
+		'PhpSpreadsheet' => APPPATH .'ThirdParty/PhpSpreadsheet/src',
 	];
 
 	/**

@@ -40,6 +40,7 @@
                 <a class="collapse-item text-success" href="<?= base_url('#') ?>"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;Painel Carência</a>
                 <a class="collapse-item text-primary" href="<?= base_url('LancamentoCarencias') ?>"><i class="fas fa-hourglass-half"></i>&nbsp;&nbsp;Relação</a>
                 <a class="collapse-item text-primary" href="<?= base_url('LancamentoCarencias/carencia') ?>"><i class="fas fa-plus"></i>&nbsp;&nbsp;Incluir</a>
+                <a class="collapse-item text-primary" href="<?= base_url('LancamentoCarencias/consulta') ?>"><i class="fas fa-search"></i>&nbsp;&nbsp;Pesquisar</a>
             </div>
         </div>
     </li>

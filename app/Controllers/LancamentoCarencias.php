@@ -195,7 +195,6 @@ class LancamentoCarencias extends BaseController
         $modelLancamentoCarencia = new LancamentoCarenciaModel();
         $modelCarencia = new CarenciaModel();
 
-
         $lancamento = [
             'ue_id' => substr($this->request->getPost('ueid'),  0, 8),
             'matricula_id' => $this->request->getPost('matricula_Id'),
@@ -214,9 +213,7 @@ class LancamentoCarencias extends BaseController
         ];
 
         //Salva o cabeçalho do provimento
-        $modelProvimento->save($provimento);
-
-
+        // $modelProvimento->save($provimento);
 
         $modelLancamentoCarencia->update($Id);
     }
@@ -331,8 +328,33 @@ class LancamentoCarencias extends BaseController
         // echo '<pre>';
         // dd($Professor);
         // exit('ecnotrou...');
-
-
         echo json_encode([$encontrado]);
     }
+
+    public function consulta()
+    {
+
+        helper(['form', 'url']);
+
+        $carenciaModel = new LancamentoCarenciaModel();
+
+        $data = [
+            'title' => 'Pesquisa de Carências',
+            'carencias'  => $carenciaModel->getCarenciaConsulta(),
+            // 'session' => \Config\Services::session(),
+            'styles' => [
+                'vendor/datatables/dataTables.bootstrap4.min.css',
+            ],
+            'scripts' => [
+                'vendor/datatables/jquery.dataTables.min.js',
+                'vendor/datatables/dataTables.bootstrap4.min.js',
+                'vendor/datatables/app.js',
+            ],
+        ];
+
+        echo view('layout/header', $data);
+        echo view('carencias/consulta');
+        echo view('layout/footer');
+    }
+
 }

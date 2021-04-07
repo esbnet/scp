@@ -69,12 +69,6 @@ class Provimentos extends BaseController
         $modelCarencia = new LancamentoCarenciaModel();
         $modelProvimentoProvido = new ProvimentoProvidoModel();
 
-        // $val = $this->validate([
-        //     'ue_id' => 'required|max_length[8]',
-        //     'cadastro' => 'required|min_length[8]|max_length[9]',
-        //     'disciplina_id'  => 'required'
-        // ]);
-
         $provimento = [
             'ue_id' => substr($this->request->getPost('ueid'),  0, 8),
             'matricula_id' => $this->request->getPost('matricula_Id'),
@@ -128,6 +122,12 @@ class Provimentos extends BaseController
                 $carencia[0]['noturno'] = $carencia[0]['noturno'] - $provido_not_prov[$i];
                 $carencia[0]['total'] = $carencia[0]['total'] - $totalProvidoDisciplina;
 
+                $carencia[0]['houve_provimento'] = intval(1);
+
+                // echo '<pre>';
+                // dd($carencia[0]);
+                // exit('-------------------------------------------------');
+                
                 //Grava horas restantes na carência
                 $modelCarencia->save($carencia[0]);
 
@@ -149,9 +149,6 @@ class Provimentos extends BaseController
                 //Grava disciplina e horas providas relacionada ao provimento
                 $modelProvimentoProvido->insert($provido);
 
-                // echo '<pre>';
-                // dd($provido);
-                // exit('-------------------------------------------------');
             }
         }
 

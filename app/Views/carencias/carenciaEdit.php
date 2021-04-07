@@ -182,7 +182,7 @@
                     <div class="card-footer footer">
                         <button title="Grava as alteração realizadas" type="submit" class="btn btn-primary text-white" id="update_carencia" name="submit" value="Salvar"><i class="fas fa-database">&nbsp;&nbsp;Atualizar</i></button>
                         <a title="Abandona as informações e retorna lista de carência" name="cancel" class="btn btn-warning " href="/LancamentoCarencias"><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
-                        <a title="Exclusão permamente" class="btn btn-outline-danger btn-circle text-danger float-right" onclick="deleta_carencia()"><i class="fas fa-trash"></i></a>
+                        <a title="Exclusão permamente" class="btn btn-outline-danger btn-circle text-danger float-right" onclick="deleta_carencia()"><i class="fas fa-trash" <?= ( $lancamento_carencia['houve_provimento'] == 1 ? 'disabled' :'disabled') ?>></i></a>
                     </div>
 
         </form>

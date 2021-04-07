@@ -5,6 +5,8 @@
 #My temp
 dompdf
 public/docs
+PhpSpreadsheet
+myth-auth
 
 # OS X
 .DS_Store

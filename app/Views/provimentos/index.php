@@ -63,7 +63,7 @@ if ($provimentos) : ?>
             <?php endif  ?>
 
             <?php if (!$provimentos) : ?>
-                <h2>Nenhum provimento cadastrado.</h2>
+                <h2><i class="far fa-hourglass"></i>&nbsp;&nbsp;Nenum provimento cadastrado.</h2>
             <?php endif  ?>
 
         </div>

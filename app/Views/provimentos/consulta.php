@@ -126,10 +126,10 @@
                         <div class="form-row d-none linha-03 ">
                             <div class="form-group col-md-3">
                                 <label for="inputMotivo">Forma de Suprimento</label>
-                                <select name="FormaSupId" id="forma_suprimento_id" class="form-control form-control-sm text-primary" required>
-                                    <option value="" selected>Selecione o motivo...</option>
+                                <select name="FormaSupId" id="forma_suprimento_id" class="form-control form-control-sm text-primary">
+                                    <option value="0" selected>Selecione o motivo...</option>
                                     <?php foreach ($formas_suprimento as $forma) : ?>
-                                        <option value="<?php echo esc($forma['id']); ?>">
+                                        <option value="<?php echo esc($forma['id']); ?>" <?= esc($forma['id'] == $forma['id'] ? 'selected' : '') ?>>
                                             <?php echo $forma['nome'] ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -139,10 +139,10 @@
 
                             <div class="form-group col-md-3">
                                 <label for="motivo_provimento_id">Tipo de Movimentação</label>
-                                <select name="TipoMovId" id="motivo_provimento_id" class="form-control form-control-sm text-primary" required>
-                                    <option value="" selected>Selecione o tipo de movimentação...</option>
+                                <select name="TipoMovId" id="motivo_provimento_id" class="form-control form-control-sm text-primary">
+                                    <option value="0" selected>Selecione o tipo de movimentação...</option>
                                     <?php foreach ($tipos_movimentacao as $tipo) : ?>
-                                        <option value="<?php echo esc($tipo['id']); ?>" >
+                                        <option value="<?php echo esc($tipo['id']); ?>" <?= esc($tipo['id'] == $tipo['id'] ? 'selected' : '') ?>>
                                             <?php echo $tipo['nome'] ?>
                                         </option>
                                     <?php endforeach; ?>

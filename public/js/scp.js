@@ -55,6 +55,11 @@ function pesquisa_escola_carencia() {
                 $(".matricula").prop("readonly", false);
                 $(".btn-matricula").prop("disabled", false);
                 $(".linha-01").removeClass("d-none");
+                $(".linha-02").removeClass("d-none");
+                $(".linha-03").removeClass("d-none");
+                $(".linha-04").removeClass("d-none");
+                $(".linha-05").removeClass("d-none");
+                $(".footer").removeClass("d-none");
             } else {
                 Swal.fire({
                     title: "Atenção!",
@@ -676,7 +681,75 @@ function deleta_provimento() {
     });
 }
 
+function consulta_carencia() {
 
+    var nte = document.getElementById("nte_cs").value;
+    var municipio = document.getElementById("municipio_cs").value;
+    var ue = document.getElementById("ue_cs").value;
+    var nte = document.getElementById("tipo_carencia").value;
+
+    var campos = nte + municipio + ue + tipo_carencia
+
+    if (campos == null || campos == "") {
+        Swal.fire({
+            title: "Atenção!",
+            text: "Nenhum campo informado. Tente novamente.",
+            icon: "warning",
+            confirmButtonText: "Voltar",
+        });
+        return;
+    }
+
+    var endereco = "/LancamentoCarencias/consulta/" + nte;
+    $.ajax({
+        url: endereco,
+        method: "post",
+        data: $(this).serialize(),
+        dataType: "json",
+        success: function (resposta) {
+            var [{ success }] = resposta;
+            var [{ professor }] = resposta;
+            var [{ message }] = resposta;
+            // console.log(success);
+            console.log(professor);
+            // console.log(message);
+            if (professor != "") {
+                document.getElementById("Matricula").value =
+                    professor.matricula;
+                document.getElementById("MatriculaSap").value =
+                    professor.matricula_sap;
+                document.getElementById("NomeProfessor").value = professor.nome;
+                document.getElementById("Vinculo").value = professor.vinculo;
+                document.getElementById("CPF").value = professor.cpf;
+                document.getElementById("Licenciatura").value =
+                    professor.licenca_plena;
+                $(".linha-02").removeClass("d-none");
+                $(".linha-03").removeClass("d-none");
+                $(".linha-04").removeClass("d-none");
+                $(".linha-05").removeClass("d-none");
+                $(".footer").removeClass("d-none");
+                document.getElementById("submit").disabled = false;
+
+                // console.log($(".datatable"))
+            } else {
+                Swal.fire({
+                    title: "Atenção!",
+                    text:
+                        "Não existe professor com a matrícula (" +
+                        document.getElementById("Matricula").value +
+                        ") informada. Tente novamente!",
+                    icon: "error",
+                    confirmButtonText: "Voltar",
+                });
+                document.getElementById("Matricula").value = "";
+                document.getElementById("MatriculaSap").value = "";
+                document.getElementById("NomeProfessor").value = "";
+                document.getElementById("Vinculo").value = "";
+            }
+        },
+    });
+
+}
 
 // Código das funções Adicionar, Salvar, Editar e Excluir
 // $(".btnEditar").bind("click", EditarCarencia);

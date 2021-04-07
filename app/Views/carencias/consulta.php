@@ -12,7 +12,43 @@
         </div>
 
         <div class="card-body">
-        
+
+            <div class="card  mb-4">
+
+                <div id="borderCard" class="card-body border-down-primary">
+                    <div class="form-row ">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="MatriculaSap">NTE</label>
+                            <input value="" type="text" class="form-control form-control-sm " name="nte" id="nte_cs">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="MatriculaSap">Município</label>
+                            <input value="" type="text" class="form-control form-control-sm " name="municipio" id="municipio_cs">
+                        </div>
+                    </div>
+                    <div class="form-row ">
+                        <div class="form-group col-md-9">
+                            <label class="control-label" for="NomeProfessor">Unidade Escolar</label>
+                            <input value="" type="text" class="form-control form-control-sm" name="unidade_escolar" id="ue_cs">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="tipo_carencia">Tipo de Carência</label>
+                            <select name="tipo_carencia" id="tipo_carencia" class="form-control form-control-sm">
+                                <option value="0">Real</option>
+                                <option value="1">Temporária</option>
+                                <option value="2">Ambos</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <a title="Pesquisar" class="btn btn-outline-warning btn-circle float-right shadow" onclick="consulta_carencia()"><i class="fas fa-search"></i></a>
+                </div>
+
+                <!-- <div class="card-footer footer"> -->
+                <!-- </div> -->
+
+            </div><hr>
+
             <?php if ($carencias) : ?>
 
                 <div class="table-responsive">
@@ -30,7 +66,6 @@
                             </tr>
                         </thead>
 
-
                         <tbody>
                             <?php foreach ($carencias as $carencia) : ?>
                                 <tr>
@@ -45,7 +80,6 @@
                                             : '<span class="badge badge-secondary">Não</span>'); ?>
                                     </td>
 
-
                                     <td class="text-center">
                                         <a class="btn btn-light btn-circle btn-sm" style='color: #0D47A1' href="<?= base_url('/LancamentoCarencias/edit/' . $carencia['id']); ?>"><i class="fas fa-pencil-alt"></i></a>
                                     </td>
@@ -56,10 +90,9 @@
 
                     </table>
                 </div>
+
             <?php endif  ?>
-            <?php if (!$carencias) : ?>
-                <h2><i class="far fa-hourglass"></i>&nbsp;&nbsp;Nenhuma carência cadastrada.</h2>
-            <?php endif  ?>
+
         </div>
 
     </div>

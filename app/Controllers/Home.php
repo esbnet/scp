@@ -18,27 +18,19 @@ class Home extends BaseController
 
 		$TP = $modelProvido->getTotalProvido();
 
-		// echo('<pre>');
-		// print_r($TCR);
-		// print_r($TCT);
-		// print_r($TP);
-		// exit('Chegou -------------------');
-
 		$TTC = (intval(($TCR[0]['total'])) + intval($TCT[0]['total']));
-		$EFICIENCIA = (intval($TP[0]['total']) / $TTC) * 100;
-
-		// echo('<pre>');
-		// print_r($TTC);
-		// echo('<br>');
-		// print_r($EFICIENCIA);
-		// exit('Chegou -------------------');
+		if ($TTC > 0) {
+			$EFICIENCIA = (intval($TP[0]['total']) / $TTC) * 100;
+		}else{
+			$EFICIENCIA = 0;
+		}
 
 		$data = [
 			'TotalCarenciaReal' => number_format($TCR[0]['total'], 0, '', '.'),
 			'TotalCarenciaTemporaria' => number_format($TCT[0]['total'], 0, '', '.'),
 			'TotalProvimento' => number_format($TP[0]['total'], 0, '', '.'),
 			'Eficiencia' => number_format($EFICIENCIA, 0, '', '.'),
-			'title' => 'Titulo exemplo'
+			'title' => 'Dashboard'
 		];
 
 		// echo('<pre>');
