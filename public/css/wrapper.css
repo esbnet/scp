@@ -1,0 +1,6 @@
+/* Stop Line Break inside Cell */
+
+.dt-body-nowrap {
+    white-space: nowrap !important;
+}
+

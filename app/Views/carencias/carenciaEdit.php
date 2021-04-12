@@ -115,10 +115,10 @@
                     <div class="form-row">
                         <div class="form-group col-md-3">
                             <label class="control-label" for="inputDisciplina">Disciplina</label>
-                            <select name="disciplina_id" id="inputDisciplina" class="form-control form-control-sm" required <?= isset($lancamento_carencia['houve_provimento']) ? 'disabled' : ''; ?>>
+                            <select name="disciplina_id" id="inputDisciplina" class="form-control form-control-sm" required <?= isset($lancamento_carencia['houve_provimento']) ? 'readonly' : ''; ?> >
                                 <option value="" selected>Disciplina...</option>
                                 <?php foreach ($disciplinas as $disciplina) : ?>
-                                    <option value="<?= esc($disciplina['id']); ?>" <?= esc($disciplina['id'] == $lancamento_carencia['disciplina_id'] ? 'selected' : '') ?>><?php echo $disciplina['nome'] ?></option>
+                                    <option value="<?= esc($disciplina['id']); ?>" <?= esc($disciplina['id'] == $lancamento_carencia['disciplina_id'] ? 'selected' : '') ?> ><?php echo $disciplina['nome'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -128,7 +128,9 @@
                             <select name="motivo_vaga_id" id="inputMotivoAfastamento" class="form-control form-control-sm" required>
                                 <option value="" selected>Motivo do Afastamento...</option>
                                 <?php foreach ($motivos as $motivo) : ?>
-                                    <option value="<?= esc($motivo['id']); ?>" <?= ($motivo['id'] == $lancamento_carencia['motivo_vaga_id'] ? 'selected' : '') ?>><?php echo $motivo['Motivo'] ?></option>
+                                    <?php if($motivo['temp'] == $lancamento_carencia['temporaria'] ) : ?>
+                                        <option value="<?= esc($motivo['id']); ?>" <?= ($motivo['id'] == $lancamento_carencia['motivo_vaga_id'] ? 'selected' : '') ?>><?php echo $motivo['motivo'] ?></option>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -136,13 +138,13 @@
                         <div class="form-group col-md-2">
                             <label class="control-label" for="DataInicio">Início do Afastamento</label>
                             <div class="input-group input-group-sm mb-2">
-                                <input type="date" class="form-control form-control-sm" id="DataInicio" name="inicio_afastamento">
+                                <input type="date" class="form-control form-control-sm" id="DataInicio" name="inicio_afastamento" value="<?= isset($lancamento_carencia['inicio_afastamento']) ? $lancamento_carencia['inicio_afastamento'] : '' ?>" required>
                             </div>
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-2 <?= ($lancamento_carencia['temporaria'] == 0 ? 'd-none' : '') ?>" >
                             <label class="control-label" for="DataFim">Fim do Afastamento</label>
                             <div class="input-group input-group-sm mb-2">
-                                <input placeholder="Término" type="date" class="form-control form-control-sm" id="DataFim" name="termino_afastamento">
+                                <input placeholder="Término" type="date" class="form-control form-control-sm" id="DataFim" name="termino_afastamento" value="<?= isset($lancamento_carencia['termino_afastamento']) ? $lancamento_carencia['termino_afastamento'] : '' ?>" <?= ($lancamento_carencia['temporaria'] == 1 ? 'required' : '') ?>>
                             </div>
                         </div>
                     </div>

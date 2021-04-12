@@ -1,3 +1,4 @@
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -29,7 +30,6 @@
                                 <th class="text-center no-sort">Alterar</th>
                             </tr>
                         </thead>
-
 
                         <tbody>
                             <?php foreach ($carencias as $carencia) : ?>

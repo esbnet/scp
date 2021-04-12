@@ -33,4 +33,13 @@ class MotivoCarenciaModel extends Model
         return $this->orderBy('Motivo', 'asc')
             ->findAll();
     }
+
+    public function getAllByTipoCarencia()
+    {
+
+        return $this->orderBy('Motivo', 'asc')
+            ->findAll();
+    }
+
+
 }

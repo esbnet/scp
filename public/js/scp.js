@@ -1,3 +1,5 @@
+$("#modalTipoCarencia").modal({ backdrop: "static", keyboard: false });
+
 // Modal para escolher o tipo de carência
 $(document).ready(function () {
     $("input").keypress(function (e) {
@@ -327,6 +329,7 @@ function pesquisa_professor_provimento() {
 
 // Busca toda a carência da UE informada
 function pesquisa_carencia() {
+    setTipoCarenciaDefinitiva;
     var ueid = document.getElementById("ueid").value;
 
     if (ueid == null || ueid == "") {
@@ -370,7 +373,7 @@ function pesquisa_carencia() {
                 $(".linha-02").removeClass("d-none");
 
                 // Se a escola existir, procurar por carência nesta escola
-                console.log(carencia);
+                //console.log(carencia);
 
                 if (carencia) {
                     for (var i = 0; carencia.length > i; i++) {
@@ -542,6 +545,43 @@ function setTipoCarenciaDefinitiva() {
     document.querySelector("#borderCard").className =
         "card-body border-left-primary";
     document.querySelector("#tipoCarencia").value = "0";
+
+    var endereco = "/LancamentoCarencias/motivoCarenciaTipo/0";
+    $.ajax({
+        url: endereco,
+        method: "post",
+        data: $(this).serialize(),
+        dataType: "json",
+        success: function (resposta) {
+            var [{ motivos }] = resposta;
+
+            if (motivos != "") {
+                var select = document.getElementById("motivo_tipo_carencia");
+
+                for (var i = 0; i < motivos.length; i++) {
+                    if (motivos[i].temp == 0) {
+                        var value = motivos[i].id;
+                        var text = motivos[i].motivo;
+                        var el = document.createElement("option");
+                        el.textContent = text;
+                        el.value = value;
+                        select.appendChild(el);
+                    }
+                }
+                $(".data-fim").hide();
+                $(".termino_afastamento").prop("required", false);
+                // $(".data-fim").prop("d-none", true)
+            } else {
+                Swal.fire({
+                    title: "Atenção!",
+                    text:
+                        "Não existe motivos para carência real. Cadastre e tente novamente!",
+                    icon: "error",
+                    confirmButtonText: "Voltar",
+                });
+            }
+        },
+    });
 }
 
 function setTipoCarenciaTemporaria() {
@@ -552,13 +592,44 @@ function setTipoCarenciaTemporaria() {
     document.querySelector("#borderCard").className =
         "card-body border-left-warning";
     document.querySelector("#tipoCarencia").value = "1";
+
+    var endereco = "/LancamentoCarencias/motivoCarenciaTipo/1";
+    $.ajax({
+        url: endereco,
+        method: "post",
+        data: $(this).serialize(),
+        dataType: "json",
+        success: function (resposta) {
+            var [{ motivos }] = resposta;
+
+            if (motivos != "") {
+                var select = document.getElementById("motivo_tipo_carencia");
+
+                for (var i = 0; i < motivos.length; i++) {
+                    if (motivos[i].temp == 1) {
+                        var value = motivos[i].id;
+                        var text = motivos[i].motivo;
+                        var el = document.createElement("option");
+                        el.textContent = text;
+                        el.value = value;
+                        select.appendChild(el);
+                    }
+                }
+                $(".data-fim").show();
+                $(".termino_afastamento").prop("required", true);
+                // $(".data-fim").prop("d-none", true)
+            } else {
+                Swal.fire({
+                    title: "Atenção!",
+                    text:
+                        "Não existe motivos para carência real. Cadastre e tente novamente!",
+                    icon: "error",
+                    confirmButtonText: "Voltar",
+                });
+            }
+        },
+    });
 }
-
-$("#modalTipoCarencia").modal({ backdrop: "static", keyboard: false });
-
-// $(document).ready(function () {
-//     $("#modalTipoCarencia").modal("show");
-// });
 
 // Acumula os campos dos turnos para o campo total -->
 function calcular_total_carencia() {
@@ -642,7 +713,8 @@ function inserirCarencia() {
 }
 
 function deleta_carencia() {
-    var url = "/LancamentoCarencias/delete/" +  document.getElementById("id").value;
+    var url =
+        "/LancamentoCarencias/delete/" + document.getElementById("id").value;
 
     Swal.fire({
         title: "Tem certeza?",
@@ -662,7 +734,8 @@ function deleta_carencia() {
 }
 
 function deleta_provimento() {
-    var url = "/provimentos/delete/" +  document.getElementById("provimento_id").value;
+    var url =
+        "/provimentos/delete/" + document.getElementById("provimento_id").value;
 
     Swal.fire({
         title: "Tem certeza?",
@@ -675,82 +748,122 @@ function deleta_provimento() {
         cancelButtonText: "Cancelar",
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire("Exclusão!", "Provimento excluída com sucesso.", "success");
+            Swal.fire(
+                "Exclusão!",
+                "Provimento excluída com sucesso.",
+                "success"
+            );
             window.location.href = url;
         }
     });
 }
 
 function consulta_carencia() {
-
-    var nte = document.getElementById("nte_cs").value;
-    var municipio = document.getElementById("municipio_cs").value;
-    var ue = document.getElementById("ue_cs").value;
-    var nte = document.getElementById("tipo_carencia").value;
-
-    var campos = nte + municipio + ue + tipo_carencia
-
-    if (campos == null || campos == "") {
-        Swal.fire({
-            title: "Atenção!",
-            text: "Nenhum campo informado. Tente novamente.",
-            icon: "warning",
-            confirmButtonText: "Voltar",
-        });
-        return;
-    }
-
-    var endereco = "/LancamentoCarencias/consulta/" + nte;
+    var endereco = "/LancamentoCarencias/consutla_carencia";
     $.ajax({
         url: endereco,
         method: "post",
         data: $(this).serialize(),
         dataType: "json",
         success: function (resposta) {
-            var [{ success }] = resposta;
-            var [{ professor }] = resposta;
-            var [{ message }] = resposta;
-            // console.log(success);
-            console.log(professor);
-            // console.log(message);
-            if (professor != "") {
-                document.getElementById("Matricula").value =
-                    professor.matricula;
-                document.getElementById("MatriculaSap").value =
-                    professor.matricula_sap;
-                document.getElementById("NomeProfessor").value = professor.nome;
-                document.getElementById("Vinculo").value = professor.vinculo;
-                document.getElementById("CPF").value = professor.cpf;
-                document.getElementById("Licenciatura").value =
-                    professor.licenca_plena;
-                $(".linha-02").removeClass("d-none");
-                $(".linha-03").removeClass("d-none");
-                $(".linha-04").removeClass("d-none");
-                $(".linha-05").removeClass("d-none");
-                $(".footer").removeClass("d-none");
-                document.getElementById("submit").disabled = false;
 
-                // console.log($(".datatable"))
+            var [{ carencias }] = resposta;
+            
+            if (carencias != "") {
+                console.log(carencias)
+                alert('encontrou as carencias')
+                var table = $("#consulta_carencia").DataTable({
+                    destroy: true,
+                    // scrollX: true,
+                    bAutoWidth: true,
+                    autoWidth: true,
+                    scrollX: true,
+                    scrollCollapse: false,
+                    scroller: true,
+
+                    data: carencias,
+
+                    dom: "Bfrtip",
+                    buttons: [
+                        {
+                            extend: "excelHtml5",
+                            text: '<i class="far fa-file-excel"></i>',
+                            titleAttr: "Exporta para excel",
+                            className: "",
+                        },
+                        {
+                            extend: "pdfHtml5",
+                            text: '<i class="far fa-file-pdf"></i>',
+                            titleAttr: "Exporta para PDF",
+                            // className: 'btn btn-success'
+                        },
+                        {
+                            extend: "csvHtml5",
+                            text: '<i class="fas fa-file-csv"></i>',
+                            titleAttr: "Exporta para cvs",
+                            className: "",
+                        },
+                        {
+                            extend: "copyHtml5",
+                            text: '<i class="fas fa-copy"></i>',
+                            titleAttr: "Copia para área de transferência",
+                            className: "",
+                        },
+                    ],
+                });
+
+                table.columns.adjust().draw();
             } else {
                 Swal.fire({
                     title: "Atenção!",
                     text:
-                        "Não existe professor com a matrícula (" +
-                        document.getElementById("Matricula").value +
-                        ") informada. Tente novamente!",
+                        "Não existe motivos para carência real. Cadastre e tente novamente!",
                     icon: "error",
                     confirmButtonText: "Voltar",
                 });
-                document.getElementById("Matricula").value = "";
-                document.getElementById("MatriculaSap").value = "";
-                document.getElementById("NomeProfessor").value = "";
-                document.getElementById("Vinculo").value = "";
             }
         },
     });
 
-}
+    // var table = $("#consulta_carencia").DataTable({
+    //     destroy: true,
+    //     // scrollX: true,
+    //     bAutoWidth: true,
+    //     autoWidth: true,
+    //     scrollX: true,
+    //     scrollCollapse: false,
+    //     scroller: true,
 
-// Código das funções Adicionar, Salvar, Editar e Excluir
-// $(".btnEditar").bind("click", EditarCarencia);
-// $("#btnAdicionar").bind("click", Adicionar);
+    //     ajax: "consutla_carencia",
+
+    //     dom: "Bfrtip",
+    //     buttons: [
+    //         {
+    //             extend: "excelHtml5",
+    //             text: '<i class="far fa-file-excel"></i>',
+    //             titleAttr: "Exporta para excel",
+    //             className: "",
+    //         },
+    //         {
+    //             extend: "pdfHtml5",
+    //             text: '<i class="far fa-file-pdf"></i>',
+    //             titleAttr: "Exporta para PDF",
+    //             // className: 'btn btn-success'
+    //         },
+    //         {
+    //             extend: "csvHtml5",
+    //             text: '<i class="fas fa-file-csv"></i>',
+    //             titleAttr: "Exporta para cvs",
+    //             className: "",
+    //         },
+    //         {
+    //             extend: "copyHtml5",
+    //             text: '<i class="fas fa-copy"></i>',
+    //             titleAttr: "Copia para área de transferência",
+    //             className: "",
+    //         },
+    //     ],
+    // });
+
+    // table.columns.adjust().draw();
+}

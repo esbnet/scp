@@ -178,15 +178,15 @@ class Provimentos extends BaseController
             'user_id' => $_SESSION['logged_in'],
             'data_lancamento' => date('Y/m/d H:i:s'),
             'desistencia' => 0,
-            'Observacao' => $this->request->getPost('Observacao'),
+            'observacao' => $this->request->getPost('Observacao'),
         ];
-
-        //Salva o cabeçalho do provimento
-        $modelProvimento->save($provimento);
 
         // echo '<pre>';
         // dd($provimento);
         // exit('-------------------------------------------------');
+
+        //Salva o cabeçalho do provimento
+        $modelProvimento->update($provimento['id'], $provimento);
 
         return redirect()->to(site_url('provimentos'));
 
@@ -297,17 +297,9 @@ class Provimentos extends BaseController
         }
 
         echo view('layout/header', $data);
-        echo view('provimentos/edit');
+        echo view('provimentos/provimentoEdit');
         echo view('layout/footer');
     }
-
-    //Grava alterações em um registro
-    public function update($Id)
-    {
-        $model = new ProvimentoModel();
-        $model->update($Id);
-    }
-    //=========================================================================
 
     public function provimento()
     {

@@ -23,7 +23,7 @@
                     <div class="form-group col-md-2">
                         <label class="control-label" for="ueid">Unidade Escolar</label>
                         <div class="input-group mb-3">
-                            <input type="number" value="1100485" size="9" id="ueid" name="ueid" class="form-control form-control-sm btn-sm" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                            <input type="number" value="1100485" size="9" id="ueid" name="ueid" class="form-control form-control-sm btn-sm" aria-label="Recipient's username" aria-describedby="button-addon2">
                             <!-- <input type="number" value="<?= isset($ue['UeID']) ? $ue['UeID'] : "" ?>" size="9" id="ueid" name="ueid" class="form-control form-control-sm btn-sm" aria-label="Recipient's username" aria-describedby="button-addon2" required> -->
                             <button class="btn btn-primary btn-sm" type="button" id="busca_escola" onclick="pesquisa_escola_carencia()"><i class="fas fa-search"></i></button>
                         </div>
@@ -53,8 +53,7 @@
                     <div class="form-group col-md-2">
                         <label class="control-label" for="inputMatricula">Matrícula</label>
                         <div class="input-group mb-3">
-                            <input type="number" value="110568394" size="9" name="matricula" id="Matricula" class="form-control form-control-sm matricula" readonly>
-                            <!-- <input type="number" value="<?= isset($professor['matricula']) ? $professor['matricula'] : '' ?>" size="9" name="matricula" id="Matricula" class="form-control form-control-sm matricula" readonly> -->
+                            <input type="number" value="" size="9" name="matricula" id="Matricula" class="form-control form-control-sm matricula" readonly>
                             <button class="btn btn-primary btn-sm btn-matricula" type="button" id="busca_professor" onclick="pesquisa_professor_carencia()" disabled><i class="fas fa-search"></i></button>
                         </div>
                     </div>
@@ -84,25 +83,22 @@
                     </div>
 
                     <div class="form-group col-md-5">
-                        <label class="control-label" for="inputMotivoAfastamento">Motivo do Afastamento</label>
-                        <select name="motivo_vaga_id" id="inputMotivoAfastamento" class="form-control  form-control-sm" required>
+                        <label class="control-label" for="motivo_tipo_carencia">Motivo do Afastamento</label>
+                        <select name="motivo_vaga_id" id="motivo_tipo_carencia"  class="form-control  form-control-sm" required>
                             <option value="" selected>Motivo do Afastamento...</option>
-                            <?php foreach ($motivos as $motivo) : ?>
-                                <option value="<?= esc($motivo['id']); ?>"> <?= $motivo['Motivo'] ?> </option>
-                            <?php endforeach; ?>
                         </select>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label class="control-label" for="DataInicio">Início do Afastamento</label>
                         <div class="input-group input-group-sm mb-2">
-                            <input type="date" class="form-control form-control-sm" id="DataInicio" name="inicio_afastamento">
+                            <input type="date" class="form-control form-control-sm" id="DataInicio" name="inicio_afastamento" required>
                         </div>
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-2 data-fim">
                         <label class="control-label" for="DataFim">Fim do Afastamento</label>
                         <div class="input-group input-group-sm mb-2">
-                            <input placeholder="Término" type="date" class="form-control form-control-sm" id="DataFim" name="termino_afastamento">
+                            <input placeholder="Término" type="date" class="form-control form-control-sm termino_afastamento" id="DataFim" name="termino_afastamento">
                         </div>
                     </div>
                 </div>
@@ -137,12 +133,12 @@
             </div>
 
             <input class="d-none" type="hidden" name="user" value="<?php echo (user()->username) ?>" />
-            <input id="tipoCarencia" type="hidden" name="temporaria" value="original" />
+            <input id="tipoCarencia" type="hidden" name="temporaria" value=""/>
 
             <div class="card-footer d-none footer">
-                <button type="submit" name="submit" id="submit" class="btn btn-outline-primary " value="Salvar" disabled><i class="fas fa-database">&nbsp;&nbsp;Gravar</i></button>
+                <button title="Grava os dados informados" type="submit" name="submit" id="submit" class="btn btn-outline-primary " value="Salvar" disabled><i class="fas fa-database">&nbsp;&nbsp;Gravar</i></button>
                 <!-- <button onclick="confirmaGravacaoCarencia()" type="submit" name="submit" id="submit" class="btn btn-outline-primary " value="Salvar"><i class="fas fa-database">&nbsp;&nbsp;Gravar</i></button> -->
-                <a name="cancel" class="btn btn-outline-warning " href="/LancamentoCarencias" disabled><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
+                <a title="Abandona a inclusão" name="cancel" class="btn btn-outline-warning " href="/LancamentoCarencias" disabled><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
             </div>
 
         </form>

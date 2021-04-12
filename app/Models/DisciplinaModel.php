@@ -9,13 +9,13 @@ class DisciplinaModel extends Model
 
     protected $table = 'scp_disciplina';
 
-    protected $allowedFields = ['id', 'Nome'];
+    protected $allowedFields = ['id', 'nome'];
 
     public function getDisciplinabyName($nome)
     {
 
         return $this->asArray()
-            ->where(['Nome' => $nome])
+            ->where(['nome' => $nome])
             ->first();
     }
 
@@ -29,7 +29,7 @@ class DisciplinaModel extends Model
     public function getAll()
     {
 
-        return $this->orderBy('Nome', 'asc')
+        return $this->orderBy('nome', 'asc')
             ->findAll();
 
         // return $this->asArray()

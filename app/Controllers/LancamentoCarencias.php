@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\LancamentoCarenciaModel;
+use App\Models\NteModel;
 use App\Models\CarenciaModel;
 use App\Models\EscolaModel;
 use App\Models\DisciplinaModel;
@@ -42,6 +43,34 @@ class LancamentoCarencias extends BaseController
         echo view('carencias/index');
         echo view('layout/footer');
     }
+
+    //Exibe tela para inserção de carência
+    public function carencia()
+    {
+        // echo '<pre>';
+        // exit('Chegou na inclusãop da carencia');
+        helper('form');
+
+        $modelDisciplina = new DisciplinaModel();
+        $modelMotivo = new MotivoCarenciaModel();
+
+        $data = [
+            'title' => 'Incluir Carência',
+            'disciplinas' => $modelDisciplina->getAll(),
+            'motivos' => $modelMotivo->getAll(),
+            'tipo_carencia' => 0
+        ];
+
+        if (session()->has('erro')) {
+            $data['erro'] = session('erro');
+        }
+
+        echo view('/layout/header', $data);
+        echo view('/carencias/carencia');
+        echo view('/layout/footer');
+    }
+
+
 
     //Exibe registro pelo Id
     public function view($Id = NULL)
@@ -88,62 +117,16 @@ class LancamentoCarencias extends BaseController
             'matutino_original' => $this->request->getPost('matutino'),
             'vespertino_original' => $this->request->getPost('vespertino'),
             'noturno_original' => $this->request->getPost('noturno'),
-            'total_original' => $this->request->getPost('total'),     
+            'total_original' => $this->request->getPost('total'),
         ];
-
-        $modelLancamentoCarencia->save($lancamento_carencia);
 
         // echo ('<pre>');
         // dd($lancamento_carencia);
         // exit('Update!');
 
-        return redirect()->to(site_url('LancamentoCarencias'));
-    }
-
-    //Grava um novo registro
-    public function update()
-    {
-
-        $modelLancamentoCarencia = new lancamentoCarenciaModel();
-
-        $lancamento_carencia = [
-            'id' => $this->request->getPost('id'),
-            'ue_id' => substr($this->request->getPost('ueid'),  0, 8),
-            'disciplina_id' => $this->request->getPost('disciplina_id'),
-            'matricula' => $this->request->getPost('matricula'),
-            'matutino' => $this->request->getPost('matutino'),
-            'vespertino' => $this->request->getPost('vespertino'),
-            'noturno' => $this->request->getPost('noturno'),
-            'total' => $this->request->getPost('total'),
-            'temporaria' =>  $this->request->getPost('temporaria'),
-            'inicio_afastamento' => $this->request->getPost('inicio_afastamento'),
-            'termino_afastamento' => $this->request->getPost('termino_afastamento'),
-            'motivo_vaga_id' => $this->request->getPost('motivo_vaga_id'),
-            'user_id' => $this->request->getPost('user_id'),
-            'tipo_lancamento_id' => 2, //Update
-            'lancamento_id' => 0, //registro atual
-            'data_lancamento' => date('Y/m/d H:i:s'),
-            'observacao' => $this->request->getPost('observacao'),
-        ];
-
-        $modelLancamentoCarencia->save($lancamento_carencia);
-
-        // echo ('<pre>');
-        // dd($lancamento_carencia);
-        // exit('Update!');
+        $modelLancamentoCarencia->insert($lancamento_carencia);
 
         return redirect()->to(site_url('LancamentoCarencias'));
-    }
-
-
-
-    //Apaga um registro com Id específico
-    public function delete($Id)
-    {
-        $model = new LancamentoCarenciaModel();
-        $model->delete($Id);
-
-        return redirect()->to(site_url('/LancamentoCarencias'));
     }
 
     //Exibe um registro para edição
@@ -173,7 +156,7 @@ class LancamentoCarencias extends BaseController
         $matricula = $data['lancamento_carencia']['matricula'];
 
         $escola = $modelEscola->getEscolabyUEId($ue_id);
-        $professor = $modelProfessor->getProfessorbyId($matricula);
+        $professor = $modelProfessor->getProfessorByMatricula($matricula);
 
         $data['ue'] = $escola;
         $data['professor'] = $professor;
@@ -182,10 +165,54 @@ class LancamentoCarencias extends BaseController
         // dd($data);
         // exit('Parada forçada...');
 
-
         echo view('layout/header', $data);
         echo view('carencias/carenciaEdit');
         echo view('layout/footer');
+    }
+
+    //Grava um novo registro
+    public function update()
+    {
+
+        $modelLancamentoCarencia = new lancamentoCarenciaModel();
+
+        $lancamento_carencia = [
+            'id' => $this->request->getPost('id'),
+            'ue_id' => substr($this->request->getPost('ueid'),  0, 8),
+            'disciplina_id' => $this->request->getPost('disciplina_id'),
+            'matricula' => $this->request->getPost('matricula'),
+            'matutino' => $this->request->getPost('matutino'),
+            'vespertino' => $this->request->getPost('vespertino'),
+            'noturno' => $this->request->getPost('noturno'),
+            'total' => $this->request->getPost('total'),
+            'temporaria' =>  $this->request->getPost('temporaria'),
+            'inicio_afastamento' => $this->request->getPost('inicio_afastamento'),
+            'termino_afastamento' => $this->request->getPost('termino_afastamento'),
+            'motivo_vaga_id' => $this->request->getPost('motivo_vaga_id'),
+            'user_id' => $this->request->getPost('user_id'),
+            'tipo_lancamento_id' => 2, //Update
+            'lancamento_id' => 0, //registro atual
+            'data_lancamento' => date('Y/m/d H:i:s'),
+            'observacao' => $this->request->getPost('observacao'),
+        ];
+
+        // echo ('<pre>');
+        // dd($lancamento_carencia);
+        // exit('Update!');
+
+        $modelLancamentoCarencia->save($lancamento_carencia);
+
+
+        return redirect()->to(site_url('LancamentoCarencias'));
+    }
+
+    //Apaga um registro com Id específico
+    public function delete($Id)
+    {
+        $model = new LancamentoCarenciaModel();
+        $model->delete($Id);
+
+        return redirect()->to(site_url('/LancamentoCarencias'));
     }
 
     //Grava alterações em um registro
@@ -254,31 +281,6 @@ class LancamentoCarencias extends BaseController
         echo view('layout/footer');
     }
 
-    public function carencia()
-    {
-
-        // echo '<pre>';
-        // exit('Chegou na inclusãop da carencia');
-        helper('form');
-
-        $modelDisciplina = new DisciplinaModel();
-        $modelMotivo = new MotivoCarenciaModel();
-
-        $data = [
-            'title' => 'Incluir Carência',
-            'disciplinas' => $modelDisciplina->getAll(),
-            'motivos' => $modelMotivo->getAll()
-        ];
-
-        if (session()->has('erro')) {
-            $data['erro'] = session('erro');
-        }
-
-        echo view('/layout/header', $data);
-        echo view('/carencias/carencia');
-        echo view('/layout/footer');
-    }
-
     public function professorView()
     {
     }
@@ -307,7 +309,6 @@ class LancamentoCarencias extends BaseController
         echo json_encode([$encontrado]);
     }
 
-
     //Pesquisa professor para incluir carência
     public function pesquisaProfessor($codigoProfessor)
     {
@@ -325,9 +326,6 @@ class LancamentoCarencias extends BaseController
             $encontrado['professor'] = "";
         }
 
-        // echo '<pre>';
-        // dd($Professor);
-        // exit('ecnotrou...');
         echo json_encode([$encontrado]);
     }
 
@@ -336,25 +334,137 @@ class LancamentoCarencias extends BaseController
 
         helper(['form', 'url']);
 
-        $carenciaModel = new LancamentoCarenciaModel();
+        $nteModel = new NteModel();
+        $disciplinaModel = new DisciplinaModel();
 
         $data = [
             'title' => 'Pesquisa de Carências',
-            'carencias'  => $carenciaModel->getCarenciaConsulta(),
-            // 'session' => \Config\Services::session(),
+            'ntes' => $nteModel->getAll(),
+            'disciplinas' => $disciplinaModel->getAll(),
+            'carencias' => [],
+            'session' => \Config\Services::session(),
             'styles' => [
                 'vendor/datatables/dataTables.bootstrap4.min.css',
+                // 'vendor/datatables/dataTables.basestyle.min.css',
+                // 'https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/datatables.min.css',
+                'https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css',
+                'https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css',
+                'https://cdn.datatables.net/fixedcolumns/3.3.2/css/fixedColumns.dataTables.min.css',
+                'css/wrapper.css'
+
             ],
             'scripts' => [
-                'vendor/datatables/jquery.dataTables.min.js',
-                'vendor/datatables/dataTables.bootstrap4.min.js',
+
+                'https://code.jquery.com/jquery-3.5.1.js',
+                'https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js',
+                'https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js',
+                'https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js',
+                'https://cdn.datatables.net/fixedcolumns/3.3.2/js/dataTables.fixedColumns.min.js',
+
+
+                // 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js',
+                // 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js',
+                // 'https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/datatables.min.js',
+
+                // 'vendor/datatables/jquery.dataTables.min.js',
+                //  'vendor/datatables/dataTables.bootstrap4.min.js',
                 'vendor/datatables/app.js',
             ],
         ];
+
+        // echo '<pre>';
+        // dd($data);
+        // exit('ecnotrou...');
 
         echo view('layout/header', $data);
         echo view('carencias/consulta');
         echo view('layout/footer');
     }
 
+    //Pega os dados dos campos, cria o critério e aplica na consulta no model
+    public function consutla_carencia()
+    {
+        helper(['form', 'url']);
+
+        echo('<pre>');
+        print_r($this->request->getPost('nte') . "asdfasdfasdf");
+
+        $query = [
+            'nome' => $this->request->getPost('nte'),
+            'municipio' => $this->request->getPost('municipio'),
+            'ue_id' => $this->request->getPost('ue_id'),
+            'escola_nome' => $this->request->getPost('unidade_escolar'),
+            'tipo_carencia' => $this->request->getPost('tipo_carencia'),
+            'disciplina' => $this->request->getPost('disciplina_id')
+        ];
+
+        print_r($query);
+        print_r($_POST);
+        exit('parametros.....');
+
+        //Retorna mensagem se de alerta se não preencher algum campo
+        // if (!isset($query)) {
+        //     echo json_encode("");
+        //     return;
+        // }
+
+        $modelCarencia = new LancamentoCarenciaModel();
+
+        $carencias = $modelCarencia->getCarenciaConsulta($query);
+        echo($query);
+
+        if ($carencias) {
+            foreach ($carencias as $carencia) {
+                $result[] = [
+                    $carencia["nome"],
+                    $carencia["municipio"],
+                    $carencia["ue_id"],
+                    $carencia["escola_nome"],
+                    $carencia["disciplina_nome"],
+                    $carencia["matutino"],
+                    $carencia["vespertino"],
+                    $carencia["noturno"],
+                    $carencia["total"],
+                    $carencia["temporaria"],
+                    $carencia["motivo"],
+                    $carencia["inicio_afastamento"],
+                    $carencia["termino_afastamento"],
+                    $carencia["nte_id"],
+                ];
+            }
+        } else {
+            $result = "";
+        }
+
+        $carencias = ["data" => $result];
+
+        // echo '<pre>';
+        // print_r(json_encode($carencias));
+        // exit('ecnotrou...');
+
+        echo json_encode($carencias);
+    }
+
+    //Pesquisa escola para incluir carência
+    public function motivoCarenciaTipo($tipo)
+    {
+
+        $modelMotivo = new MotivoCarenciaModel();
+        $motivos = $modelMotivo->getAllByTipoCarencia($tipo);
+
+        if ($motivos) {
+            $encontrado['success'] = 'true';
+            $encontrado['message'] = 'Motivos por tipo informado localizado';
+            $encontrado['motivos'] = $motivos;
+        } else {
+            $encontrado['success'] = 'false';
+            $encontrado['message'] = 'Motivos por tio informado não foi encontrado';
+            $encontrado['motivos'] = "";
+        }
+
+        echo json_encode([$encontrado]);
+    }
 }

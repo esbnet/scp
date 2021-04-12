@@ -4,16 +4,9 @@ use CodeIgniter\Model;
 
 class NteModel extends Model {
 
-    protected $table = 'nte';
+    protected $table = 'scp_nte';
     
-    protected $allowedFields = ['id','Nome'];
-
-    public function getMunicipiobyName($Nome) {
-
-        return $this->asArray()
-                    ->where(['Municipio' => $Nome])
-                    ->first();
-    }
+    protected $allowedFields = ['id','nome'];
 
     public function getMunicipiobyId($id) {
 

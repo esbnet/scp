@@ -118,12 +118,16 @@ class LancamentoCarenciaModel extends Model
         return $carencia;
     }
 
-    public function getCarenciaConsulta()
+    public function getCarenciaConsulta($query = null)
     {
 
-        $query = [
-            'total >' => 0
-        ];
+        if($query['tipo_carencia'] = 0) {
+            $query_local['temporaria ='] = 0;
+        }elseif($query['tipo_carencia'] = 1){
+            $query_local['temporaria ='] = 1;
+        }
+
+        $query_local = ['total >' => 0, '  '];
 
         $carencia = $this->select(
             'scp_ue.nte_id,
@@ -148,7 +152,13 @@ class LancamentoCarenciaModel extends Model
             ->join('scp_disciplina', 'scp_disciplina.id = scp_lancamento_carencia.disciplina_id', 'left')
             ->join('scp_professor', 'scp_professor.matricula = scp_lancamento_carencia.matricula', 'left')
             ->join('scp_motivo_carencia', 'scp_motivo_carencia.id = scp_lancamento_carencia.motivo_vaga_id', 'left')
-            ->where($query)
+            ->like('scp_nte.nome',$query['nome'])
+            ->like('scp_ue.municipio',$query['municipio'])
+            ->like('scp_ue.id',$query['ue_id'])
+            ->like('scp_ue.ue',$query['escola_nome'])
+            ->like('scp_lancamento_carencia.temporaria',$query['tipo_carencia'])
+            ->like('scp_disciplina.nome',$query['disciplina'])
+            ->where($query_local)
             ->orderby('scp_ue.nte_id, scp_ue.municipio, escola_nome, disciplina_nome asc')
             ->findAll();
 

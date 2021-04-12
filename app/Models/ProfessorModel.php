@@ -27,13 +27,23 @@ class ProfessorModel extends Model
             ->first();
     }
 
-    public function getProfessorbyId($id)
+    public function getProfessorbyId($id = null)
     {
 
         return $this->asArray()
             ->where(" matricula = $id OR Cpf = $id OR matricula_sap = $id")
             ->first();
     }
+
+    public function getProfessorByMatricula($matricula = null)
+    {
+        return $this->asArray()
+            ->where(" matricula = $matricula")
+            ->first();
+    }
+
+
+
 
     public function getAll()
     {
