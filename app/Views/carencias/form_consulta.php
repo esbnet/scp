@@ -12,7 +12,8 @@
         </div>
 
         <div class="card-body">
-            <form>
+            <form method="POST" nome="parametros" id="form_consulta" action="<?php echo base_url('\LancamentoCarencias\consulta_carencia') ?>">
+                <?= csrf_field() ?>
                 <div class="card  mb-4">
                     <div id="borderCard" class="card-body border-down-primary">
                         <div class="form-row ">
@@ -62,46 +63,11 @@
                                 </select>
                             </div>
                         </div>
-                        <a title="Carência Detalhada" class="btn btn-light btn-circle float-right shadow3" onclick="consulta_carencia_detalhada()"><i class="far fa-copy"></i></a>
-                        <a class="float-right">&nbsp;</a>
-                        <a class="float-right">&nbsp;</a>
-                        <a title="Carência Real" class="btn btn-light btn-circle float-right shadow3" onclick="consulta_carencia_real()"><i class="far fa-sticky-note"></i></a>
+                        <!-- <button title="Pesquisar" type="submit" form="#form_consulta" class="btn btn-outline-warning btn-circle float-right shadow"><i class="fas fa-search"></i></button> -->
+                        <button title="Pesquisar" form="#form_consulta" class="btn btn-outline-warning btn-circle float-right shadow" onclick="consulta_carencia()"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
             </form>
-
-            <div class="card  mb-4">
-                <div id="borderCard" class="card-body border-down-primary">
-                    <div class="table-responsive">
-                        <table id="consulta_carencia" name="consulta_carencia" class="table-striped table-hover compact nowrap dataTable " width="auto" cellspacing="0">
-                            <!-- <table class="table dataTable" width="100%" cellspacing="0"> -->
-                            <thead>
-                                <tr>
-                                    <th>NTE Nome</th>
-                                    <th>Município</th>
-                                    <th>Cód. UE</th>
-                                    <th>Escola</th>
-                                    <th>Disciplina</th>
-                                    <th>Mat</th>
-                                    <th>Vesp</th>
-                                    <th>Not</th>
-                                    <th>Total</th>
-                                    <th class="text-center">Temp.</th>
-                                    <th>Motivo</th>
-                                    <th>Início</th>
-                                    <th>Término</th>
-                                    <th class="text-center no-sort">...</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
     </div>

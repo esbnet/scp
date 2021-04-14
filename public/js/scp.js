@@ -758,112 +758,186 @@ function deleta_provimento() {
     });
 }
 
-function consulta_carencia() {
+function consulta_carencia_detalhada() {
+    // alert('chegou na função')
+
     var endereco = "/LancamentoCarencias/consutla_carencia";
+
+    var tipo_consulta = "real";
+
+    var dados = new FormData();
+
+    dados.append( "nte", $('#nte').val());
+    dados.append( "municipio", $('#municipio').val() );
+    dados.append( "ue_id", $('#ue_id').val());
+    dados.append( "ue", $('#ue').val());
+    // dados.append( "tipo_carencia", "0");
+    dados.append( "tipo_carencia", $('#tipo_carencia').val());
+    dados.append( "disciplina", $('#disciplina').val());
+    dados.append( "tipo_consulta", tipo_consulta);
+
     $.ajax({
         url: endereco,
-        method: "post",
-        data: $(this).serialize(),
-        dataType: "json",
-        success: function (resposta) {
+        method: "POST",
+        data: dados,
+        // data: $(this).serialize(),
+        // dataType: "json",
+        processData: false,
+        contentType: false,
+    }).done(function (resposta) {
 
-            var [{ carencias }] = resposta;
-            
-            if (carencias != "") {
-                console.log(carencias)
-                alert('encontrou as carencias')
-                var table = $("#consulta_carencia").DataTable({
-                    destroy: true,
-                    // scrollX: true,
-                    bAutoWidth: true,
-                    autoWidth: true,
-                    scrollX: true,
-                    scrollCollapse: false,
-                    scroller: true,
+        var dataSet = JSON.parse(resposta);
 
-                    data: carencias,
+        console.log(dataSet);
 
-                    dom: "Bfrtip",
-                    buttons: [
-                        {
-                            extend: "excelHtml5",
-                            text: '<i class="far fa-file-excel"></i>',
-                            titleAttr: "Exporta para excel",
-                            className: "",
-                        },
-                        {
-                            extend: "pdfHtml5",
-                            text: '<i class="far fa-file-pdf"></i>',
-                            titleAttr: "Exporta para PDF",
-                            // className: 'btn btn-success'
-                        },
-                        {
-                            extend: "csvHtml5",
-                            text: '<i class="fas fa-file-csv"></i>',
-                            titleAttr: "Exporta para cvs",
-                            className: "",
-                        },
-                        {
-                            extend: "copyHtml5",
-                            text: '<i class="fas fa-copy"></i>',
-                            titleAttr: "Copia para área de transferência",
-                            className: "",
-                        },
-                    ],
-                });
+        if (dataSet != "") {
+            // var table = 
+            $("#consulta_carencia").DataTable({
+                destroy: true,
+                // scrollX: true,
+                bAutoWidth: true,
+                autoWidth: true,
+                scrollX: true,
+                scrollCollapse: false,
+                scroller: true,
+                data: dataSet,
+                // ajax: "consutla_carencia",
+                // "ajax": "/consutla_carencia",
+                dom: "Bfrtip",
+                buttons: [
+                    {
+                        extend: "excelHtml5",
+                        text: '<i class="far fa-file-excel"></i>',
+                        titleAttr: "Exporta para excel",
+                        className: "",
+                    },
+                    {
+                        extend: "pdfHtml5",
+                        text: '<i class="far fa-file-pdf"></i>',
+                        titleAttr: "Exporta para PDF",
+                        // className: 'btn btn-success'
+                    },
+                    {
+                        extend: "csvHtml5",
+                        text: '<i class="fas fa-file-csv"></i>',
+                        titleAttr: "Exporta para cvs",
+                        className: "",
+                    },
+                    {
+                        extend: "copyHtml5",
+                        text: '<i class="fas fa-copy"></i>',
+                        titleAttr: "Copia para área de transferência",
+                        className: "",
+                    },
+                ],
+            });
 
-                table.columns.adjust().draw();
-            } else {
-                Swal.fire({
-                    title: "Atenção!",
-                    text:
-                        "Não existe motivos para carência real. Cadastre e tente novamente!",
-                    icon: "error",
-                    confirmButtonText: "Voltar",
-                });
-            }
-        },
+            // table.columns.adjust().draw();
+            return;
+        } else {
+            alert("Carencia vazia");
+
+            Swal.fire({
+                title: "Atenção!",
+                text:
+                    "Não existe motivos para carência real. Cadastre e tente novamente!",
+                icon: "error",
+                confirmButtonText: "Voltar",
+            });
+            return;
+        }
     });
 
-    // var table = $("#consulta_carencia").DataTable({
-    //     destroy: true,
-    //     // scrollX: true,
-    //     bAutoWidth: true,
-    //     autoWidth: true,
-    //     scrollX: true,
-    //     scrollCollapse: false,
-    //     scroller: true,
+}
 
-    //     ajax: "consutla_carencia",
+function consulta_carencia_real() {
+    // alert('chegou na função')
 
-    //     dom: "Bfrtip",
-    //     buttons: [
-    //         {
-    //             extend: "excelHtml5",
-    //             text: '<i class="far fa-file-excel"></i>',
-    //             titleAttr: "Exporta para excel",
-    //             className: "",
-    //         },
-    //         {
-    //             extend: "pdfHtml5",
-    //             text: '<i class="far fa-file-pdf"></i>',
-    //             titleAttr: "Exporta para PDF",
-    //             // className: 'btn btn-success'
-    //         },
-    //         {
-    //             extend: "csvHtml5",
-    //             text: '<i class="fas fa-file-csv"></i>',
-    //             titleAttr: "Exporta para cvs",
-    //             className: "",
-    //         },
-    //         {
-    //             extend: "copyHtml5",
-    //             text: '<i class="fas fa-copy"></i>',
-    //             titleAttr: "Copia para área de transferência",
-    //             className: "",
-    //         },
-    //     ],
-    // });
+    var endereco = "/LancamentoCarencias/consutla_carencia";
 
-    // table.columns.adjust().draw();
+    var tipo_consulta = "detalhada";
+
+    var dados = new FormData();
+
+    dados.append( "nte", $('#nte').val());
+    dados.append( "municipio", $('#municipio').val() );
+    dados.append( "ue_id", $('#ue_id').val());
+    dados.append( "ue", $('#ue').val());
+    // dados.append( "tipo_carencia", "0");
+    dados.append( "tipo_carencia", $('#tipo_carencia').val());
+    dados.append( "disciplina", $('#disciplina').val());
+    dados.append( "tipo_consulta", tipo_consulta);
+
+    $.ajax({
+        url: endereco,
+        method: "POST",
+        data: dados,
+        // data: $(this).serialize(),
+        // dataType: "json",
+        processData: false,
+        contentType: false,
+    }).done(function (resposta) {
+
+        var dataSet = JSON.parse(resposta);
+
+        console.log(dataSet);
+
+        if (dataSet != "") {
+            // var table = 
+            $("#consulta_carencia").DataTable({
+                destroy: true,
+                // scrollX: true,
+                bAutoWidth: true,
+                autoWidth: true,
+                scrollX: true,
+                scrollCollapse: false,
+                scroller: true,
+                data: dataSet,
+                // ajax: "consutla_carencia",
+                // "ajax": "/consutla_carencia",
+                dom: "Bfrtip",
+                buttons: [
+                    {
+                        extend: "excelHtml5",
+                        text: '<i class="far fa-file-excel"></i>',
+                        titleAttr: "Exporta para excel",
+                        className: "",
+                    },
+                    {
+                        extend: "pdfHtml5",
+                        text: '<i class="far fa-file-pdf"></i>',
+                        titleAttr: "Exporta para PDF",
+                        // className: 'btn btn-success'
+                    },
+                    {
+                        extend: "csvHtml5",
+                        text: '<i class="fas fa-file-csv"></i>',
+                        titleAttr: "Exporta para cvs",
+                        className: "",
+                    },
+                    {
+                        extend: "copyHtml5",
+                        text: '<i class="fas fa-copy"></i>',
+                        titleAttr: "Copia para área de transferência",
+                        className: "",
+                    },
+                ],
+            });
+
+            // table.columns.adjust().draw();
+            return;
+        } else {
+            alert("Carencia vazia");
+
+            Swal.fire({
+                title: "Atenção!",
+                text:
+                    "Não existe motivos para carência real. Cadastre e tente novamente!",
+                icon: "error",
+                confirmButtonText: "Voltar",
+            });
+            return;
+        }
+    });
+
 }

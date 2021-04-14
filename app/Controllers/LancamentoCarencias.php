@@ -281,14 +281,6 @@ class LancamentoCarencias extends BaseController
         echo view('layout/footer');
     }
 
-    public function professorView()
-    {
-    }
-
-    public function carenciaView()
-    {
-    }
-
     //Pesquisa escola para incluir carência
     public function pesquisaEscola($codigoEscola)
     {
@@ -329,6 +321,31 @@ class LancamentoCarencias extends BaseController
         echo json_encode([$encontrado]);
     }
 
+    public function form_consulta()
+    {
+
+        helper(['form', 'url']);
+
+        $nteModel = new NteModel();
+        $disciplinaModel = new DisciplinaModel();
+
+        $data = [
+            'title' => 'Pesquisa de Carências',
+            'ntes' => $nteModel->getAll(),
+            'disciplinas' => $disciplinaModel->getAll(),
+            'carencias' => [],
+            'session' => \Config\Services::session(),
+        ];
+
+        // echo '<pre>';
+        // dd($data);
+        // exit('ecnotrou...');
+
+        echo view('layout/header', $data);
+        echo view('carencias/form_consulta');
+        echo view('layout/footer');
+    }
+
     public function consulta()
     {
 
@@ -346,11 +363,10 @@ class LancamentoCarencias extends BaseController
             'styles' => [
                 'vendor/datatables/dataTables.bootstrap4.min.css',
                 // 'vendor/datatables/dataTables.basestyle.min.css',
-                // 'https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/datatables.min.css',
+                'https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/datatables.min.css',
                 'https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css',
                 'https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css',
                 'https://cdn.datatables.net/fixedcolumns/3.3.2/css/fixedColumns.dataTables.min.css',
-                'css/wrapper.css'
 
             ],
             'scripts' => [
@@ -362,8 +378,7 @@ class LancamentoCarencias extends BaseController
                 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js',
                 'https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js',
-                'https://cdn.datatables.net/fixedcolumns/3.3.2/js/dataTables.fixedColumns.min.js',
-
+                // 'https://cdn.datatables.net/fixedcolumns/3.3.2/js/dataTables.fixedColumns.min.js',
 
                 // 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js',
                 // 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js',
@@ -384,42 +399,117 @@ class LancamentoCarencias extends BaseController
         echo view('layout/footer');
     }
 
+
     //Pega os dados dos campos, cria o critério e aplica na consulta no model
     public function consutla_carencia()
     {
-        helper(['form', 'url']);
 
-        echo('<pre>');
-        print_r($this->request->getPost('nte') . "asdfasdfasdf");
-
-        $query = [
-            'nome' => $this->request->getPost('nte'),
-            'municipio' => $this->request->getPost('municipio'),
-            'ue_id' => $this->request->getPost('ue_id'),
-            'escola_nome' => $this->request->getPost('unidade_escolar'),
-            'tipo_carencia' => $this->request->getPost('tipo_carencia'),
-            'disciplina' => $this->request->getPost('disciplina_id')
-        ];
-
-        print_r($query);
-        print_r($_POST);
-        exit('parametros.....');
-
-        //Retorna mensagem se de alerta se não preencher algum campo
-        // if (!isset($query)) {
-        //     echo json_encode("");
-        //     return;
-        // }
+        //Pega parâmetros enviados pro Ajax
+        $nte = $_POST['nte'];
+        $municipio = $_POST['municipio'];
+        $ue_id = $_POST['ue_id'];
+        $ue = $_POST['ue'];
+        $tipo_carencia = $_POST['tipo_carencia'];
+        $disciplina = $_POST['disciplina'];
+        $tipo_consulta = $_POST['tipo_consulta'];
 
         $modelCarencia = new LancamentoCarenciaModel();
 
-        $carencias = $modelCarencia->getCarenciaConsulta($query);
-        echo($query);
+        if($tipo_consulta == "real") {
+            $carencias = $modelCarencia->getCarenciaRealConsulta(
+                $nte,
+                $municipio,
+                $ue_id,
+                $ue,
+                $tipo_carencia,
+                $disciplina
+            );    
+        }else{
+            $carencias = $modelCarencia->getCarenciaDetalhadaConsulta(
+                $nte,
+                $municipio,
+                $ue_id,
+                $ue,
+                $tipo_carencia,
+                $disciplina
+            );    
+        }
 
         if ($carencias) {
             foreach ($carencias as $carencia) {
                 $result[] = [
-                    $carencia["nome"],
+                    $carencia['nte_nome'],
+                    $carencia['municipio'],
+                    $carencia['ue_id'],
+                    $carencia['escola_nome'],
+                    $carencia['disciplina_nome'],
+                    $carencia['matutino'],
+                    $carencia['vespertino'],
+                    $carencia['noturno'],
+                    $carencia['total'],
+                    $carencia['temporaria'],
+                    $carencia['motivo'],
+                    $carencia['inicio_afastamento'],
+                    $carencia['termino_afastamento'],
+                    $carencia['nte_id'],
+                ];
+            }
+        } else {
+            $result = "";
+        }
+
+        $carencias = ['dataSet' => $result];
+
+        // echo ("<pre>");
+        // print_r($encontrado);
+        // exit('ecnotrou...');
+
+        echo json_encode($result);
+    }
+
+    //Pesquisa escola para incluir carência
+    public function motivoCarenciaTipo($tipo)
+    {
+
+        $modelMotivo = new MotivoCarenciaModel();
+        $motivos = $modelMotivo->getAllByTipoCarencia($tipo);
+
+        if ($motivos) {
+            $encontrado['success'] = 'true';
+            $encontrado['message'] = 'Motivos por tipo informado localizado';
+            $encontrado['motivos'] = $motivos;
+        } else {
+            $encontrado['success'] = 'false';
+            $encontrado['message'] = 'Motivos por tio informado não foi encontrado';
+            $encontrado['motivos'] = "";
+        }
+
+        echo json_encode([$encontrado]);
+    }
+
+    public function teste_()
+    {
+
+        $modelCarencia = new LancamentoCarenciaModel();
+
+        $carencias['carencias'] = $modelCarencia->getCarenciaConsulta(
+            $nte = 26,
+            $municipio = "",
+            $ue_id = "",
+            $ue = "",
+            $tipo_carencia = 1,
+            $disciplina_id = "INGLÊS"
+
+        );
+
+        echo '<pre>';
+        print_r(($carencias));
+        exit('ecnotrou...');
+
+        if ($carencias) {
+            foreach ($carencias as $carencia) {
+                $result[] = [
+                    $carencia["nte_nome"],
                     $carencia["municipio"],
                     $carencia["ue_id"],
                     $carencia["escola_nome"],
@@ -441,30 +531,23 @@ class LancamentoCarencias extends BaseController
 
         $carencias = ["data" => $result];
 
+        echo '<pre>';
+        print_r(json_encode($carencias));
+        exit('ecnotrou...');
+
+
         // echo '<pre>';
-        // print_r(json_encode($carencias));
+        // print_r($data);
         // exit('ecnotrou...');
 
-        echo json_encode($carencias);
+        // echo view('/layout/header', $data);
+        // echo view('/carencias/teste');
+        // echo view('/layout/footer');
     }
 
-    //Pesquisa escola para incluir carência
-    public function motivoCarenciaTipo($tipo)
+    public function teste()
     {
+        echo view('/carencias/teste');
 
-        $modelMotivo = new MotivoCarenciaModel();
-        $motivos = $modelMotivo->getAllByTipoCarencia($tipo);
-
-        if ($motivos) {
-            $encontrado['success'] = 'true';
-            $encontrado['message'] = 'Motivos por tipo informado localizado';
-            $encontrado['motivos'] = $motivos;
-        } else {
-            $encontrado['success'] = 'false';
-            $encontrado['message'] = 'Motivos por tio informado não foi encontrado';
-            $encontrado['motivos'] = "";
-        }
-
-        echo json_encode([$encontrado]);
     }
 }
