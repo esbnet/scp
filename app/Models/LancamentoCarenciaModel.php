@@ -45,7 +45,6 @@ class LancamentoCarenciaModel extends Model
             ->first();
     }
 
-
     public function getCarenciaUE($ueid = NULL)
     {
         $array = ['ue_id = ' => $ueid, 'total >' => 0];
@@ -103,6 +102,7 @@ class LancamentoCarenciaModel extends Model
 
         return $this->selectSum('total')
             ->where(['temporaria' => 1])
+            ->where("termino_afastamento >=", date('Y-m-d'))
             ->findAll();
     }
 
@@ -118,8 +118,15 @@ class LancamentoCarenciaModel extends Model
         return $carencia;
     }
 
-    public function getCarenciaRealConsulta($nte = "", $municipio = "", $ue_id = "", $ue = "", $tipo_carencia = "", $disciplina = "") 
+    public function getCarenciaRealConsulta($campos = NULL) 
     {
+
+        $nte = $campos['nte'];
+        $municipio = $campos['municipio'];
+        $ue_id = $campos['ue_id'];
+        $ue = $campos['ue'];
+        $tipo_carencia = $campos['tipo_carencia'];
+        $disciplina = $campos['disciplina'];
 
         if ($tipo_carencia < 2 && $tipo_carencia <> Null  ) {
             $tipo_carencia = [ $tipo_carencia ];
@@ -213,4 +220,32 @@ class LancamentoCarenciaModel extends Model
 
         return $carencia;
     }
+
+    public function getCarenciaTop5Disciplina()
+    {
+
+        return $this
+            ->select('scp_disciplina.nome as disciplina_nome')->limit(5)
+            ->selectSum('scp_lancamento_carencia.total')
+            ->join('scp_disciplina', 'scp_lancamento_carencia.disciplina_id = scp_disciplina.id')
+            ->groupby('disciplina_id')
+            ->orderby('total', 'desc')
+            ->findAll();
+
+    }
+
+    public function getCarenciaTop5Escola()
+    {
+
+        return $this
+            ->select('scp_ue.ue as escola_nome')->limit(5)
+            ->selectSum('scp_lancamento_carencia.total')
+            ->join('scp_ue', 'scp_lancamento_carencia.ue_id = scp_ue.id')
+            ->groupby('ue_id')
+            ->orderby('total', 'desc')
+            ->findAll();
+
+    }
+
+
 }

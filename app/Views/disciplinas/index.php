@@ -6,7 +6,7 @@
             <h2 class="float-left text-primary" id="titleCard"> <?= $title; ?> </h2>
             <a title="Voltar ao painel" class="btn btn-outline-success float-right btn-circle shadow" href="/"><i class="fas fa-chart-line"></i></a>
             <a class="float-right">&nbsp;</a>
-            <a title="Adicionar diciplina" class="btn btn-outline-primary float-right btn-circle" href="/disciplinas/new"><i class="fas fa-plus"></i></a>
+            <a title="Adicionar diciplina" class="btn btn-outline-primary float-right btn-circle" href="/cadastros/disciplinas/new"><i class="fas fa-plus"></i></a>
         </div>
 
         <div id="borderCard" class="card-body">
@@ -31,7 +31,7 @@
                                     <td><?= esc($disciplinas_item['nome']); ?></td>
 
                                     <td style="text-align: center; width: 3%;">
-                                        <a class="btn btn-outline-success btn-circle btn-sm" href="/disciplinas/edit/<?= esc($disciplinas_item['id']); ?>"><i class="fas fa-pencil-alt"></i></a>
+                                        <a class="btn btn-outline-success btn-circle btn-sm" href="/cadastros/disciplinas/edit/<?= esc($disciplinas_item['id']); ?>"><i class="fas fa-pencil-alt"></i></a>
                                     </td>
                                     <!-- <td style="text-align: center; width: 3%;">
                                         <a class="btn btn-outline-danger  btn-circle btn-sm" href="/disciplinas/delete/<?= esc($disciplinas_item['id']); ?>"><i class="fas fa-trash"></i></a>

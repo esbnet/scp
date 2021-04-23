@@ -90,13 +90,12 @@ class Disciplinas extends Controller {
     }
 
     //Apaga um registro com Id específico
-    public function delete($Id)
+    public function remove($Id)
     {
-        $data['session'] = \Config\Services::session();
 
         $model = new DisciplinaModel();
         $model->delete($Id);
 
-        return redirect()->to(site_url('disciplinas'));
+        return redirect()->to(site_url('/cadastros/disciplinas'));
     }
 }

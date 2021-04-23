@@ -32,7 +32,7 @@
 
                     <div class="form-row float-right">
                         <label class="control-label" for="ueid">
-                            Última atualização:&nbsp;&nbsp;
+                            <!-- Última atualização:&nbsp;&nbsp; -->
                             <i class="fas fa-user-edit text-success"></i>&nbsp;&nbsp;<?php echo $provimento['user_id']; ?>
                             &nbsp;&nbsp;&nbsp;
                             <i class="fas fa-calendar-alt text-success"></i>&nbsp;&nbsp;<?php echo date($provimento['data_lancamento']); ?> </label>

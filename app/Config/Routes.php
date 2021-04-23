@@ -16,7 +16,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
+$routes->setDefaultController('home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -27,6 +27,10 @@ $routes->setAutoRoute(true);
  * Route Definitions
  * --------------------------------------------------------------------
  */
+
+
+// $routes->get('admin/users', 'UserController::index', ['filter' => 'permission:manage-user']);
+// $routes->get('cadastros/disciplinas', 'disciplinas::index', ['filter' => 'permission:manage-user']);
 
 //Uidade Escolas
 // $routes->get('escolas', 'escolas::index');

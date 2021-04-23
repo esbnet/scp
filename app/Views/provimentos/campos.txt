@@ -1,0 +1,51 @@
+id
+ue_id
+matricula_id
+aula_normal
+aula_extra
+forma_suprimento_id
+tipo_movimentacao_id
+anuencia
+data_anuencia
+assuncao
+data_assuncao
+user_id
+data_lancamento
+desistencia
+observacao
+
+
+id
+provimento_id
+disciplina_id
+mat
+vesp
+not
+total
+mat_old
+vesp_old
+not_old
+total_old
+carencia_old_id
+
+NTE
+Município
+Cód. UE
+Escola
+Matrícula
+CPF
+Nome do Professor
+AN
+AE
+Forma Suprimento
+Tipo Movimentação
+Anuência
+Dt.Anu.
+Assunção
+Dt.Ass.
+Temp
+Operador
+Dt Lanc.
+Observacao
+id
+

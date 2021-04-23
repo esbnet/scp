@@ -7,14 +7,22 @@ use App\Models\ProvimentoProvidoModel;
 
 class Home extends BaseController
 {
+
 	public function index()
 	{
 
 		$modelCarencia = new LancamentoCarenciaModel();
 		$modelProvido = new ProvimentoProvidoModel();
 
+		$tmp = $modelCarencia->getCarencia();
 		$TCR = $modelCarencia->getTotalCarenciaReal();
 		$TCT = $modelCarencia->getTotalCarenciaTemporaria();
+		$TFD = $modelCarencia->getCarenciaTop5Disciplina();
+		$TFE = $modelCarencia->getCarenciaTop5Escola();
+
+		// echo '<pre>';
+		// dd($TFE);
+		// exit('Chegou nos indicaroes');
 
 		$TP = $modelProvido->getTotalProvido();
 
@@ -30,16 +38,16 @@ class Home extends BaseController
 			'TotalCarenciaTemporaria' => number_format($TCT[0]['total'], 0, '', '.'),
 			'TotalProvimento' => number_format($TP[0]['total'], 0, '', '.'),
 			'Eficiencia' => number_format($EFICIENCIA, 0, '', '.'),
+			'TFD' => $TFD,
+			'TFE' => $TFE,
+			'TTC' => $TTC,
 			'title' => 'Dashboard'
 		];
-
-		// echo('<pre>');
-		// print_r($data['TotalProvimento']);
-		// exit('Chegou -------------------');
 
 		echo view('layout/header', $data);
 		echo view('home/index', $data);
 		echo view('layout/footer');
+
 	}
 
 	//--------------------------------------------------------------------

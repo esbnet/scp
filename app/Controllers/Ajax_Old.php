@@ -2,9 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\CarenciaModel;
-use App\Models\DisciplinaModel;
-use App\Models\MotivoAfastamentoModel;
 use App\Models\CoreModel;
 
 use CodeIgniter\Controller;

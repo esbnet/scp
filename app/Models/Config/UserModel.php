@@ -1,47 +1,59 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Config;
 
 use CodeIgniter\Model;
 
-class MyUserModel extends Model
+class UserModel extends Model
 {
-  
-  protected $table = 'users';
-  protected $primaryKey = 'id';
 
-  protected $allowedFields = [
-    'id', 'email', 'username', 'password_hash', 'reset_hash', 'reset_at', 'reset_expires', 'activate_hash',
-    'status', 'status_message', 'active', 'force_pass_reset', 'permissions', 'deleted_at',
-  ];
+    protected $table = 'users';
+    protected $primaryKey = 'id';
 
-  public function getUserById($id)
-  {
-    return $this->asArray()
-      ->where(['id' => $id])
-      ->first();
-  }
+    protected $allowedFields = [
+        'id',
+        'email',
+        'username',
+        'password_hash',
+        'reset_hash',
+        'reset_at',
+        'reset_expires',
+        'activate_hash',
+        'status',
+        'status_message',
+        'active',
+        'force_pass_reset',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
-  public function getUserName($username)
-  {
-    return $this->asArray()
-      ->where(['username' => $username])
-      ->first();
-  }
-
-  function listUsers($id = NULL)
-  {
-
-    if ($id === NULL) {
-      return $this->findAll();
+    public function getUserById($id)
+    {
+        return $this->asArray()
+            ->where(['id' => $id])
+            ->first();
     }
 
-    return $this->asArray()
-      ->where(['id' => $id])
-      ->first();
-  }
-}
+    public function getUserName($username)
+    {
+        return $this->asArray()
+            ->where(['username' => $username])
+            ->first();
+    }
 
+    function getUsers($id = NULL)
+    {
+
+        if ($id === NULL) {
+            return $this->findAll();
+        }
+
+        return $this->asArray()
+            ->where(['id' => $id])
+            ->first();
+    }
+}
 
 // 'id'               => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
 // 'email'            => ['type' => 'varchar', 'constraint' => 255],
