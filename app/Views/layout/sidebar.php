@@ -84,41 +84,11 @@
         </div>
     </li>
 
-    <!-- Nav Item - Utilities Collapse Menu
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseConsultas" aria-expanded="true" aria-controls="collapseConsultas">
-            <i class="fas fa-fw fa-search-location"></i>
-            <span>Consultas</span>
-        </a>
-        <div id="collapseConsultas" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<?= base_url('/construcao') ?>">Carência</a>
-                <a class="collapse-item" href="<?= base_url('/construcao') ?>">Provimento</a>
-            </div>
-        </div>
-    </li>
-
-    Nav Item - Utilities Collapse Menu
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRelatorios" aria-expanded="true" aria-controls="collapseRelatorios">
-            <i class="fas fa-fw fa-layer-group"></i>
-            <span>Relatórios</span>
-        </a>
-        <div id="collapseRelatorios" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<?= base_url('construcao') ?>">Carência</a>
-                <a class="collapse-item" href="<?= base_url('construcao') ?>">Provimento</a>
-            </div>
-        </div>
-    </li> --> 
-
-
-
     <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
+    <!-- <hr class="sidebar-divider d-none d-md-block"> -->
 
     <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTools" aria-expanded="true" aria-controls="collapseCadastro">
             <i class="fas fa-fw fa-tools"></i>
             <span>Configurações</span>
@@ -126,29 +96,38 @@
         <div id="collapseTools" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item text-danger" href="/system/config"><i class="fas fa-fw fa-cogs"></i>&nbsp;&nbsp;Opções</a>
-                <!-- <a class="collapse-item text-danger" href="/opcoes"><i class="fas fa-fw fa-arrows-alt"></i>&nbsp;&nbsp;Opções</a> -->
                 <a class="collapse-item text-danger" href="/system/users"><i class="fas fa-fw fa-user"></i>&nbsp;&nbsp;Usuários</a>
                 <a class="collapse-item text-danger" href="/system/grupos"><i class="fas fa-fw fa-users"></i>&nbsp;&nbsp;Grupos</a>
                 <a class="collapse-item text-danger" href="/system/autorizacoes"><i class="fas fa-fw fa-key"></i>&nbsp;&nbsp;Autorizações</a>
             </div>
         </div>
-    </li>
+    </li> -->
 
     <!-- Nav Item - Utilities Collapse Menu -->
-    <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAjuda" aria-expanded="true" aria-controls="collapseCadastro">
-            <i class="fas fa-fw fa-question"></i>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHelp" aria-expanded="true" aria-controls="collapseCadastro">
+            <i class="fas fa-question"></i>
             <span>Ajuda</span>
         </a>
-        <div id="collapseAjuda" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="collapseHelp" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Ajuda:</h6>
-                <a class="collapse-item" href="/escolas">Dicas</a>
-                <h6 class="collapse-header">Ambiente:</h6>
-                <a class="collapse-item" href="/escolas">Sobre</a>
+                <a class="collapse-item " href="/document/cadastro_usuario">Cadastro de Usuários</a>
+                <a class="collapse-item " href="#">Carência</a>
+                <a class="collapse-item " href="/document/carencia_inclusao">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Inclusão</a>
+                <a class="collapse-item " href="/document/carencia_alteracao">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Alteração</a>
+                <a class="collapse-item " href="/document/carencia_exclusao">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Exclusão</a>
+                <a class="collapse-item " href="/document/carencia_pesquisa">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Pesquisa</a>
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+                <a class="collapse-item " href="#">Provimento</a>
+                <a class="collapse-item " href="/document/inclusao_provimento">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Inclusão</a>
+                <a class="collapse-item " href="/document/inclusao_provimento">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Alteração</a>
+                <a class="collapse-item " href="/document/inclusao_provimento">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Exclusão</a>
+                <a class="collapse-item " href="/document/inclusao_provimento">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Pesquisa</a>
             </div>
+
         </div>
-    </li> -->
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

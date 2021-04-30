@@ -23,8 +23,7 @@
                     <div class="form-group col-md-2">
                         <label class="control-label" for="ueid">Unidade Escolar</label>
                         <div class="input-group mb-3">
-                            <input type="number" value="1100485" size="9" id="ueid" name="ueid" class="form-control form-control-sm btn-sm" aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <!-- <input type="number" value="<?= isset($ue['UeID']) ? $ue['UeID'] : "" ?>" size="9" id="ueid" name="ueid" class="form-control form-control-sm btn-sm" aria-label="Recipient's username" aria-describedby="button-addon2" required> -->
+                            <input type="number" value="1100485" size="10" maxlength="10"  id="ueid" name="ueid" class="form-control form-control-sm btn-sm" aria-label="Recipient's username" aria-describedby="button-addon2">
                             <button class="btn btn-primary btn-sm" type="button" id="busca_escola" onclick="pesquisa_escola_carencia()"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
@@ -58,7 +57,7 @@
                         </div>
                     </div>
                     <div class="form-group col-md-2">
-                        <label class="control-label" for="matricula_sap">Cód. RH Bahia</label>
+                        <label class="control-label" for="matricula_sap">Cód. Secul</label>
                         <input value="<?= isset($professor['matricula_sap']) ? $professor['matricula_sap'] : '' ?>" type="text" class="form-control form-control-sm " name="matricula_sap" id="matricula_sap" readonly>
                     </div>
                     <div class="form-group col-md-6">

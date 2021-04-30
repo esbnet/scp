@@ -53,6 +53,8 @@ class UserModel extends Model
             ->where(['id' => $id])
             ->first();
     }
+
+    
 }
 
 // 'id'               => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],

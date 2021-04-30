@@ -38,4 +38,21 @@ class DisciplinaModel extends Model
         //     ->first();
 
     }
+
+    public function getAreas()
+    {
+
+        return $this->select('distinct(area)')
+                ->orderBy('area', 'asc')
+            ->findAll();
+
+        // return $this->asArray()
+        //     ->findAll
+        //     ->orderBy('Nome', 'asc')
+        //     ->first();
+
+    }
+
+
+
 }

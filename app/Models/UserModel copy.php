@@ -26,7 +26,15 @@ class UserModel extends Model
         return $this->findAll();
     }
 
+    public function insertUser($user = NULL, $grupo_id = NULL) {
 
+        echo '<pre>';
+        dd($user);
+        dd($grupo_id);
 
+        return $this->withGroup($grupo_id)
+            ->save($user);
+
+        } 
     
 }

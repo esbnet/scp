@@ -6,7 +6,7 @@
             <h2 class="float-left text-primary" id="titleCard"> <?= $title; ?> </h2>
             <a title="Voltar ao painel" class="btn btn-outline-success float-right btn-circle shadow" href="/"><i class="fas fa-chart-line"></i></a>
             <a class="float-right">&nbsp;</a>
-            <a title="Adicionar user de usuário" class="btn btn-outline-primary float-right btn-circle" href="/system/users/new"><i class="fas fa-plus"></i></a>
+            <a title="Adicionar user de usuário" class="btn btn-outline-primary float-right btn-circle" href="/register"><i class="fas fa-plus"></i></a>
         </div>
 
         <div id="borderCard" class="card-body">
@@ -18,12 +18,12 @@
                 <table class="table table-hover table-bordered table-sm dataTable">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Id</th>
-                            <th>Nome</th>
-                            <th>Usuário</th>
-                            <th>E-mail</th>
-                            <th>Ativo</th>
-                            <th>Status</th>
+                            <th class="text-center">Id</th>
+                            <th class="text-center">Nome</th>
+                            <th class="text-center">Usuário</th>
+                            <th class="text-center">E-mail</th>
+                            <th class="text-center">Ativo</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center no-sort">Alterar</th>
                         </tr>
                     </thead>

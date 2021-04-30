@@ -19,7 +19,7 @@
                             <div class="form-group col-md-4">
                                 <label class="control-label" for="inputDisciplina">NTE</label>
                                 <select name="nte" id="nte" class="form-control form-control-sm" required>
-                                    <option value="" selected>NTE...</option>
+                                    <option value="" selected>...</option>
                                     <?php foreach ($ntes as $nte) : ?>
                                         <option value="<?= esc($nte['id']); ?>">
                                             <?php echo $nte['nome'] ?>
@@ -27,9 +27,18 @@
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <div class="form-group col-md-8">
+                            <div class="form-group col-md-6">
                                 <label class="control-label" for="MatriculaSap">Município</label>
                                 <input value="" type="text" class="form-control form-control-sm " name="municipio" id="municipio">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label class="control-label" for="tipo_carencia">Tipo de Carência</label>
+                                <select name="tipo_carencia" id="tipo_carencia" class="form-control form-control-sm">
+                                    <option value="">Carencia...</option>
+                                    <option value="0">Real</option>
+                                    <option value="1">Temporária</option>
+                                    <option value="2">Ambos</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-row ">
@@ -41,22 +50,25 @@
                                 <label class="control-label" for="NomeProfessor">Unidade Escolar</label>
                                 <input value="" type="text" class="form-control form-control-sm" name="unidade_escolar" id="ue">
                             </div>
-                            <div class="form-group col-md-2">
-                                <label class="control-label" for="tipo_carencia">Tipo de Carência</label>
-                                <select name="tipo_carencia" id="tipo_carencia" class="form-control form-control-sm">
-                                    <option value="">Carencia...</option>
-                                    <option value="0">Real</option>
-                                    <option value="1">Temporária</option>
-                                    <option value="2">Ambos</option>
-                                </select>
-                            </div>
                             <div class="form-group col-md-3">
                                 <label class="control-label" for="disciplina">Disciplina</label>
                                 <select name="disciplina" id="disciplina" class="form-control form-control-sm">
-                                    <option value="" selected>Disciplina...</option>
+                                    <option value="" selected>...</option>
                                     <?php foreach ($disciplinas as $disciplina) : ?>
                                         <option value="<?= esc($disciplina['id']); ?>">
                                             <?php echo $disciplina['nome'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label class="control-label" for="area_formacao">Área de Formação</label>
+                                <select name="area_formacao" id="area_formacao" class="form-control form-control-sm">
+                                <option value="" selected>...</option>
+                                    <?php foreach ($areas as $area) : ?>
+                                        <option value="<?= esc($area['area']); ?>">
+                                            <?php echo $area['area'] ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>

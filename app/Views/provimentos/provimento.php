@@ -50,7 +50,7 @@
                     </div>
                     <div class="form-group col-md-1">
                         <label class="control-label" for="CodNte">Nte</label>
-                        <input value="<?= isset($ue['CodNte']) ? $ue['CodNte'] : ""; ?>" name="CodNte" type="text" class="form-control form-control-sm text-primary" id="CodNte" readonly>
+                        <input value="<?= isset($ue['CodNte']) ? intval($ue['CodNte'])  : ""; ?>" name="CodNte" type="text" class="form-control form-control-sm text-primary" id="CodNte" readonly>
                     </div>
                 </div>
                 <!-- Fim Form1-->
@@ -87,11 +87,11 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="CPF">CPF</label>
-                                <input type="text" class="form-control form-control-sm text-primary" id="CPF" disabled>
+                                <input type="text" class="form-control form-control-sm text-primary" id="CPF" name="cpf" disabled>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="Licenciatura">Licenciatura Plena (Seconline)</label>
-                                <input type="text" class="form-control form-control-sm text-primary" id="Licenciatura" disabled>
+                                <input type="text" class="form-control form-control-sm text-primary" id="Licenciatura" name="Licenciatura" disabled>
                             </div>
                         </div>
                         <hr>

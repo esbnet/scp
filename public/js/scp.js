@@ -59,10 +59,13 @@ function pesquisa_escola_carencia() {
                 document.getElementById("UE").value = escola.ue;
                 document.getElementById("OU").value = escola.ou;
                 document.getElementById("Municipio").value = escola.municipio;
-                document.getElementById("CodNte").value = escola.nte_id;
+                document.getElementById("CodNte").value = escola.nte_id.replace(/\b0+/g, '');
                 document.getElementById("busca_escola").disabled = true;
+
+                $(".ueid").prop("readonly", true);
                 $(".matricula").prop("readonly", false);
                 $(".btn-matricula").prop("disabled", false);
+
                 $(".linha-01").removeClass("d-none");
                 $(".linha-02").removeClass("d-none");
                 $(".linha-03").removeClass("d-none");
@@ -182,8 +185,8 @@ function pesquisa_professor_carencia() {
                 document.getElementById("matricula_sap").value = professor.matricula_sap;
                 document.getElementById("NomeProfessor").value = professor.nome;
                 document.getElementById("Vinculo").value = professor.vinculo;
-                // document.getElementById("CPF").value = professor.Cpf;
-                // document.getElementById("Licenciatura").value = professor.LicPlena;
+                document.getElementById("CPF").value = professor.Cpf;
+                document.getElementById("Licenciatura").value = professor.LicPlena;
                 $(".linha-02").removeClass("d-none");
                 $(".linha-03").removeClass("d-none");
                 $(".linha-04").removeClass("d-none");
@@ -192,7 +195,7 @@ function pesquisa_professor_carencia() {
             } else {
                 Swal.fire({
                     title: "Atenção!",
-                    text: "Não existe professor com a matrícula (" + document.getElementById("Matricula").value + ") informada. Tente novamente!",
+                    text: "Não xxxx existe professor com a matrícula (" + document.getElementById("Matricula").value + ") informada. Tente novamente!",
                     icon: "error",
                     confirmButtonText: "Voltar"
                 });
@@ -200,12 +203,14 @@ function pesquisa_professor_carencia() {
                 document.getElementById("MatriculaSap").value = "";
                 document.getElementById("NomeProfessor").value = "";
                 document.getElementById("Vinculo").value = "";
+                document.getElementById("CPF").value = "";
+                document.getElementById("Licenciatura").value = "";
             }
         }
     });
 }
 
-function pesquisa_escola_provimento() {
+function _pesquisa_escola_provimento() {
     var codigo = document.getElementById("ueid").value;
 
     if (codigo == null || codigo == "") {
@@ -245,7 +250,7 @@ function pesquisa_escola_provimento() {
                 document.getElementById("UE").value = escola.Ue;
                 document.getElementById("OU").value = escola.OU;
                 document.getElementById("Municipio").value = escola.Municipio;
-                document.getElementById("CodNte").value = escola.CodNte;
+                document.getElementById("CodNte").value = escola.CodNte.val();
                 document.getElementById("busca_escola").disabled = true;
                 $(".matricula").prop("readonly", false);
                 $(".btn-matricula").prop("disabled", false);
@@ -267,6 +272,7 @@ function pesquisa_escola_provimento() {
     });
 }
 
+//Utilizado na inclusão do provimento
 function pesquisa_professor_provimento() {
     var matricula = document.getElementById("Matricula").value;
 
@@ -326,6 +332,8 @@ function pesquisa_professor_provimento() {
                 document.getElementById("MatriculaSap").value = "";
                 document.getElementById("NomeProfessor").value = "";
                 document.getElementById("Vinculo").value = "";
+                document.getElementById("CPF").value = "";
+                document.getElementById("Licenciatura").value = "";
             }
         }
     });
@@ -389,7 +397,7 @@ function pesquisa_carencia() {
                 document.getElementById("UE").value = escola.ue;
                 document.getElementById("OU").value = escola.ou;
                 document.getElementById("Municipio").value = escola.municipio;
-                document.getElementById("CodNte").value = escola.nte_id;
+                document.getElementById("CodNte").value = parseInt(escola.nte_id);
                 $(".matricula").prop("readonly", false);
                 $(".btn-matricula").prop("disabled", false);
                 $(".linha-01").removeClass("d-none");
@@ -697,7 +705,7 @@ function deleta_provimento() {
     });
 }
 
-function consulta_carencia_detalhada() { // alert('chegou na função')
+function consulta_carencia_detalhada() { 
 
     var endereco = "/LancamentoCarencias/consutla_carencia";
     var tipo_consulta = "real";
@@ -709,6 +717,7 @@ function consulta_carencia_detalhada() { // alert('chegou na função')
     dados.append("ue", $('#ue').val());
     dados.append("tipo_carencia", $('#tipo_carencia').val());
     dados.append("disciplina", $('#disciplina').val());
+    dados.append("area_formacao", $('#area_formacao').val());
     dados.append("tipo_consulta", tipo_consulta);
 
     $.ajax({

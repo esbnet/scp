@@ -31,10 +31,22 @@
             <?php csrf_field() ?>
 
             <?php if (!$lancamento_carencia['temporaria']) : ?>
+            
                 <div id="borderCard" class="card-body border-left-primary">
-                <?php else : ?>
-                    <div id="borderCard" class="card-body border-left-warning">
-                    <?php endif; ?>
+                <div class="form-row float-left">
+                    <a title="Carência Real" class="btn btn-primary float-right btn-circle btn-sm text-white">
+                        <span>R</span>
+                    </a>
+                </div>
+            <?php else : ?>
+                <div id="borderCard" class="card-body border-left-warning">
+                <div class="form-row float-left ">
+                <a title="Carência Temporária" class="btn btn-warning float-right btn-circle btn-sm text-white">
+                        <span>T</span>
+                    </a>
+
+                </div>
+            <?php endif; ?>
 
                     <div class="form-row float-right">
                         <label class="control-label" for="ueid">
@@ -60,7 +72,7 @@
                         <div class="form-group col-md-2">
                             <label class="control-label" for="UeID">Unidade Escolar</label>
                             <div class="input-group mb-3">
-                                <input type="number" value="<?= isset($lancamento_carencia['ue_id']) ? $lancamento_carencia['ue_id'] : "" ?>" size="9" id="ueid" name="ueid" class="form-control form-control-sm btn-sm" aria-label="Recipient's username" aria-describedby="button-addon2" required readonly>
+                                <input type="number" value="<?= isset($lancamento_carencia['ue_id']) ? $lancamento_carencia['ue_id'] : "" ?>" size="10" maxlength="10" id="ueid" name="ueid" class="form-control form-control-sm btn-sm" aria-label="Recipient's username" aria-describedby="button-addon2" required readonly>
                                 <?php if ($lancamento_carencia['houve_provimento'] == 1) : ?>
                                     <button class="btn btn-warning btn-sm" title="exit provimento" type="button" id="busca_professor" disabled">&nbsp;<i class="fas fa-info"></i></button>
                                 <?php endif; ?>
@@ -85,7 +97,7 @@
                         </div>
                         <div class="form-group col-md-1">
                             <label class="control-label" for="CodNte">NTE</label>
-                            <input value="<?= isset($ue['nte_id']) ? $ue['nte_id'] : ""; ?>" name="CodNte" type="text" class="form-control form-control-sm" id="CodNte" readonly>
+                            <input value="<?= isset($ue['nte_id']) ? intval($ue['nte_id']) : ""; ?>" name="CodNte" type="text" class="form-control form-control-sm" id="CodNte" readonly>
                         </div>
                     </div>
                     <!-- Fim Form1-->
@@ -99,7 +111,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-2">
-                            <label class="control-label" for="MatriculaSap">Cód. RH Bahia</label>
+                            <label class="control-label" for="MatriculaSap">Cód. Secul</label>
                             <input value="<?= isset($professor['matricula_sap']) ? $professor['matricula_sap'] : '' ?>" type="text" class="form-control form-control-sm " name="MatriculaSap" id="MatriculaSap" readonly>
                         </div>
                         <div class="form-group col-md-6">
