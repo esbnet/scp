@@ -67,7 +67,7 @@
                         </div>
                         <div class="form-group col-md-1">
                             <label class="control-label" for="CodNte">Nte</label>
-                            <input value="<?= isset($provimento['nte_id']) ? $provimento['nte_id'] : ""; ?>" name="CodNte" type="text" class="form-control form-control-sm text-primary" id="CodNte" readonly>
+                            <input value="<?= isset($provimento['nte_id']) ? intval($provimento['nte_id']) : ""; ?>" name="CodNte" type="text" class="form-control form-control-sm text-primary" id="CodNte" readonly>
                         </div>
                     </div>
 
@@ -98,7 +98,7 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label for="CPF">CPF</label>
-                            <input value="<?= isset($provimento['cpf']) ? $provimento['cpf'] : '' ?>" type="text" class="form-control form-control-sm text-primary" name="cpf" id="cpf" readonly>
+                            <input value="<?= isset($provimento['cpf']) ? $provimento['cpf'] : '' ?>" type="text" class="form-control form-control-sm text-primary" name="CPF" id="CPF" readonly>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="Licenciatura">Licenciatura Plena (Seconline)</label>

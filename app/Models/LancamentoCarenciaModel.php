@@ -127,6 +127,7 @@ class LancamentoCarenciaModel extends Model
         $ue = $campos['ue'];
         $tipo_carencia = $campos['tipo_carencia'];
         $disciplina = $campos['disciplina'];
+        $area_formacao = $campos['area_formacao'];
 
         if ($tipo_carencia < 2 && $tipo_carencia <> Null  ) {
             $tipo_carencia = [ $tipo_carencia ];
@@ -164,11 +165,15 @@ class LancamentoCarenciaModel extends Model
             ->like('scp_ue.id', $ue_id)
             ->like('scp_ue.ue', $ue)
             ->like('scp_disciplina.id', $disciplina)
+            ->like('scp_disciplina.area', $area_formacao)
             ->where($query_local)
             ->whereIn('scp_lancamento_carencia.temporaria', $tipo_carencia )
             ->orderby('scp_ue.nte_id, scp_ue.municipio, escola_nome, disciplina_nome asc')
             ->findAll();
 
+
+
+            
         return $carencia;
     }
 

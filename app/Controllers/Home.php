@@ -14,7 +14,6 @@ class Home extends BaseController
 		$modelCarencia = new LancamentoCarenciaModel();
 		$modelProvido = new ProvimentoProvidoModel();
 
-		$tmp = $modelCarencia->getCarencia();
 		$TCR = $modelCarencia->getTotalCarenciaReal();
 		$TCT = $modelCarencia->getTotalCarenciaTemporaria();
 		$TFD = $modelCarencia->getCarenciaTop5Disciplina();

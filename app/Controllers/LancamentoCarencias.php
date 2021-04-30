@@ -70,8 +70,6 @@ class LancamentoCarencias extends BaseController
         echo view('/layout/footer');
     }
 
-
-
     //Exibe registro pelo Id
     public function view($Id = NULL)
     {
@@ -96,12 +94,6 @@ class LancamentoCarencias extends BaseController
 
         $modelLancamentoCarencia = new lancamentoCarenciaModel();
 
-        // $ia = $this->request->getPost('inicio_afastamento');
-        // $ia = date('Y-m-d', $ia);
-
-        // $ta = $this->request->getPost('termino_afastamento');
-        // $ta = date('Y-m-d', $ta);
-
         $lancamento_carencia = [
             'id' => $this->request->getPost('id'),
             'ue_id' => substr($this->request->getPost('ueid'),  0, 8),
@@ -114,8 +106,6 @@ class LancamentoCarencias extends BaseController
             'temporaria' =>  $this->request->getPost('temporaria'),
             'inicio_afastamento' => $this->request->getPost('inicio_afastamento'),
             'termino_afastamento' => $this->request->getPost('termino_afastamento'),
-            // 'inicio_afastamento' => $ia,
-            // 'termino_afastamento' => $ta,
             'motivo_vaga_id' => $this->request->getPost('motivo_vaga_id'),
             'user_id' => $this->request->getPost('user'),
             'tipo_lancamento_id' => 2, //Update
@@ -129,7 +119,7 @@ class LancamentoCarencias extends BaseController
         ];
 
         // echo ('<pre>');
-        // dd($lancamento_carencia);
+        // dd($lancamento_carencia['ue_id']);
         // exit('Update!');
 
         $modelLancamentoCarencia->insert($lancamento_carencia);
@@ -141,8 +131,6 @@ class LancamentoCarencias extends BaseController
     public function edit($id)
     {
 
-        helper(['form', 'url']);
-
         $modelLancamentoCarencia = new LancamentoCarenciaModel();
         $modelMotivoAfastamento = new MotivoCarenciaModel();
         $modelDisciplina = new DisciplinaModel();
@@ -150,7 +138,7 @@ class LancamentoCarencias extends BaseController
         $modelProfessor = new ProfessorModel();
 
         $data = [
-            'title' => 'Editar a carência',
+            'title' => 'Editar Carência',
             'lancamento_carencia' => $modelLancamentoCarencia->getCarencia($id),
             'motivos' => $modelMotivoAfastamento->getAll(),
             'disciplinas' => $modelDisciplina->getAll()
@@ -174,7 +162,17 @@ class LancamentoCarencias extends BaseController
         // exit('Parada forçada...');
 
         echo view('layout/header', $data);
-        echo view('carencias/carenciaEdit');
+
+        //Impede a edição da carência para grupos que não seja CPG
+        if (in_groups(3, 5)) {
+            // echo '<pre>No grupo';
+            // dd(in_groups(3, 5));
+            echo view('carencias/carenciaEdit');
+        } else {
+            // echo '<pre>Fora do grupo';
+            // dd(in_groups(3, 5));
+            echo view('carencias/carenciaView');
+        }
         echo view('layout/footer');
     }
 
@@ -343,6 +341,7 @@ class LancamentoCarencias extends BaseController
             'ntes' => $nteModel->getAll(),
             'disciplinas' => $disciplinaModel->getAll(),
             'carencias' => [],
+            'areas' => $disciplinaModel->getAreas(),
             'session' => \Config\Services::session(),
             'styles' => [
                 'vendor/datatables/dataTables.bootstrap4.min.css',
@@ -396,8 +395,9 @@ class LancamentoCarencias extends BaseController
             'ue' => $_POST['ue'],
             'tipo_carencia' => $_POST['tipo_carencia'],
             'disciplina' => $_POST['disciplina'],
+            'area_formacao' => $_POST['area_formacao'],
         ];
-        
+
         $tipo_consulta = $_POST['tipo_consulta'];
 
         $modelCarencia = new LancamentoCarenciaModel();
@@ -410,7 +410,7 @@ class LancamentoCarencias extends BaseController
 
         if ($carencias) {
             foreach ($carencias as $carencia) {
-                
+
                 $id = $carencia['carencia_id'];
                 $edit = "<a title='Exibe o registro para edição' class='btn btn-light btn-circle btn-sm' style='color: #0D47A1' href='/LancamentoCarencias/edit/{$id}'><i class='fas fa-edit'></i></a>";
 
@@ -460,4 +460,5 @@ class LancamentoCarencias extends BaseController
 
         echo json_encode([$encontrado]);
     }
+
 }

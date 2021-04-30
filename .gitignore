@@ -7,7 +7,8 @@ dompdf
 public/docs
 PhpSpreadsheet
 myth-auth
-system
+/system
+*.sql
 
 # OS X
 .DS_Store

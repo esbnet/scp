@@ -1,5 +1,3 @@
-<? helper(['form', 'url']); ?>
-
 <!-- Begin Page Content -->
 <div class="container-fluid">
 

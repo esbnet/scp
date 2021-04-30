@@ -8,7 +8,7 @@ class Form extends Controller
 {
     public function index()
     {
-        helper(['form', 'url']);
+        helper(['form', 'url', 'auth']);
 
         if (!$this->validate([])) {
             echo view('form/Signup', ['validation' => $this->validator,]);
