@@ -18,7 +18,7 @@
             </p>
             <br>
             <p>Na tela de edição existe os recursos enumarados que descreveremos a seguir:
-            <ol>
+            <ol> 
                 <li> Tipo de caência</li>
                 <li> Usuário, data e hora que da última atualização do geristro</li>
                 <li> Botões de navegação: Voltar para pesquisa; Voltar para o painel</li>
