@@ -6,7 +6,7 @@
         <div class="col-sm-6 offset-sm-3">
 
             <div class="card shadow">
-                <h2 class="card-header text-primary"><?= lang('Auth.loginTitle') ?></h2>
+                <h2 class="card-header text-center text-primary"><?= lang('Auth.loginTitle') ?></h2>
                 <div class="card-body">
 
                     <?= view('Myth\Auth\Views\_message_block') ?>
@@ -65,10 +65,10 @@
                     <hr>
 
                     <?php if ($config->allowRegistration) : ?>
-                    <p><a href="<?= route_to('register') ?>"><?= lang('Auth.needAnAccount') ?></a></p>
+                    <p class="text-center"><a href="<?= route_to('register') ?>"><?= lang('Auth.needAnAccount') ?></a></p>
                     <?php endif; ?>
                     <?php if ($config->activeResetter) : ?>
-                    <p><a href="<?= route_to('forgot') ?>"><?= lang('Auth.forgotYourPassword') ?></a></p>
+                    <p class="text-center"><a href="<?= route_to('forgot') ?>"><?= lang('Auth.forgotYourPassword') ?></a></p>
                     <?php endif; ?>
                 </div>
             </div>

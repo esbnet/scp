@@ -9,6 +9,7 @@ class ProvimentoModel extends Model
 
     protected $table = 'scp_provimento';
     protected $primaryKey = 'id';
+    protected $useSoftDeletes = true;
 
     protected $allowedFields = [
         'id',

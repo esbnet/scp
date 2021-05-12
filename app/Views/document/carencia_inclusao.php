@@ -4,18 +4,24 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
 
+        <div class="card-header py-3">
+            <h2 class="text-primary" id="titleCard"> <?= $title; ?> </h2>
+        </div>
+
         <div id="borderCard" class="card-body border-left-primary">
 
-            <h4><?= $title; ?></h4>
             <br>
-            <p>Para efetuar a inclusão de carência siga os passo a a seguir:</p>
-            <p>1. Acesse o sistema"</p>
-            <p>2. No menu a esquerda clicar em carência e depois em "Incluir"</p>
-            <p class="text-center"><img src="<?= base_url('assets/images/Menu_Carência_Incluir.PNG') ?>" style="width: 70%;"></p>
-            <p>3. Na tela a seguir preencha o campo <strong class="badge badge-secondary">Unidade Escolar</strong> com o código RHBahia ou Codsecul</p>
-            <p class="text-center"><img src="<?= base_url('assets/images/Carência_Incluir_Informar_UE.PNG') ?>" style="width: 70%;"></p>
-            <p>4. A seguir preencha os campos do formulário de acordo com os critérios abaixo:</p>
-            <p class="text-center"><img src="<?= base_url('assets/images/Carência_Incluir_Tela_Completa.PNG') ?>" style="width: 70%;"></p>
+            <p>Para efetuar a inclusão de carência siga os passo a seguir:</p>
+
+            <p>1. No menu a esquerda clicar em "Carência" e depois em "+ Incluir"</p>
+
+            <p class="text-center"><img src="<?= base_url('assets/images/Menu_Carencia_Incluir.PNG') ?>" style="width: 70%;"></p>
+            
+            <p>2. Na tela a seguir preencha o campo <strong class="badge badge-danger">Unidade Escolar</strong> com o código RHBahia ou Codsecul e clique no botão de pesquisa (lupa).</p>
+            <p class="text-center"><img src="<?= base_url('assets/images/provimento_incluir_informar_ue.PNG') ?>" style="width: 70%;"></p>
+            
+            <p>3. A seguir preencha os campos do formulário de acordo com os critérios descrito a seguir.</p>
+            <p class="text-center"><img src="<?= base_url('assets/images/carencia_incluir_tela_completa.png') ?>" style="width: 70%;"></p>
 
             <p>
                 Na tela para cadastro é obrigatório preencher os campos:
@@ -35,12 +41,18 @@
                 e caso haja incosistêencia ele informará e dará orientação para concluir o cadastro. Clicando em "Cacelar" o sistema irá descartar todas as informações e retornar a tela de pesquisa
             </p>
 
-            <br>
-            <div class="card-footer footer float-right">
-                <a title="Retornar ao início" class="btn btn-outline-success " href="/">
-                    <i class="fas fa-home">&nbsp;&nbsp;Home</i>
-                </a>
-            </div>
+            <hr>
+            <P>Legenda do campos:
+                <strong class="badge badge-danger">obrigatório</strong>
+                <strong class="badge badge-warning">ao meno um</strong>
+                <strong class="badge badge-secondary">opcional</strong>
+            </P>
+
+        </div>
+        <div class="card-footer footer text-right ">
+            <a title="Retornar ao início" class="btn btn-outline-success " href="/">
+                <i class="fas fa-home">&nbsp;&nbsp;Home</i>
+            </a>
         </div>
 
     </div>

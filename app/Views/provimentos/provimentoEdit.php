@@ -1,6 +1,13 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
+    <?php
+    if (isset($_SESSION['msg'])) {
+        echo $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    }
+    ?>
+
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
 
@@ -33,9 +40,10 @@
                     <div class="form-row float-right">
                         <label class="control-label" for="ueid">
                             <!-- Última atualização:&nbsp;&nbsp; -->
-                            <i class="fas fa-user-edit text-success"></i>&nbsp;&nbsp;<?php echo $provimento['user_id']; ?>
+                            <i class="fas fa-user-edit text-success"></i>&nbsp;&nbsp;<?php echo $user['username']; ?>
                             &nbsp;&nbsp;&nbsp;
-                            <i class="fas fa-calendar-alt text-success"></i>&nbsp;&nbsp;<?php echo date($provimento['data_lancamento']); ?> </label>
+                            <i class="fas fa-calendar-alt text-success"></i>&nbsp;&nbsp;<?php echo date($provimento['data_lancamento']); ?>
+                        </label>
                     </div>
                     <br>
                     <hr>
@@ -76,7 +84,7 @@
                         <div class="form-group col-md-2">
                             <label class="control-label" for="inputMatricula">Matrícula</label>
                             <div class="input-group mb-3">
-                                <input title="CodSecul ou Cod. SAP ou CPF" data-toggle="tooltip" data-placement="top" title="Tooltip na parte superior" type="number" value="<?= isset($provimento['professor_matricula']) ? $provimento['professor_matricula'] : '' ?>" size="9" name="matricula_Id" id="Matricula" class="form-control form-control-sm text-primary matricula" >
+                                <input title="CodSecul ou Cod. SAP ou CPF" data-toggle="tooltip" data-placement="top" title="Tooltip na parte superior" type="number" value="<?= isset($provimento['professor_matricula']) ? $provimento['professor_matricula'] : '' ?>" size="9" name="matricula_Id" id="Matricula" class="form-control form-control-sm text-primary matricula">
                                 <button class="btn btn-primary btn-sm btn-matricula" type="button" id="busca_professor" onclick="pesquisa_professor_provimento()"><i class="fas fa-search"></i></button>
                             </div>
                         </div>
@@ -121,7 +129,7 @@
 
                         <div class="form-group col-md-3">
                             <label for="motivo_provimento_id">Tipo de Movimentação</label>
-                            <select name="TipoMovId" id="motivo_provimento_id" class="form-control form-control-sm text-primary" >
+                            <select name="TipoMovId" id="motivo_provimento_id" class="form-control form-control-sm text-primary">
                                 <option value="0" selected>Selecione o tipo de movimentação...</option>
                                 <?php foreach ($tipos_movimentacao as $tipo) : ?>
                                     <option value="<?= esc($tipo['id']); ?>" <?= esc($tipo['id'] == $provimento['tipo_movimentacao_id'] ? 'selected' : '') ?>><?= $tipo['nome']; ?></option>
@@ -154,7 +162,7 @@
                                 <label class="form-check-label " for="cb_assuncao">Assução</label>&nbsp;&nbsp;&nbsp;
 
                                 <!-- <input type="date" class="form-control form-control-sm text-primary" id="DataAssuncao" name="DataAssuncao" disabled> -->
-                                <input type="date" class="form-control form-control-sm text-primary" id="DataAssuncao" name="DataAssuncao" value="<?= isset($provimento['data_assuncao']) ? $provimento['data_assuncao'] : '' ?>" <?php echo(isset($provimento['data_assuncao']) ? '' : 'disabled') ?>>
+                                <input type="date" class="form-control form-control-sm text-primary" id="DataAssuncao" name="DataAssuncao" value="<?= isset($provimento['data_assuncao']) ? $provimento['data_assuncao'] : '' ?>" <?php echo (isset($provimento['data_assuncao']) ? '' : 'disabled') ?>>
                             </div>
                         </div>
                     </div>

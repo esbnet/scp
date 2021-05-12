@@ -1,6 +1,13 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
+    <?php
+    if (isset($_SESSION['msg'])) {
+        echo $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    }
+    ?>
+
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
 
@@ -8,7 +15,7 @@
             <h2 class="float-left text-primary"> <?= $title; ?> </h2>
             <a title="Voltar ao painel" class="btn btn-circle btn-outline-success float-right" href="/"><i class="fas fa-chart-line"></i></a>
             <a class="float-right">&nbsp;</a>
-            <a title="Adicionar nova carência" class="btn btn-circle btn-outline-primary float-right" href="/LancamentoCarencias/carencia"><i class="fas fa-plus"></i></a>
+            <a title="Adicionar nova carência" class="btn btn-circle btn-outline-primary float-right" href="/Carencias/carencia"><i class="fas fa-plus"></i></a>
         </div>
 
         <div class="card-body">
@@ -65,7 +72,7 @@
                             <div class="form-group col-md-2">
                                 <label class="control-label" for="area_formacao">Área de Formação</label>
                                 <select name="area_formacao" id="area_formacao" class="form-control form-control-sm">
-                                <option value="" selected>...</option>
+                                    <option value="" selected>...</option>
                                     <?php foreach ($areas as $area) : ?>
                                         <option value="<?= esc($area['area']); ?>">
                                             <?php echo $area['area'] ?>
@@ -87,9 +94,9 @@
                     <div class="table-responsive">
                         <table id="consulta_carencia" name="consulta_carencia" class="table-striped table-hover compact nowrap dataTable " width="auto" cellspacing="0">
                             <!-- <table class="table dataTable" width="100%" cellspacing="0"> -->
-                            <thead >
+                            <thead>
                                 <tr>
-                                <th class="text-center no-sort">Edit</th>
+                                    <th class="text-center no-sort">Edit</th>
                                     <th>NTE Nome</th>
                                     <th>Município</th>
                                     <th>Cód. UE</th>
@@ -105,8 +112,8 @@
                                     <th>Término</th>
                                 </tr>
                             </thead>
-                            <tfoot >
-		                        <tr>
+                            <tfoot>
+                                <tr>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -122,7 +129,7 @@
                                     <th></th>
                                     <th></th>
                                 </tr>
-	                        </tfoot>
+                            </tfoot>
                             <tbody>
                             </tbody>
 

@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\NteModel;
-use App\Models\LancamentoCarenciaModel;
+use App\Models\CarenciaModel;
 use App\Models\EscolaModel;
 use App\Models\DisciplinaModel;
 use App\Models\ProfessorModel;
@@ -11,6 +11,7 @@ use App\Models\TipoMovimentacaoModel;
 use App\Models\FormaSuprimentoModel;
 use App\Models\ProvimentoModel;
 use App\Models\ProvimentoProvidoModel;
+use App\Models\UserModel;
 
 class Provimentos extends BaseController
 {
@@ -43,33 +44,15 @@ class Provimentos extends BaseController
     }
     //=========================================================================
 
-    //Exibe registro pelo Id
-    public function view($Id = NULL)
-    {
-        $model = new provimentoModel();
-
-        $data['provimentos'] = $model->getprovimento($Id);
-        $data['session'] = \Config\Services::session();
-
-        if (empty($data['provimentos'])) {
-            var_dump($data);
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Carência não encontrada: ' . $Id);
-        }
-
-        echo view('templates/header', $data);
-        echo view('provimentos/view');
-        echo view('templates/footer');
-    }
-    //=========================================================================
-
     //Grava um novo registro
     public function store()
     {
 
         $modelProvimento = new provimentoModel();
-        $modelCarencia = new LancamentoCarenciaModel();
+        $modelCarencia = new CarenciaModel();
         $modelProvimentoProvido = new ProvimentoProvidoModel();
 
+        //Pega os dados do formulário e passa para os campos
         $provimento = [
             'ue_id' => substr($this->request->getPost('ueid'),  0, 8),
             'matricula_id' => $this->request->getPost('matricula_Id'),
@@ -81,7 +64,7 @@ class Provimentos extends BaseController
             'data_anuencia' => is_null($this->request->getPost('DataAnuencia')) ? '00-00-0000' : $this->request->getPost('DataAnuencia'),
             'assuncao' => is_null($this->request->getPost('Assuncao')) ? 0 : -1,
             'data_assuncao' => is_null($this->request->getPost('DataAssuncao')) ? '00-00-0000' : $this->request->getPost('DataAssuncao'),
-            'user_id' => $_SESSION['logged_in'],
+            'user_id' => user()->id,
             'data_lancamento' => date('Y/m/d H:i:s'),
             'desistencia' => 0,
             'Observacao' => $this->request->getPost('Observacao'),
@@ -99,38 +82,49 @@ class Provimentos extends BaseController
         $provido_mat_prov = $this->request->getPost('mat_prov[]');
         $provido_vesp_prov = $this->request->getPost('vesp_prov[]');
         $provido_not_prov = $this->request->getPost('not_prov[]');
-
+        $carencia_id = $this->request->getPost('carencia_id[]');
+    
+        //pega o número de linhas na tabela
         $tamanho_array = count($provido_not_prov);
 
+        
         for ($i = 0; $i < ($tamanho_array); $i++) {
+            
+            //soma os três novos peíodos da carência
+            $totalProvidoDisciplina = intval($provido_mat_prov[$i]) + intval($provido_vesp_prov[$i]) + intval($provido_not_prov[$i]);            
 
-            $totalProvidoDisciplina = intval($provido_mat_prov[$i]) + intval($provido_vesp_prov[$i]) + intval($provido_not_prov[$i]);
-
+            //Se foi informado algum valor a prover, o sistema faz o abatimento e atualiza a carência 
             if ($totalProvidoDisciplina > 0) {
-
-                $carencia = $modelCarencia->getCarenciaByDisciplina($provimento['ue_id'], $provido_disciplina_id[$i], $provido_temporaria[$i]);
+                
+                $carencia = $modelCarencia->getCarencia($carencia_id[$i]);
+                // dd($carencia);
 
                 //Valores antigos para salvar no provimento
-                $mat_old = $carencia[0]['matutino'];
-                $vesp_old = $carencia[0]['vespertino'];
-                $not_old = $carencia[0]['noturno'];
-                $total_old = $carencia[0]['total'];
-                $carencia_old_id = $carencia[0]['id'];
+                $mat_old = $carencia['matutino'];
+                $vesp_old = $carencia['vespertino'];
+                $not_old = $carencia['noturno'];
+                $total_old = $carencia['total'];
+                $carencia_old_id = $carencia['id'];
 
                 //Calcula as horas que restaram na carência
-                $carencia[0]['matutino'] = $carencia[0]['matutino'] - $provido_mat_prov[$i];
-                $carencia[0]['vespertino'] = $carencia[0]['vespertino'] - $provido_vesp_prov[$i];
-                $carencia[0]['noturno'] = $carencia[0]['noturno'] - $provido_not_prov[$i];
-                $carencia[0]['total'] = $carencia[0]['total'] - $totalProvidoDisciplina;
+                $carencia['matutino'] = $carencia['matutino'] - $provido_mat_prov[$i];
+                $carencia['vespertino'] = $carencia['vespertino'] - $provido_vesp_prov[$i];
+                $carencia['noturno'] = $carencia['noturno'] - $provido_not_prov[$i];
+                $carencia['total'] = $carencia['total'] - $totalProvidoDisciplina;
 
-                $carencia[0]['houve_provimento'] = intval(1);
-
+                
+                $carencia['user_id'] = user()->id;
+                $carencia['tipo_lancamento_id'] = 3;
+                $carencia['lancamento_id'] = $provimento_id;
+                $carencia['data_lancamento'] = date('Y/m/d H:i:s');
+                
+                $carencia['houve_provimento'] = 1;
                 // echo '<pre>';
                 // dd($carencia[0]);
                 // exit('-------------------------------------------------');
                 
                 //Grava horas restantes na carência
-                $modelCarencia->save($carencia[0]);
+                $modelCarencia->save($carencia);
 
                 //Monta registro do provimento
                 $provido = [
@@ -152,6 +146,9 @@ class Provimentos extends BaseController
 
             }
         }
+
+        $_SESSION ['msg'] = "<div id='message' class='alert alert-success alert-dismissible fade show'  role='alert'>Provimento <strong>gravado</strong> com sucesso!</div>";
+        header("Locarion: carencias/carencia");
 
         return redirect()->to(site_url('provimentos'));
 
@@ -176,7 +173,7 @@ class Provimentos extends BaseController
             'data_anuencia' => is_null($this->request->getPost('DataAnuencia')) ? '00-00-0000' : $this->request->getPost('DataAnuencia'),
             'assuncao' => is_null($this->request->getPost('Assuncao')) ? 0 : -1,
             'data_assuncao' => is_null($this->request->getPost('DataAssuncao')) ? '00-00-0000' : $this->request->getPost('DataAssuncao'),
-            'user_id' => $_SESSION['logged_in'],
+            'user_id' => user()->id,
             'data_lancamento' => date('Y/m/d H:i:s'),
             'desistencia' => 0,
             'observacao' => $this->request->getPost('Observacao'),
@@ -189,6 +186,9 @@ class Provimentos extends BaseController
         //Salva o cabeçalho do provimento
         $modelProvimento->update($provimento['id'], $provimento);
 
+        $_SESSION ['msg'] = "<div id='message' class='alert alert-success alert-dismissible fade show'  role='alert'>Provimento <strong>atualizado</strong> com sucesso!</div>";
+        header("Locarion: carencias/carencia");
+
         return redirect()->to(site_url('provimentos'));
 
         //=========================================================================
@@ -199,7 +199,7 @@ class Provimentos extends BaseController
     {
 
         $modelProvimento = new provimentoModel();
-        $modelCarencia = new LancamentoCarenciaModel();
+        $modelCarencia = new CarenciaModel();
         $modelProvimentoProvido = new ProvimentoProvidoModel();
 
         //Pega todos as disciplinas relativas ao provimento
@@ -222,12 +222,6 @@ class Provimentos extends BaseController
             $carencia['noturno'] = intval($carencia['noturno']) + intval($provido['not']);
             $carencia['total'] = intval($carencia['total']) + intval($provido['total']);
 
-            // $carencia = $carencia;
-            
-            // echo '<pre>';
-            // print_r($id);
-            // exit('-------------------------------------------------');
-
             //Registra a devolução da carênca
             $modelCarencia->save($carencia);
 
@@ -237,6 +231,9 @@ class Provimentos extends BaseController
 
         //Excluir o provimento definitivamento 
         $modelProvimento->delete($id);
+
+        $_SESSION ['msg'] = "<div id='message' class='alert alert-danger alert-dismissible fade show'  role='alert'>Provimento <strong>EXCLUÍDO</strong> com sucesso!</div>";
+        header("Locarion: carencias/carencia");
 
         return redirect()->to(site_url('provimentos/'));
     }
@@ -258,8 +255,9 @@ class Provimentos extends BaseController
         $modelTipo_Movimentacao = new TipoMovimentacaoModel();
         $modelDisciplina = new DisciplinaModel();
         $modelFormaSuprimentoModel = new FormaSuprimentoModel();
-        // $modelCarencia = new LancamentoCarenciaModel();
+        // $modelCarencia = new CarenciaModel();
         $modelProvimentoProvido = new ProvimentoProvidoModel();
+        $modelUser = new UserModel();
 
         $data = [
             'title' => 'Editar o provimento',
@@ -281,10 +279,15 @@ class Provimentos extends BaseController
             'tipos_movimentacao' => $modelTipo_Movimentacao->getAll(),
             'formas_suprimento' => $modelFormaSuprimentoModel->getAll(),
             'disciplinas' => $modelDisciplina->getAll(),
-            'provimento' => $modelProvimento->getProvimento($provimento_id)
+            'provimento' => $modelProvimento->getProvimento($provimento_id),
+
             // 'carencia' => $modelCarencia->getUserById($id),
 
         ];
+
+        $data['user'] =  $modelUser->getUserById($data['provimento']['user_id']);
+
+        // dd($data);
 
         $id_provimento = intval($data['provimento']['provimento_id']);
         $data['provimento_provido'] = $modelProvimentoProvido->getProvidoByProvimentoId($id_provimento);
@@ -368,7 +371,7 @@ class Provimentos extends BaseController
             $encontrado['escola'] = $Ue;
 
             //Recuperar carencias para a escola caso houver
-            $modelCarencia = new LancamentoCarenciaModel();
+            $modelCarencia = new CarenciaModel();
             $Carencias = $modelCarencia->getCarenciaUE($codigoEscola);
 
             if ($Carencias) {
@@ -526,14 +529,7 @@ class Provimentos extends BaseController
                 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js',
                 'https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js',
-                // 'https://cdn.datatables.net/fixedcolumns/3.3.2/js/dataTables.fixedColumns.min.js',
 
-                // 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js',
-                // 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js',
-                // 'https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/datatables.min.js',
-
-                // 'vendor/datatables/jquery.dataTables.min.js',
-                //  'vendor/datatables/dataTables.bootstrap4.min.js',
                 'vendor/datatables/app.js',
             ],
         ];
