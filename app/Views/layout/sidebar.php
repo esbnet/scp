@@ -38,9 +38,9 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item text-success" href="<?= base_url('#') ?>"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;Painel Carência</a>
-                <!-- <a class="collapse-item text-primary" href="<?= base_url('LancamentoCarencias') ?>"><i class="fas fa-hourglass-half"></i>&nbsp;&nbsp;Relação</a> -->
-                <a class="collapse-item text-primary" href="<?= base_url('LancamentoCarencias/carencia') ?>"><i class="fas fa-plus"></i>&nbsp;&nbsp;Incluir</a>
-                <a class="collapse-item text-primary" href="<?= base_url('LancamentoCarencias') ?>"><i class="fas fa-search"></i>&nbsp;&nbsp;Pesquisar</a>
+                <!-- <a class="collapse-item text-primary" href="<?= base_url('Carencias') ?>"><i class="fas fa-hourglass-half"></i>&nbsp;&nbsp;Relação</a> -->
+                <a class="collapse-item text-primary" href="<?= base_url('Carencias/carencia') ?>"><i class="fas fa-plus"></i>&nbsp;&nbsp;Incluir</a>
+                <a class="collapse-item text-primary" href="<?= base_url('Carencias') ?>"><i class="fas fa-search"></i>&nbsp;&nbsp;Pesquisar</a>
             </div>
         </div>
     </li>
@@ -120,10 +120,10 @@
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
                 <a class="collapse-item " href="#">Provimento</a>
-                <a class="collapse-item " href="/document/inclusao_provimento">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Inclusão</a>
-                <a class="collapse-item " href="/document/inclusao_provimento">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Alteração</a>
-                <a class="collapse-item " href="/document/inclusao_provimento">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Exclusão</a>
-                <a class="collapse-item " href="/document/inclusao_provimento">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Pesquisa</a>
+                <a class="collapse-item " href="/document/provimento_inclusao">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Inclusão</a>
+                <a class="collapse-item " href="/document/provimento_alteracao">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Alteração</a>
+                <a class="collapse-item " href="/document/provimento_exclusao">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Exclusão</a>
+                <a class="collapse-item " href="/document/provimento_pesquisa">&nbsp;&nbsp;<i class="fas fa-angle-right"></i>&nbsp;&nbsp;Pesquisa</a>
             </div>
 
         </div>

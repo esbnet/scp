@@ -1,6 +1,13 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
+    <?php
+    if (isset($_SESSION['msg'])) {
+        echo $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    }
+    ?>
+
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
 
@@ -8,22 +15,23 @@
             <h2 class="float-left text-primary" id="titleCard"> <?= $title; ?> </h2>
             <a title="Voltar ao painel" class="btn btn-outline-success float-right btn-circle shadow" href="/"><i class="fas fa-chart-line"></i></a>
             <a class="float-right">&nbsp;</a>
-            <a title="Voltar a pesquisa de carência" class="btn btn-outline-primary float-right btn-circle" href="/LancamentoCarencias"><i class="fas fa-undo-alt"></i></a>
+            <a title="Voltar a pesquisa de carência" class="btn btn-outline-primary float-right btn-circle" href="/Carencias"><i class="fas fa-undo-alt"></i></a>
         </div>
 
         <!-- <form class="shadow p-3 mb-5 bg-white rounded"> -->
 
-        <form class="needs-validation shadow" action="<?= '/LancamentoCarencias/add' ?>" method="post">
+        <form class="needs-validation shadow" action="<?= '/Carencias/add' ?>" method="post">
             <?= csrf_field() ?>
 
             <div id="borderCard" class="card-body border-left-primary">
+
 
                 <!-- Form1 -->
                 <div class="form-row">
                     <div class="form-group col-md-2">
                         <label class="control-label" for="ueid">Unidade Escolar</label>
                         <div class="input-group mb-3">
-                            <input type="number" value="1100485" size="10" maxlength="10"  id="ueid" name="ueid" class="form-control form-control-sm btn-sm" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <input type="number" value="1100485" size="10" maxlength="10" id="ueid" name="ueid" class="form-control form-control-sm btn-sm" aria-label="Recipient's username" aria-describedby="button-addon2">
                             <button class="btn btn-primary btn-sm" type="button" id="busca_escola" onclick="pesquisa_escola_carencia()"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
@@ -83,7 +91,7 @@
 
                     <div class="form-group col-md-5">
                         <label class="control-label" for="motivo_tipo_carencia">Motivo do Afastamento</label>
-                        <select name="motivo_vaga_id" id="motivo_tipo_carencia"  class="form-control  form-control-sm" required>
+                        <select name="motivo_vaga_id" id="motivo_tipo_carencia" class="form-control  form-control-sm" required>
                             <option value="" selected>Motivo do Afastamento...</option>
                         </select>
                     </div>
@@ -132,12 +140,12 @@
             </div>
 
             <input class="d-none" type="hidden" name="user" value="<?php echo (user()->username) ?>" />
-            <input id="tipoCarencia" type="hidden" name="temporaria" value=""/>
+            <input id="tipoCarencia" type="hidden" name="temporaria" value="" />
 
             <div class="card-footer d-none footer">
                 <button title="Grava os dados informados" type="submit" name="submit" id="submit" class="btn btn-outline-primary " value="Salvar" disabled><i class="fas fa-database">&nbsp;&nbsp;Gravar</i></button>
                 <!-- <button onclick="confirmaGravacaoCarencia()" type="submit" name="submit" id="submit" class="btn btn-outline-primary " value="Salvar"><i class="fas fa-database">&nbsp;&nbsp;Gravar</i></button> -->
-                <a title="Abandona a inclusão" name="cancel" class="btn btn-outline-warning " href="/LancamentoCarencias" disabled><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
+                <a title="Abandona a inclusão" name="cancel" class="btn btn-outline-warning " href="/Carencias/carencia" disabled><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
             </div>
 
         </form>

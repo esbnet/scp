@@ -1,6 +1,13 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
+    <?php
+    if (isset($_SESSION['msg'])) {
+        echo $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    }
+    ?>
+
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
 
@@ -123,8 +130,42 @@
                         </div>
                         <hr>
 
-                        <div class="form-row d-none linha-03 ">
-                            <div class="form-group col-md-3">
+                        <div class="form-row d-none linha-03">
+                            <div class="form-group col-md-2">
+                                <div class="form-check form-check-inline ">
+                                    <input class="form-check-input" type="checkbox" id="AulaNormal" name="AulaNormal">
+                                    <label class="form-check-label " for="AulaNormal">Aula Normal</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div class="form-check form-check-inline ">
+                                    <input class="form-check-input text-primary" type="checkbox" id="AulaExtra" name="AulaExtra">
+                                    <label class="form-check-label " for="AulaExtra">Aula Extra</label>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-8">
+                                <div class="text-right">
+                                    <div class="form-check form-check-inline">
+                                        <input class="switches text-primary" type="checkbox" id="cb_anuencia" name="Anuencia" onchange="habilitaDataAnuencia()">
+                                        <label class="form-check-label" for="cb_anuencia">Anuência</label>&nbsp;&nbsp;&nbsp;
+                                        <input type="date" class="form-control form-control-sm text-primary" id="DataAnuencia" name="DataAnuencia" disabled>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input text-primary" type="checkbox" id="cb_assuncao" name="Assuncao" onchange="habilitaDataAssuncao()">
+                                        <label class="form-check-label " for="cb_assuncao">Assução</label>&nbsp;&nbsp;&nbsp;
+                                        <input type="date" class="form-control form-control-sm text-primary" id="DataAssuncao" name="DataAssuncao" disabled>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row d-none linha-04">
+
+                            <div class="form-group col-md-6">
                                 <label for="inputMotivo">Forma de Suprimento</label>
                                 <select name="FormaSupId" id="forma_suprimento_id" class="form-control form-control-sm text-primary" required>
                                     <option value="" selected>Selecione o motivo...</option>
@@ -137,41 +178,17 @@
                                 <div class="invalid-feedback" id="erroForma"> </div>
                             </div>
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-6">
                                 <label for="motivo_provimento_id">Tipo de Movimentação</label>
                                 <select name="TipoMovId" id="motivo_provimento_id" class="form-control form-control-sm text-primary" required>
                                     <option value="" selected>Selecione o tipo de movimentação...</option>
                                     <?php foreach ($tipos_movimentacao as $tipo) : ?>
-                                        <option value="<?php echo esc($tipo['id']); ?>" >
+                                        <option value="<?php echo esc($tipo['id']); ?>">
                                             <?php echo $tipo['nome'] ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
                                 <div class="invalid-feedback" id="erroMotivo"> </div>
-                            </div>
-                            <div class="form-check form-check-inline ">
-                                <input class="form-check-input" type="checkbox" id="AulaNormal" name="AulaNormal">
-                                <label class="form-check-label " for="AulaNormal">Aula Normal</label>
-                            </div>
-                            <div class="form-check form-check-inline ">
-                                <input class="form-check-input text-primary" type="checkbox" id="AulaExtra" name="AulaExtra">
-                                <label class="form-check-label " for="AulaExtra">Aula Extra</label>
-                            </div>
-                        </div>
-
-                        <div class="form-row d-none linha-04 ">
-                            <div class="form-group ">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input text-primary" type="checkbox" id="cb_anuencia" name="Anuencia" onchange="habilitaDataAnuencia()">
-                                    <label class="form-check-label" for="cb_anuencia">Anuência</label>&nbsp;&nbsp;&nbsp;
-                                    <input type="date" class="form-control form-control-sm text-primary" id="DataAnuencia" name="DataAnuencia" disabled>
-
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input text-primary" type="checkbox" id="cb_assuncao" name="Assuncao" onchange="habilitaDataAssuncao()">
-                                    <label class="form-check-label " for="cb_assuncao">Assução</label>&nbsp;&nbsp;&nbsp;
-                                    <input type="date" class="form-control form-control-sm text-primary" id="DataAssuncao" name="DataAssuncao" disabled>
-                                </div>
                             </div>
                         </div>
 
@@ -222,10 +239,12 @@
 
             <!-- Início do footer do card -->
             <div class="card-footer ">
-                <button title="Grava as informações de carência." type="submit" name="submit" id="submit" class="btn btn-outline-primary" value="Salvar" onclick="" disabled>
+                <button title="Grava as informações de carência." type="submit" name="submit" id="submit" class="btn btn-outline-primary" value="Salvar" onclick="">
                     <i class="fas fa-database">&nbsp;&nbsp;Gravar</i>
                 </button>
-                <a title="Cancela a inclusão da carência." name="cancel" class="btn btn-outline-warning " href="/provimentos"><i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i></a>
+                <a title="Cancela a inclusão da carência." name="cancel" class="btn btn-outline-warning " href="/provimentos/provimento">
+                    <i class="fas fa-ban">&nbsp;&nbsp;Cancelar</i>
+                </a>
             </div>
             <!-- Fim do footer do card -->
 

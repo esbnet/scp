@@ -8,7 +8,7 @@
             <h2 class="float-left text-primary"> <?= $title; ?> </h2>
             <a title="Voltar ao painel" class="btn btn-circle btn-outline-success float-right" href="/"><i class="fas fa-chart-line"></i></a>
             <a class="float-right">&nbsp;</a>
-            <a title="Adicionar nova carência" class="btn btn-circle btn-outline-primary float-right" href="/LancamentoCarencias/carencia"><i class="fas fa-plus"></i></a>
+            <a title="Adicionar nova carência" class="btn btn-circle btn-outline-primary float-right" href="/Carencias/carencia"><i class="fas fa-plus"></i></a>
         </div>
 
         <div class="card-body">

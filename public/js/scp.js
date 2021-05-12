@@ -31,7 +31,7 @@ function pesquisa_escola_carencia() {
         return;
     }
 
-    var endereco = "/LancamentoCarencias/pesquisaEscola/" + codigo;
+    var endereco = "/Carencias/pesquisaEscola/" + codigo;
     $.ajax({
         url: endereco,
         method: "post",
@@ -110,7 +110,7 @@ function lancamento_carencia_store() {
         return;
     }
 
-    var endereco = "/LancamentoCarencias/store/";
+    var endereco = "/Carencias/store/";
     $.ajax({
         url: endereco,
         method: "post",
@@ -155,7 +155,7 @@ function pesquisa_professor_carencia() {
         return;
     }
 
-    var endereco = "/LancamentoCarencias/pesquisaProfessor/" + matricula;
+    var endereco = "/Carencias/pesquisaProfessor/" + matricula;
     $.ajax({
         url: endereco,
         method: "post",
@@ -221,7 +221,7 @@ function _pesquisa_escola_provimento() {
         return;
     }
 
-    var endereco = "/LancamentoCarencias/pesquisaEscola/" + codigo;
+    var endereco = "/Carencias/pesquisaEscola/" + codigo;
 
     $.ajax({
         url: endereco,
@@ -281,28 +281,14 @@ function pesquisa_professor_provimento() {
         return;
     }
 
-    var endereco = "/LancamentoCarencias/pesquisaProfessor/" + matricula;
+    var endereco = "/Carencias/pesquisaProfessor/" + matricula;
     $.ajax({
         url: endereco,
         method: "post",
         data: $(this).serialize(),
         dataType: "json",
         success: function (resposta) {
-            var [
-                {
-                    success
-                }
-            ] = resposta;
-            var [
-                {
-                    professor
-                }
-            ] = resposta;
-            var [
-                {
-                    message
-                }
-            ] = resposta;
+            var [{professor}] = resposta;
             // console.log(success);
             console.log(professor);
             // console.log(message);
@@ -318,7 +304,7 @@ function pesquisa_professor_provimento() {
                 $(".linha-04").removeClass("d-none");
                 $(".linha-05").removeClass("d-none");
                 $(".footer").removeClass("d-none");
-                document.getElementById("submit").disabled = false;
+                // document.getElementById("submit").disabled = false;
 
                 // console.log($(".datatable"))
             } else {
@@ -341,7 +327,9 @@ function pesquisa_professor_provimento() {
 
 // Busca toda a carência da UE informada
 function pesquisa_carencia() {
+
     setTipoCarenciaDefinitiva;
+
     var ueid = document.getElementById("ueid").value;
 
     if (ueid == null || ueid == "") {
@@ -436,7 +424,20 @@ function pesquisa_carencia() {
                         }
 
                         // Adicionando registros retornados na tabela
-                        $("#tabelaCarencia").append("<tr class='linha_carencia'>" + "<td class='d-none' ><input name='disciplina_id[]' value='" + carencia[i].disciplina_id + "' type='number'></td>" + "<td class='d-none' ><input name='temporaria[]' value='" + carencia[i].temporaria + "' type='number'></td>" + "<td class='text-center'>" + carencia[i].nome + "</td>" + "<td class='text-center'>" + temp + "</td>" + "<td class='text-center'>" + carencia[i].matutino + "</td>" + "<td class='campo text-center d-none'>" + MatProv + "</td>" + "<td class='text-center'>" + carencia[i].vespertino + "</td>" + "<td class='campo text-center d-none'>" + VespProv + "</td>" + "<td class='text-center'>" + carencia[i].noturno + "</td>" + "<td class='campo text-center d-none'>" + NotProv + "</td>" + "<td class='text-center'>" + carencia[i].total + "</td>" + "<td class='text-center'>" + "<a href='#'><input type='checkbox' name='adicionar'/></a></td>" + "</tr>");
+                        $("#tabelaCarencia").append("<tr class='linha_carencia'>" + 
+                        "<td class='d-none' ><input name='disciplina_id[]' value='" + carencia[i].disciplina_id + "' type='number'></td>" + 
+                        "<td class='d-none' ><input name='temporaria[]' value='" + carencia[i].temporaria + "' type='number'></td>" + 
+                        "<td class='text-center'>" + carencia[i].nome + "</td>" + 
+                        "<td class='text-center'>" + temp + "</td>" + 
+                        "<td class='text-center'>" + carencia[i].matutino + "</td>" + 
+                        "<td class='campo text-center d-none'>" + MatProv + "</td>" + 
+                        "<td class='text-center'>" + carencia[i].vespertino + "</td>" + 
+                        "<td class='campo text-center d-none'>" + VespProv + "</td>" + 
+                        "<td class='text-center'>" + carencia[i].noturno + "</td>" + 
+                        "<td class='campo text-center d-none'>" + NotProv + "</td>" + 
+                        "<td class='text-center'>" + carencia[i].total + "</td>" + 
+                        "<td class='text-center'>" + "<a href='#'><input type='checkbox' name='adicionar'/></a> <input name='carencia_id[]' value='" + carencia[i].id + "' type='hidden'> </td>" + 
+                        "</tr>");
                     }
 
                     // consultando todos os input to type checkbox na pagina
@@ -508,8 +509,10 @@ function setTipoCarenciaDefinitiva() {
     document.querySelector("#titleCard").className = "float-left text-primary";
     document.querySelector("#borderCard").className = "card-body border-left-primary";
     document.querySelector("#tipoCarencia").value = "0";
+    
+    $("#message").remove();
 
-    var endereco = "/LancamentoCarencias/motivoCarenciaTipo/0";
+    var endereco = "/Carencias/motivoCarenciaTipo/0";
     $.ajax({
         url: endereco,
         method: "post",
@@ -553,7 +556,9 @@ function setTipoCarenciaTemporaria() {
     document.querySelector("#borderCard").className = "card-body border-left-warning";
     document.querySelector("#tipoCarencia").value = "1";
 
-    var endereco = "/LancamentoCarencias/motivoCarenciaTipo/1";
+    $("#message").remove();
+
+    var endereco = "/Carencias/motivoCarenciaTipo/1";
     $.ajax({
         url: endereco,
         method: "post",
@@ -666,7 +671,7 @@ function inserirCarencia() {
 }
 
 function deleta_carencia() {
-    var url = "/LancamentoCarencias/delete/" + document.getElementById("id").value;
+    var url = "/Carencias/delete/" + document.getElementById("id").value;
 
     Swal.fire({
         title: "Tem certeza?",
@@ -706,8 +711,10 @@ function deleta_provimento() {
 }
 
 function consulta_carencia_detalhada() { 
+    
+    $("#message").remove();
 
-    var endereco = "/LancamentoCarencias/consutla_carencia";
+    var endereco = "/Carencias/consulta_carencia";
     var tipo_consulta = "real";
     var dados = new FormData();
 
@@ -816,7 +823,7 @@ function consulta_carencia_detalhada() {
 
 function consulta_carencia_real() { // alert('chegou na função')
 
-    var endereco = "/LancamentoCarencias/consutla_carencia";
+    var endereco = "/Carencias/consulta_carencia";
 
     var tipo_consulta = "detalhada";
 
@@ -908,6 +915,8 @@ function consulta_provimento() {
     dados.append("professor_nome", $('#professor_nome').val());
     dados.append("anuencia", $('#anuencia').val());
     dados.append("assuncao", $('#assuncao').val());
+
+    $("#message").remove();
 
     $.ajax({
         url: endereco,

@@ -17,10 +17,10 @@
 
         <div class="card-header py-3">
             <h2 class="float-left text-primary" id="titleCard"> Visualizar Carência </h2>
-            <a title="Voltar a pesquisa de carência" class="btn btn-outline-primary float-right btn-circle" href="/LancamentoCarencias"><i class="fas fa-undo-alt"></i></a>
+            <a title="Voltar a pesquisa de carência" class="btn btn-outline-primary float-right btn-circle" href="/Carencias"><i class="fas fa-undo-alt"></i></a>
         </div>
 
-        <?php $url = '/LancamentoCarencias/update'; ?>
+        <?php $url = '/Carencias/update'; ?>
 
         <!-- <form class="shadow p-3 mb-5 bg-white rounded"> -->
         <form action="<?= $url; ?> " method="post">
@@ -48,7 +48,7 @@
                     <div class="form-row float-right">
                         <label class="control-label" for="ueid">
                             <!-- Última atualização:&nbsp;&nbsp; -->
-                            <i class="fas fa-user-edit text-success"></i>&nbsp;&nbsp;<?php echo $lancamento_carencia['user_id']; ?>
+                            <i class="fas fa-user-edit text-success"></i>&nbsp;&nbsp;<?php echo user()->username; ?>
                             &nbsp;&nbsp;&nbsp;
                             <i class="fas fa-calendar-alt text-success"></i>&nbsp;&nbsp;<?php echo $lancamento_carencia['data_lancamento']; ?>
                         </label>
@@ -192,7 +192,7 @@
                     <input id="tipoCarencia" type="hidden" name="temporaria" value="<?php echo $lancamento_carencia['temporaria'] ?>" />
 
                     <div class="card-footer footer">
-                        <!-- <a title="Retorna lista de carência" name="cancel" class="btn btn-success " href="/LancamentoCarencias"><i class="fas fa-undo-alt">&nbsp;&nbsp;Voltar</i></a> -->
+                        <!-- <a title="Retorna lista de carência" name="cancel" class="btn btn-success " href="/Carencias"><i class="fas fa-undo-alt">&nbsp;&nbsp;Voltar</i></a> -->
                     </div>
 
         </form>

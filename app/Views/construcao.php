@@ -69,6 +69,7 @@
 </style>
 </head>
 <body>
+
 	<div class="wrap">
 		<h1>404 - Recurso não localizado</h1>
 

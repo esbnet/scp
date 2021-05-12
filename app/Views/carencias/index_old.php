@@ -9,7 +9,7 @@
             <h2 class="float-left text-primary"> <?= $title; ?> </h2>
             <a title="Voltar ao painel" class="btn btn-circle btn-outline-success float-right" href="/"><i class="fas fa-chart-line"></i></a>
             <a class="float-right">&nbsp;</a>
-            <a title="Adicionar nova carência" class="btn btn-circle btn-outline-primary float-right" href="/LancamentoCarencias/carencia"><i class="fas fa-plus"></i></a>
+            <a title="Adicionar nova carência" class="btn btn-circle btn-outline-primary float-right" href="/Carencias/carencia"><i class="fas fa-plus"></i></a>
         </div>
 
         <div class="card-body">
@@ -46,7 +46,7 @@
                                     </td>
 
                                     <td class="text-center">
-                                        <a class="btn btn-light btn-circle btn-sm" style='color: #0D47A1' href="<?= base_url('/LancamentoCarencias/edit/' . $carencia['id']); ?>"><i class="fas fa-pencil-alt"></i></a>
+                                        <a class="btn btn-light btn-circle btn-sm" style='color: #0D47A1' href="<?= base_url('/Carencias/edit/' . $carencia['id']); ?>"><i class="fas fa-pencil-alt"></i></a>
                                     </td>
 
                                 </tr>

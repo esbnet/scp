@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\LancamentoCarenciaModel;
+use App\Models\CarenciaModel;
 use App\Models\ProvimentoProvidoModel;
 
 class Home extends BaseController
@@ -11,7 +11,7 @@ class Home extends BaseController
 	public function index()
 	{
 
-		$modelCarencia = new LancamentoCarenciaModel();
+		$modelCarencia = new CarenciaModel();
 		$modelProvido = new ProvimentoProvidoModel();
 
 		$TCR = $modelCarencia->getTotalCarenciaReal();
@@ -20,7 +20,7 @@ class Home extends BaseController
 		$TFE = $modelCarencia->getCarenciaTop5Escola();
 
 		// echo '<pre>';
-		// dd($TFE);
+		// dd($TFD);
 		// exit('Chegou nos indicaroes');
 
 		$TP = $modelProvido->getTotalProvido();
