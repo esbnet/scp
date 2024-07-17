@@ -22,7 +22,9 @@ Aqui temos a relação de professores disponíveis para serem alocados nas disci
 - [ ] Salvar os arquivos na pasta da aplicação
 - [ ] Na pasta raiz editar o arquivo .env e configurar o URL da aplicação:
 
-``` APP_URL=http://scphml.sec.ba.gov.br ```
+``` 
+APP_URL=http://scphml.sec.ba.gov.br
+```
 - [ ] No mesmo arquivo, configurar o acesso ao banco
 
 ```
@@ -38,13 +40,17 @@ Aqui temos a relação de professores disponíveis para serem alocados nas disci
 ```
 - [ ] Na pasta src rodar o comando
 
-``` Sistema de Carência e Provimento2composer install ```
+``` 
+Sistema de Carência e Provimento2composer install
+```
 
 - [ ] Criar o bando scp
 - [ ] Rodar o script banco.sql que encontra-se na pasta app
 - [ ] Ainda na pasta src executar o comando
 
- ``` php spark serve ```
+``` 
+php spark serve
+```
 
 ## Configurações PHP
 - [ ]  Instalar as extensões: *intl* extension e *mbstring* extension 
