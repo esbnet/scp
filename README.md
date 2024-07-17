@@ -3,15 +3,26 @@ O sistema se propõe a relacionar disciplinas sem professor atribuido e uma rela
 
 O sistema foi desenvolvido com o framework Codeigniter 4.0.4
 
-![Alt text](public/assets/images/Cadastro_Usuario.PNG?raw=true "Title")
+![Alt text](public/assets/images/Menu_Carência_Incluir.PNG?raw=true "Title")
 
 
 ## Módulo de Carência
 Neste módulo são mantidas as disciplinas que possuem carência de professores. 
-![./public/assets/images/Carencia_Incluir_Informar_UE.PNG]()
+![Tela de Carência](public/assets/images/Carencia_Incluir_Tela_Completa.PNG?raw=true "Title")
+
+## Consulta de Carência
+![Tela de Carência](public/assets/images/Carencia_Pesquisa.png?raw=true "Title")
+
+
 
 ## Módulo de Provimento
 Aqui temos a relação de professores disponíveis para serem alocados nas disciplinas disponíveis no módulo de carência.
+![Tela de Carência](public/assets/images/Provimento_Incluir_Adicionar_Carencia.PNG?raw=true "Title")
+
+## Consulta de Provimento
+![Tela de Carência](public/assets/images/Provimento_Alteracao_Consulta.PNG?raw=true "Title")
+
+
 
 ## Pré-Requisitos
 - PHP 7.3 >
