@@ -8,7 +8,7 @@ O sistema foi desenvolvido com o framework Codeigniter 4.0.4
 
 ## Módulo de Carência
 Neste módulo são mantidas as disciplinas que possuem carência de professores. 
-
+![./public/assets/images/Carencia_Incluir_Informar_UE.PNG]()
 
 ## Módulo de Provimento
 Aqui temos a relação de professores disponíveis para serem alocados nas disciplinas disponíveis no módulo de carência.
@@ -55,3 +55,6 @@ php spark serve
 ## Configurações PHP
 - [ ]  Instalar as extensões: *intl* extension e *mbstring* extension 
 - [ ] Habilitar as extensões: php-json , php-mysqlnd , php-xml
+
+
+
