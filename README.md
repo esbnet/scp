@@ -8,18 +8,22 @@ O sistema foi desenvolvido com o framework Codeigniter 4.0.4
 
 ## Módulo de Carência
 Neste módulo são mantidas as disciplinas que possuem carência de professores. 
+
 ![Tela de Carência](public/assets/images/Carencia_Incluir_Tela_Completa.PNG?raw=true "Title")
 
 ## Consulta de Carência
+Esta tela permite verificar através de uma pesquisa avanção com diversos parâmetros de pesquisa, quais as disciplinas possuem carência de professor.
+
 ![Tela de Carência](public/assets/images/Carencia_Pesquisa.png?raw=true "Title")
-
-
 
 ## Módulo de Provimento
 Aqui temos a relação de professores disponíveis para serem alocados nas disciplinas disponíveis no módulo de carência.
+
 ![Tela de Carência](public/assets/images/Provimento_Incluir_Adicionar_Carencia.PNG?raw=true "Title")
 
 ## Consulta de Provimento
+Permite gerenciar os provimentos realizados e até realizar ajustes em operaçẽs já realizadas.
+
 ![Tela de Carência](public/assets/images/Provimento_Alteracao_Consulta.PNG?raw=true "Title")
 
 
