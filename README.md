@@ -34,13 +34,13 @@ Permite gerenciar os provimentos realizados e até realizar ajustes em operaç�
 
 ## Instalação / Configuração
 
-- [ ] Salvar os arquivos na pasta da aplicação
-- [ ] Na pasta raiz editar o arquivo .env e configurar o URL da aplicação:
+- Salvar os arquivos na pasta da aplicação
+- Na pasta raiz editar o arquivo .env e configurar o URL da aplicação:
 
 ``` 
 APP_URL=http://scphml.sec.ba.gov.br
 ```
-- [ ] No mesmo arquivo, configurar o acesso ao banco
+- No mesmo arquivo, configurar o acesso ao banco
 
 ```
 #-------------------------------------------------------------------- 
@@ -53,23 +53,23 @@ APP_URL=http://scphml.sec.ba.gov.br
  database.default.password =  
  database.default.DBDriver = MySQLi
 ```
-- [ ] Na pasta src rodar o comando
+- Na pasta src rodar o comando
 
 ``` 
-Sistema de Carência e Provimento2composer install
+composer install
 ```
 
-- [ ] Criar o bando scp
-- [ ] Rodar o script banco.sql que encontra-se na pasta app
-- [ ] Ainda na pasta src executar o comando
+- Criar o bando scp
+- Rodar o script banco.sql que encontra-se na pasta app
+- Ainda na pasta src executar o comando
 
 ``` 
 php spark serve
 ```
 
 ## Configurações PHP
-- [ ]  Instalar as extensões: *intl* extension e *mbstring* extension 
-- [ ] Habilitar as extensões: php-json , php-mysqlnd , php-xml
+- Instalar as extensões: *intl* extension e *mbstring* extension 
+- Habilitar as extensões: php-json , php-mysqlnd , php-xml
 
 
 
